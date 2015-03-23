@@ -1,0 +1,14 @@
+//
+//  PrefixHeader.pch
+//  FitYourBuddy
+//
+//  Created by 陈文琦 on 15/3/21.
+//  Copyright (c) 2015年 xpz. All rights reserved.
+//
+
+#ifndef FitYourBuddy_PrefixHeader_pch
+#define FitYourBuddy_PrefixHeader_pch
+
+#import "Constant.h"
+
+#endif
