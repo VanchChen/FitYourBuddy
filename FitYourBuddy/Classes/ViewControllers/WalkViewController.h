@@ -6,8 +6,6 @@
 //  Copyright (c) 2015年 xpz. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @interface WalkViewController : UIViewController
 
 @end

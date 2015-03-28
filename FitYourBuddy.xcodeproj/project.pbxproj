@@ -40,12 +40,19 @@
 		D676E43C1AA21CB3003BF293 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D676E43B1AA21CB3003BF293 /* CoreGraphics.framework */; };
 		D6A69ECF1A9C58CD0061603F /* PushUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A69ECE1A9C58CD0061603F /* PushUpViewController.m */; };
 		D6A8CB531ABD7FEB003F7650 /* UIView+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A8CB521ABD7FEB003F7650 /* UIView+Base.m */; };
+		D6AFCAEE1AC5A62400400358 /* UIImage+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AFCAED1AC5A62400400358 /* UIImage+Base.m */; };
+		D6AFCAF21AC5AA8A00400358 /* CommonUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AFCAF11AC5AA8A00400358 /* CommonUtil.m */; };
 		D6B5D59C1AB51D4700B6BA01 /* CompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B5D59B1AB51D4700B6BA01 /* CompleteViewController.m */; };
+		D6BBD0821AC310B300B56935 /* NSString+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BBD0811AC310B300B56935 /* NSString+Base.m */; };
 		D6C5FAE81A9DCC3B00BABA36 /* SitUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAE71A9DCC3B00BABA36 /* SitUpViewController.m */; };
 		D6C5FAEB1A9DCC4E00BABA36 /* SquatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAEA1A9DCC4E00BABA36 /* SquatViewController.m */; };
 		D6C5FAEE1A9DCC6500BABA36 /* WalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAED1A9DCC6500BABA36 /* WalkViewController.m */; };
 		D6C5FAF21A9DD1A600BABA36 /* TarBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAF11A9DD1A600BABA36 /* TarBarViewController.m */; };
 		D6DC62D41A9B355700E03ED6 /* ExerciseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DC62D31A9B355700E03ED6 /* ExerciseViewController.m */; };
+		D6F53B891AC6660500289E6C /* b4.wav in Resources */ = {isa = PBXBuildFile; fileRef = D6F53B851AC6660500289E6C /* b4.wav */; };
+		D6F53B8A1AC6660500289E6C /* c5.wav in Resources */ = {isa = PBXBuildFile; fileRef = D6F53B861AC6660500289E6C /* c5.wav */; };
+		D6F53B8D1AC6663B00289E6C /* coin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6F53B8B1AC6663B00289E6C /* coin.mp3 */; };
+		D6F53B8E1AC6663B00289E6C /* exercise.wav in Resources */ = {isa = PBXBuildFile; fileRef = D6F53B8C1AC6663B00289E6C /* exercise.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,8 +126,14 @@
 		D6A8CB501ABD6F93003F7650 /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		D6A8CB511ABD7FEB003F7650 /* UIView+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Base.h"; sourceTree = "<group>"; };
 		D6A8CB521ABD7FEB003F7650 /* UIView+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Base.m"; sourceTree = "<group>"; };
+		D6AFCAEC1AC5A62400400358 /* UIImage+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Base.h"; sourceTree = "<group>"; };
+		D6AFCAED1AC5A62400400358 /* UIImage+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Base.m"; sourceTree = "<group>"; };
+		D6AFCAF01AC5AA8A00400358 /* CommonUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonUtil.h; path = Classes/Util/CommonUtil.h; sourceTree = "<group>"; };
+		D6AFCAF11AC5AA8A00400358 /* CommonUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonUtil.m; path = Classes/Util/CommonUtil.m; sourceTree = "<group>"; };
 		D6B5D59A1AB51D4700B6BA01 /* CompleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompleteViewController.h; path = Classes/ViewControllers/CompleteViewController.h; sourceTree = "<group>"; };
 		D6B5D59B1AB51D4700B6BA01 /* CompleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CompleteViewController.m; path = Classes/ViewControllers/CompleteViewController.m; sourceTree = "<group>"; };
+		D6BBD0801AC310B300B56935 /* NSString+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base.h"; sourceTree = "<group>"; };
+		D6BBD0811AC310B300B56935 /* NSString+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base.m"; sourceTree = "<group>"; };
 		D6C5FAE61A9DCC3B00BABA36 /* SitUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SitUpViewController.h; path = Classes/ViewControllers/SitUpViewController.h; sourceTree = "<group>"; };
 		D6C5FAE71A9DCC3B00BABA36 /* SitUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SitUpViewController.m; path = Classes/ViewControllers/SitUpViewController.m; sourceTree = "<group>"; };
 		D6C5FAE91A9DCC4E00BABA36 /* SquatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SquatViewController.h; path = Classes/ViewControllers/SquatViewController.h; sourceTree = "<group>"; };
@@ -131,6 +144,10 @@
 		D6C5FAF11A9DD1A600BABA36 /* TarBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TarBarViewController.m; path = Classes/ViewControllers/TarBarViewController.m; sourceTree = "<group>"; };
 		D6DC62D21A9B355700E03ED6 /* ExerciseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExerciseViewController.h; path = Classes/ViewControllers/ExerciseViewController.h; sourceTree = "<group>"; };
 		D6DC62D31A9B355700E03ED6 /* ExerciseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExerciseViewController.m; path = Classes/ViewControllers/ExerciseViewController.m; sourceTree = "<group>"; };
+		D6F53B851AC6660500289E6C /* b4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = b4.wav; path = Classes/Sounds/b4.wav; sourceTree = "<group>"; };
+		D6F53B861AC6660500289E6C /* c5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = c5.wav; path = Classes/Sounds/c5.wav; sourceTree = "<group>"; };
+		D6F53B8B1AC6663B00289E6C /* coin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = coin.mp3; path = Classes/Sounds/coin.mp3; sourceTree = "<group>"; };
+		D6F53B8C1AC6663B00289E6C /* exercise.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = exercise.wav; path = Classes/Sounds/exercise.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +215,7 @@
 		D639C4231A90DA2800715BA9 /* FitYourBuddy */ = {
 			isa = PBXGroup;
 			children = (
+				D6AFCAEF1AC5A9FA00400358 /* Util */,
 				D6A8CB4E1ABD6755003F7650 /* Constant */,
 				D6A8CB4A1ABD6663003F7650 /* Category */,
 				D676E4121AA1A4C0003BF293 /* Sounds */,
@@ -341,6 +359,10 @@
 		D676E4121AA1A4C0003BF293 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				D6F53B8B1AC6663B00289E6C /* coin.mp3 */,
+				D6F53B8C1AC6663B00289E6C /* exercise.wav */,
+				D6F53B851AC6660500289E6C /* b4.wav */,
+				D6F53B861AC6660500289E6C /* c5.wav */,
 				D676E4131AA1A4E6003BF293 /* a4.wav */,
 				D676E4141AA1A4E6003BF293 /* c4.wav */,
 				D676E4151AA1A4E6003BF293 /* d4.wav */,
@@ -408,6 +430,10 @@
 			children = (
 				D6A8CB511ABD7FEB003F7650 /* UIView+Base.h */,
 				D6A8CB521ABD7FEB003F7650 /* UIView+Base.m */,
+				D6BBD0801AC310B300B56935 /* NSString+Base.h */,
+				D6BBD0811AC310B300B56935 /* NSString+Base.m */,
+				D6AFCAEC1AC5A62400400358 /* UIImage+Base.h */,
+				D6AFCAED1AC5A62400400358 /* UIImage+Base.m */,
 			);
 			name = Category;
 			path = Classes/Category;
@@ -421,6 +447,15 @@
 			);
 			name = Constant;
 			path = Classes/Constant;
+			sourceTree = "<group>";
+		};
+		D6AFCAEF1AC5A9FA00400358 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				D6AFCAF01AC5AA8A00400358 /* CommonUtil.h */,
+				D6AFCAF11AC5AA8A00400358 /* CommonUtil.m */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 		D6C5FAEF1A9DD0F800BABA36 /* TarBar */ = {
@@ -532,11 +567,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6F53B891AC6660500289E6C /* b4.wav in Resources */,
+				D6F53B8D1AC6663B00289E6C /* coin.mp3 in Resources */,
 				D676E41C1AA1A4E6003BF293 /* e4.wav in Resources */,
+				D6F53B8E1AC6663B00289E6C /* exercise.wav in Resources */,
 				D639C4351A90DA2800715BA9 /* Images.xcassets in Resources */,
 				D676E41A1AA1A4E6003BF293 /* c4.wav in Resources */,
 				D676E41E1AA1A4E6003BF293 /* g4.wav in Resources */,
 				D676E41B1AA1A4E6003BF293 /* d4.wav in Resources */,
+				D6F53B8A1AC6660500289E6C /* c5.wav in Resources */,
 				D676E41D1AA1A4E6003BF293 /* f4.wav in Resources */,
 				D676E4191AA1A4E6003BF293 /* a4.wav in Resources */,
 			);
@@ -557,6 +596,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D676E4371AA21A4A003BF293 /* EBStepManager.m in Sources */,
+				D6AFCAF21AC5AA8A00400358 /* CommonUtil.m in Sources */,
 				D6DC62D41A9B355700E03ED6 /* ExerciseViewController.m in Sources */,
 				D65467B81AACADF300FE38E3 /* WelcomeViewController.m in Sources */,
 				D639C42A1A90DA2800715BA9 /* AppDelegate.m in Sources */,
@@ -570,6 +610,7 @@
 				D676E4351AA21A4A003BF293 /* EBM7Manager.m in Sources */,
 				D676E4341AA21A4A003BF293 /* EBAccelerometerFilter.m in Sources */,
 				D63FCF411A962EA100582386 /* HistoryViewController.m in Sources */,
+				D6BBD0821AC310B300B56935 /* NSString+Base.m in Sources */,
 				D639C42D1A90DA2800715BA9 /* FitYourBuddy.xcdatamodeld in Sources */,
 				D61A102B1A972F4100B2C64C /* NSDate+Calendar.m in Sources */,
 				D676E4241AA1AE98003BF293 /* SoundTool.m in Sources */,
@@ -577,6 +618,7 @@
 				D63FCF371A9628EE00582386 /* SettingsViewController.m in Sources */,
 				D6C5FAF21A9DD1A600BABA36 /* TarBarViewController.m in Sources */,
 				D6C5FAEB1A9DCC4E00BABA36 /* SquatViewController.m in Sources */,
+				D6AFCAEE1AC5A62400400358 /* UIImage+Base.m in Sources */,
 				D669BE6F1A9D9A7B00DE6FA6 /* WQCircleProgressBar.m in Sources */,
 				D61A10251A972F3100B2C64C /* WQProgressBar.m in Sources */,
 				D6C5FAEE1A9DCC6500BABA36 /* WalkViewController.m in Sources */,

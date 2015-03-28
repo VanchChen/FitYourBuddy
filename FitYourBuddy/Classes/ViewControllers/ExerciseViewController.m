@@ -15,7 +15,7 @@
 #import "CompleteViewController.h"
 
 static CGFloat const ExerciseViewButtonTopPadding = 30.0f;           //开始锻炼按钮初始上边距
-static CGFloat const ExerciseViewButtonWidth = 200.0f;               //开始锻炼按钮宽度
+static CGFloat const ExerciseViewButtonWidth = 220.0f;               //开始锻炼按钮宽度
 static CGFloat const ExerciseViewBallonWidth = 30.0f;                //开始锻炼按钮气球宽度
 static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻炼按钮气球宽度
 
@@ -83,48 +83,48 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     NSString *sitUpString, *pushUpString, *squatString, *walkString;
     if (sitUpDoneNum >= sitUpNum) {
         sitUpString = [NSString stringWithFormat:@"%ld/%ld", (long)sitUpNum, (long)sitUpNum];
-        [sitUpMission setBackgroundColor:themeRedColor];
+        [sitUpMission setBackgroundColor:themeBlueColor];
     } else{
         sitUpString = [NSString stringWithFormat:@"%ld/%ld", (long)sitUpDoneNum, (long)sitUpNum];
-        [sitUpMission setBackgroundColor:themeBlueColor];
+        [sitUpMission setBackgroundColor:startTrainTargetGreyColor];
     }
     
     if (pushUpDoneNum >= pushUpNum) {
         pushUpString = [NSString stringWithFormat:@"%ld/%ld", (long)pushUpNum, (long)pushUpNum];
-        [pushUpMission setBackgroundColor:themeRedColor];
+        [pushUpMission setBackgroundColor:themeBlueColor];
     } else{
         pushUpString = [NSString stringWithFormat:@"%ld/%ld", (long)pushUpDoneNum, (long)pushUpNum];
-        [pushUpMission setBackgroundColor:themeBlueColor];
+        [pushUpMission setBackgroundColor:startTrainTargetGreyColor];
     }
     
     if (squatDoneNum >= squatNum) {
         squatString = [NSString stringWithFormat:@"%ld/%ld", (long)squatNum, (long)squatNum];
-        [squatMission setBackgroundColor:themeRedColor];
+        [squatMission setBackgroundColor:themeBlueColor];
     } else{
         squatString = [NSString stringWithFormat:@"%ld/%ld", (long)squatDoneNum, (long)squatNum];
-        [squatMission setBackgroundColor:themeBlueColor];
+        [squatMission setBackgroundColor:startTrainTargetGreyColor];
     }
     
     if (walkDoneNum >= walkNum) {
         walkString = [NSString stringWithFormat:@"%ld/%ld", (long)walkNum, (long)walkNum];
-        [walkMission setBackgroundColor:themeRedColor];
+        [walkMission setBackgroundColor:themeBlueColor];
     } else{
         walkString = [NSString stringWithFormat:@"%ld/%ld", (long)walkDoneNum, (long)walkNum];
-        [walkMission setBackgroundColor:themeBlueColor];
+        [walkMission setBackgroundColor:startTrainTargetGreyColor];
     }
     
     
     //加载按钮
-    UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 80, 30)];
-    [textLabel setText:@"日常任务"];
-    [textLabel setTextColor:themeBlueColor];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 80, 30)];
+    [textLabel setText:@"日常任务:"];
+    [textLabel setTextColor:tipTitleLabelColor];
+    [textLabel setFont:[UIFont systemFontOfSize:18]];
     [self.view addSubview:textLabel];
     
-    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 40, 260, 30)];
+    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 35, 290, 30)];
     [textLabel setText:@"请选择喜欢的运动，并完成锻炼目标"];
-    [textLabel setTextColor:themeBlueColor];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [textLabel setTextColor:tipTitleLabelColor];
+    [textLabel setFont:[UIFont systemFontOfSize:18]];
     [self.view addSubview:textLabel];
     
     textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 150, 40)];
@@ -182,7 +182,7 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     //按钮页面
     
     buttonView = [[UIView alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 64 - 49 - 80)];
-    [buttonView setBackgroundColor:themeBlueColor];
+    [buttonView setBackgroundColor:indexBackgroundColor];
     [buttonView setClipsToBounds:YES];
     [self.view addSubview:buttonView];
     
@@ -237,10 +237,12 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     [walkButton setBackgroundColor:[UIColor whiteColor]];
     [walkButton addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     walkButton.layer.cornerRadius = 15;
-    walkButton.layer.shadowColor = themeGreyColor.CGColor;
-    walkButton.layer.shadowOffset = CGSizeMake(5, 2);
-    walkButton.layer.shadowOpacity = 1;
-    walkButton.layer.shadowRadius = 0;
+    walkButton.layer.borderWidth = 1;
+    walkButton.layer.borderColor = themeGreyColor.CGColor;
+    //walkButton.layer.shadowColor = themeGreyColor.CGColor;
+    //walkButton.layer.shadowOffset = CGSizeMake(5, 2);
+    //walkButton.layer.shadowOpacity = 1;
+    //walkButton.layer.shadowRadius = 0;
     [buttonView addSubview:walkButton];
     
     UIView* walkBallon = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, (frame.size.height - ExerciseViewBallonWidth) / 2, ExerciseViewBallonWidth, ExerciseViewBallonWidth)];
@@ -248,9 +250,9 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     walkBallon.layer.cornerRadius = 15;
     [walkButton addSubview:walkBallon];
     
-    UILabel* walkLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(walkBallon.frame) + ExerciseViewSmallPadding, 0, CGRectGetMaxX(frame) - CGRectGetMaxX(walkBallon.frame) - ExerciseViewSmallPadding, CGRectGetHeight(frame))];
-    [walkLabel setTextColor:themeBlueColor];
-    [walkLabel setFont:[UIFont boldSystemFontOfSize:24]];
+    UILabel* walkLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(walkBallon.frame) + APPCONFIG_UI_VIEW_PADDING, 0, CGRectGetMaxX(frame) - CGRectGetMaxX(walkBallon.frame) - APPCONFIG_UI_VIEW_PADDING, CGRectGetHeight(frame))];
+    [walkLabel setTextColor:tipTitleLabelColor];
+    [walkLabel setFont:[UIFont systemFontOfSize:24]];
     [walkLabel setText:label];
     [walkButton addSubview:walkLabel];
 }

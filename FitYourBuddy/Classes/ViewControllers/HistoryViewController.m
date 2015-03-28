@@ -38,7 +38,7 @@
     page = 1;
     
     UIView* scrollTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 75)];
-    [scrollTitleView setBackgroundColor:[UIColor whiteColor]];
+    [scrollTitleView setBackgroundColor:indexBackgroundColor];
     [self.view addSubview:scrollTitleView];
     
     melodyB = [[UIView alloc] initWithFrame:CGRectMake(-45, 20, 35, 35)];
@@ -48,7 +48,7 @@
     
     sharpB = [[UILabel alloc] initWithFrame:CGRectMake(-5, 20, 100, 35)];
     [sharpB setText:@"步行"];
-    [sharpB setTextColor:themeBlueColor];
+    [sharpB setTextColor:tipTitleLabelColor];
     [sharpB setFont:[UIFont boldSystemFontOfSize:0.f]];
     [sharpB setAlpha:0];
     [scrollTitleView addSubview:sharpB];
@@ -60,7 +60,7 @@
     
     sharpC = [[UILabel alloc] initWithFrame:CGRectMake(50, 20, 100, 35)];
     [sharpC setText:@"仰卧起坐"];
-    [sharpC setTextColor:themeBlueColor];
+    [sharpC setTextColor:tipTitleLabelColor];
     [sharpC setFont:[UIFont boldSystemFontOfSize:20.f]];
     [sharpC setAlpha:1];
     [scrollTitleView addSubview:sharpC];
@@ -72,7 +72,7 @@
     
     sharpD = [[UILabel alloc] initWithFrame:CGRectMake(225, 20, 100, 35)];
     [sharpD setText:@"俯卧撑"];
-    [sharpD setTextColor:themeBlueColor];
+    [sharpD setTextColor:tipTitleLabelColor];
     [sharpD setFont:[UIFont boldSystemFontOfSize:0.f]];
     [sharpD setAlpha:0];
     [scrollTitleView addSubview:sharpD];
@@ -104,59 +104,31 @@
     [scrollView setContentOffset:CGPointMake(scrollView.frame.size.width, 0)];
     [self.view addSubview:scrollView];
     
-    UIView* walkView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, scrollView.frame.size.width, scrollView.frame.size.height)];
+    UIView* walkView = [self createInitViewWithFrame:CGRectMake(0, 0, scrollView.width, scrollView.height) andColor:walkColor];
     [scrollView addSubview:walkView];
-    [self createInitFrame:walkView];
     
-    UIView* sitUpView = [[UIView alloc] initWithFrame:CGRectMake(scrollView.frame.size.width, 0, scrollView.frame.size.width, scrollView.frame.size.height)];
+    UIView* sitUpView = [self createInitViewWithFrame:CGRectMake(scrollView.width, 0, scrollView.width, scrollView.height) andColor:sitUpColor];
     [scrollView addSubview:sitUpView];
-    [self createInitFrame:sitUpView];
     
-    UIView* pushUpView = [[UIView alloc] initWithFrame:CGRectMake(scrollView.frame.size.width * 2, 0, scrollView.frame.size.width, scrollView.frame.size.height)];
+    UIView* pushUpView = [self createInitViewWithFrame:CGRectMake(scrollView.width * 2, 0, scrollView.width, scrollView.height) andColor:pushUpColor];
     [scrollView addSubview:pushUpView];
-    [self createInitFrame:pushUpView];
     
-    UIView* squatView = [[UIView alloc] initWithFrame:CGRectMake(scrollView.frame.size.width * 3, 0, scrollView.frame.size.width, scrollView.frame.size.height)];
+    UIView* squatView = [self createInitViewWithFrame:CGRectMake(scrollView.width * 3, 0, scrollView.width, scrollView.height) andColor:squatColor];
     [scrollView addSubview:squatView];
-    [self createInitFrame:squatView];
     
-    UIView* walkView2 = [[UIView alloc] initWithFrame:CGRectMake(scrollView.frame.size.width * 4, 0, scrollView.frame.size.width, scrollView.frame.size.height)];
+    UIView* walkView2 = [self createInitViewWithFrame:CGRectMake(scrollView.width * 4, 0, scrollView.width, scrollView.height) andColor:walkColor];
     [scrollView addSubview:walkView2];
-    [self createInitFrame:walkView2];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Class Extention
-- (void)createInitFrame:(UIView *)view
+- (UIView *)createInitViewWithFrame:(CGRect)frame andColor:(UIColor *)color
 {
-    UIView* lineView;
-    UILabel* textLabel;
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor whiteColor];
     
-    lineView = [[UIView alloc] initWithFrame:CGRectMake(159.5, 0, 1, 100)];
-    [lineView setBackgroundColor:[UIColor whiteColor]];
-    [view addSubview:lineView];
     
-    lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 320, 1)];
-    [lineView setBackgroundColor:[UIColor whiteColor]];
-    [view addSubview:lineView];
     
-    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 160, 40)];
-    [textLabel setTextColor:[UIColor whiteColor]];
-    [textLabel setTextAlignment:NSTextAlignmentCenter];
-    [textLabel setText:@"个人记录"];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:20]];
-    [view addSubview:textLabel];
-    
-    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 10, 160, 40)];
-    [textLabel setTextColor:[UIColor whiteColor]];
-    [textLabel setTextAlignment:NSTextAlignmentCenter];
-    [textLabel setText:@"生涯总数"];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:20]];
-    [view addSubview:textLabel];
+    return view;
 }
 
 #pragma mark - Scroll View Delegate

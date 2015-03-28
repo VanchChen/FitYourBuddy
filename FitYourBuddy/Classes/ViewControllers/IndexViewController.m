@@ -12,7 +12,14 @@
 
 #import "ExerciseViewController.h"
 
-#import "AccountCoreDataHelper.h"
+static CGFloat const LevelViewHeight = 80.0f;
+static CGFloat const TitleLabelWidth = 40.0f;
+static CGFloat const FatGuyHeightRatio = 0.8f;
+//static CGFloat const FatGuyWidthToHeightRatio = 631.0f / 822.0f;
+static CGFloat const StartButtonWidth = 200.0f;
+static CGFloat const DayLabelHeight = 25.0f;
+
+static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
 
 @interface IndexViewController ()<UIScrollViewDelegate, UIGestureRecognizerDelegate>
 {
@@ -29,6 +36,7 @@
     [super viewDidLoad];
     
     self.title = @"小胖砸";
+    self.view.backgroundColor = indexBackgroundColor;
     
     //统一返回键
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
@@ -40,140 +48,136 @@
     NSError *error;
     accountDict = [AccountCoreDataHelper getAccountDictionaryWithError:&error];
     NSString *fatGuyName = [NSString stringWithFormat:@"早上好，%@", accountDict[@"name"]];
-    NSString *fatGuyCount = accountDict[@"count"];
-    NSString *fatGuyLevel = [NSString stringWithFormat:@"Lv.%@", accountDict[@"level"]];
-    float fullExp = [self getExpFromLevel:accountDict[@"level"]];
+    NSString *fatGuyCount = [NSString stringWithFormat:@"%@天", accountDict[@"count"]];
+    NSString *fatGuyLevel = [NSString stringWithFormat:@"等级Lv.%@", accountDict[@"level"]];
+    float fullExp = [CommonUtil getExpFromLevel:accountDict[@"level"]];
     float exp = [accountDict[@"exp"] floatValue];
     exp = exp / fullExp;
     
-    if (APPCONFIG_DEVICE_OVER_IPHONE5) {
-        //添加小胖砸界面
-        UIView* fatGuyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64 - 49 - 140)];//高315
-        [fatGuyView setBackgroundColor:[UIColor whiteColor]];//themeBlueColor
-        [self.view addSubview:fatGuyView];
-        
-        UILabel* fatGuyNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
-        [fatGuyNameLabel setText:fatGuyName];
-        [fatGuyNameLabel setTextColor:themeBlueColor];//[UIColor whiteColor]
-        [fatGuyNameLabel setFont:[UIFont boldSystemFontOfSize:16]];
-        [fatGuyNameLabel setBackgroundColor:[UIColor clearColor]];
-        [fatGuyView addSubview:fatGuyNameLabel];
-        
-        //临时小胖砸图
-        UIImageView* littleFatGuy = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 151, 235)]; //9/14
-        [littleFatGuy setImage:[UIImage imageNamed:@"LittleFatGuy"]];
-        [littleFatGuy setCenter:fatGuyView.center];
-        [fatGuyView addSubview:littleFatGuy];
-    } else {
-        //添加小胖砸界面
-        UIView* fatGuyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64 - 49 - 140)];//高???
-        [fatGuyView setBackgroundColor:[UIColor whiteColor]];//themeBlueColor
-        [self.view addSubview:fatGuyView];
-        
-        UILabel* fatGuyNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
-        [fatGuyNameLabel setText:fatGuyName];
-        [fatGuyNameLabel setTextColor:themeBlueColor];//[UIColor whiteColor]
-        [fatGuyNameLabel setFont:[UIFont boldSystemFontOfSize:16]];
-        [fatGuyNameLabel setBackgroundColor:[UIColor clearColor]];
-        [fatGuyView addSubview:fatGuyNameLabel];
-        
-        //临时小胖砸图
-        UIImageView* littleFatGuy = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 126, 196)]; //9/14
-        [littleFatGuy setImage:[UIImage imageNamed:@"LittleFatGuy"]];
-        [littleFatGuy setCenter:fatGuyView.center];
-        [fatGuyView addSubview:littleFatGuy];
-    }
+    //添加小胖砸界面
+    CGFloat fatGuyViewHeight = APPCONFIG_UI_SCREEN_VHEIGHT - LevelViewHeight - TitleLabelWidth - APPCONFIG_UI_VIEW_BETWEEN_PADDING * 3;
+    UIView* fatGuyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPCONFIG_UI_SCREEN_FWIDTH, fatGuyViewHeight)];
+    [fatGuyView setBackgroundColor:themeBlueColor];
+    [self.view addSubview:fatGuyView];
     
-    //添加锻炼界面，高度为140
-    UIView* trainView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 64 - 49 - 140, self.view.frame.size.width, 140)];
-    [trainView setBackgroundColor:themeBlueColor];
-    [self.view addSubview:trainView];
+    UILabel* fatGuyNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
+    [fatGuyNameLabel setText:fatGuyName];
+    [fatGuyNameLabel setTextColor:[UIColor whiteColor]];
+    [fatGuyNameLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [fatGuyNameLabel setBackgroundColor:[UIColor clearColor]];
+    [fatGuyView addSubview:fatGuyNameLabel];
     
-    UIView* historyLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, trainView.bounds.size.width, 1)];
-    [historyLine setBackgroundColor:[UIColor whiteColor]];
-    [trainView addSubview:historyLine];
+    //加两个云，这里frame就写死了
+    UIImageView *cloudImage = [[UIImageView alloc] init];
+    cloudImage.frame = CGRectMake(210, 5, 60, 60);
+    cloudImage.image = [UIImage imageNamed:@"CloudIcon"];
+    [fatGuyView addSubview:cloudImage];
     
-    UILabel* historyTipLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
-    [historyTipLabel setText:@"您已坚持锻炼"];
-    [historyTipLabel setTextColor:[UIColor whiteColor]];
-    [historyTipLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    [historyTipLabel setBackgroundColor:[UIColor clearColor]];
-    [trainView addSubview:historyTipLabel];
+    cloudImage = [[UIImageView alloc] init];
+    cloudImage.frame = CGRectMake(260, 45, 60, 60);
+    cloudImage.image = [UIImage imageNamed:@"CloudIcon"];
+    [fatGuyView addSubview:cloudImage];
     
-    UILabel* historyDayLabel = [[UILabel alloc] initWithFrame:CGRectMake(110, 10, 50, 20)];
-    [historyDayLabel setText:fatGuyCount];
-    [historyDayLabel setTextColor:[UIColor whiteColor]];
-    [historyDayLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    [historyDayLabel setBackgroundColor:[UIColor clearColor]];
-    [trainView addSubview:historyDayLabel];
-    [historyDayLabel sizeToFit];
+    //临时小胖砸图
+    UIImage *fatGuyImage = [UIImage imageNamed:@"LittleFatGuy"];
+    //CGFloat tmpHeight = fatGuyViewHeight * FatGuyHeightRatio * FatGuyHeightRatio;
+    //fatGuyImage = [fatGuyImage transformToSize:CGSizeMake(tmpHeight * FatGuyWidthToHeightRatio, tmpHeight)];
     
-    UILabel* historyOneDay = [[UILabel alloc] initWithFrame:CGRectMake(110 + historyDayLabel.bounds.size.width + 5, 10, 20, 20)];
-    [historyOneDay setText:@"天"];
-    [historyOneDay setTextColor:[UIColor whiteColor]];
-    [historyOneDay setFont:[UIFont boldSystemFontOfSize:16]];
-    [historyOneDay setBackgroundColor:[UIColor clearColor]];
-    [trainView addSubview:historyOneDay];
+    UIImageView* littleFatGuy = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, fatGuyViewHeight * FatGuyHeightRatio, fatGuyViewHeight * FatGuyHeightRatio)];
+    [littleFatGuy setBackgroundColor:[UIColor whiteColor]];
+    [littleFatGuy setContentMode:UIViewContentModeCenter];//UIViewContentModeScaleAspectFit
+    //[littleFatGuy setContentMode:UIViewContentModeScaleAspectFit];
+    [littleFatGuy setImage:fatGuyImage];
+    [littleFatGuy setCenter:CGPointMake(fatGuyView.center.x, fatGuyView.center.y + APPCONFIG_UI_VIEW_BETWEEN_PADDING)];
+    littleFatGuy.layer.cornerRadius = fatGuyViewHeight * FatGuyHeightRatio / 2.0f;
+    littleFatGuy.layer.shadowColor = themeDeepBlueColor.CGColor;
+    littleFatGuy.layer.shadowOffset = CGSizeMake(5, 5);
+    littleFatGuy.layer.shadowOpacity = 1;
+    littleFatGuy.layer.shadowRadius = 0;
+    [fatGuyView addSubview:littleFatGuy];
     
-    UILabel* historyLevel = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, 30, 20)];
-    [historyLevel setText:fatGuyLevel];
-    [historyLevel setTextColor:[UIColor whiteColor]];
-    [historyLevel setFont:[UIFont boldSystemFontOfSize:16]];
-    [historyLevel setBackgroundColor:[UIColor clearColor]];
-    [trainView addSubview:historyLevel];
+    //UIImageView *fatGuyImageView = [[UIImageView alloc] initWithImage:fatGuyImage];
+    //fatGuyImageView.center = littleFatGuy.center;
+    //[littleFatGuy addSubview:fatGuyImageView];
     
-    WQProgressBar* historyProgressBar = [[WQProgressBar alloc] initWithFrame:CGRectMake(50, 38, 220, 23) andRat:exp withAnimation:YES];
-    [trainView addSubview:historyProgressBar];
-    
-    UIView* startTrainLine = [[UIView alloc] initWithFrame:CGRectMake(0, 69, trainView.bounds.size.width, 1)];
-    [startTrainLine setBackgroundColor:[UIColor whiteColor]];
-    [trainView addSubview:startTrainLine];
-    
-    UIButton* startTrainBtn = [[UIButton alloc] initWithFrame:CGRectMake(60, 80, 200, 50)];
+    //开始锻炼按钮
+    UIButton* startTrainBtn = [[UIButton alloc] initWithFrame:CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - StartButtonWidth) / 2, APPCONFIG_UI_SCREEN_VHEIGHT - APPCONFIG_UI_VIEW_BETWEEN_PADDING  - TitleLabelWidth, StartButtonWidth, TitleLabelWidth)];
     [startTrainBtn setBackgroundColor:themeRedColor];
     [[startTrainBtn layer] setCornerRadius:15];
     [startTrainBtn addTarget:self action:@selector(tappedStartTrainBtn) forControlEvents:UIControlEventTouchUpInside];
-    [trainView addSubview:startTrainBtn];
+    [startTrainBtn setTitle:@"开始锻炼" forState:UIControlStateNormal];
+    [startTrainBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    startTrainBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    [self.view addSubview:startTrainBtn];
+
+    //两个框
+    CGFloat dayView = (APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2 - APPCONFIG_UI_VIEW_BETWEEN_PADDING) / 2.0f;
+    //左边日历框
+    UIView *leftDayView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, 0, dayView, LevelViewHeight)];
+    [self.view addSubview:leftDayView];
+    [leftDayView topOfView:startTrainBtn withMargin:APPCONFIG_UI_VIEW_BETWEEN_PADDING];
     
-    UILabel* startTrainLabel = [[UILabel alloc] initWithFrame:startTrainBtn.bounds];
-    [startTrainLabel setTextColor:[UIColor whiteColor]];
-    [startTrainLabel setText:@"开 始 锻 炼"];
-    [startTrainLabel setFont:[UIFont boldSystemFontOfSize:22]];
-    [startTrainLabel setTextAlignment:NSTextAlignmentCenter];
-    [startTrainBtn addSubview:startTrainLabel];
+    UILabel *leftDayTipLabel = [CommonUtil createLabelWithText:@"坚持天数" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:15] andTextAlignment:NSTextAlignmentCenter];
+    leftDayTipLabel.frame = CGRectMake(0, 0, leftDayView.width, DayLabelHeight);
+    [leftDayView addSubview:leftDayTipLabel];
     
+    UIImageView *leftCalendarImage = [[UIImageView alloc] init];
+    leftCalendarImage.frame = CGRectMake(CalendarImageMargin.left, 0, leftDayView.width - CalendarImageMargin.left * 2, leftDayView.height - leftDayTipLabel.height);
+    leftCalendarImage.image = [UIImage imageNamed:@"CalendarIcon"];
+    leftCalendarImage.contentMode = UIViewContentModeScaleAspectFill;
+    [leftDayView addSubview:leftCalendarImage];
+    [leftCalendarImage bottomOfView:leftDayTipLabel withMargin:CalendarImageMargin.bottom];
+    
+    UILabel *leftHistoryDayLabel = [CommonUtil createLabelWithText:fatGuyCount andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:24] andTextAlignment:NSTextAlignmentCenter];
+    leftHistoryDayLabel.frame = CGRectMake(0, APPCONFIG_UI_VIEW_BETWEEN_PADDING, leftCalendarImage.width, leftCalendarImage.height - APPCONFIG_UI_VIEW_BETWEEN_PADDING);
+    [leftCalendarImage addSubview:leftHistoryDayLabel];
+    
+    //右边等级框
+    UIView *rightDayView = [CommonUtil createViewWithFrame:CGRectMake(0, 0, dayView, LevelViewHeight)];
+    [self.view addSubview:rightDayView];
+    [rightDayView topOfView:startTrainBtn withMargin:APPCONFIG_UI_VIEW_BETWEEN_PADDING];
+    [rightDayView rightOfView:leftDayView withMargin:APPCONFIG_UI_VIEW_BETWEEN_PADDING];
+    
+    UILabel *rightDayTipLabel = [CommonUtil createLabelWithText:fatGuyLevel andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:15] andTextAlignment:NSTextAlignmentCenter];
+    rightDayTipLabel.frame = CGRectMake(0, 0, rightDayView.width, DayLabelHeight);
+    [rightDayView addSubview:rightDayTipLabel];
+    
+    WQProgressBar *levelProgressBar = [[WQProgressBar alloc] initWithFrame:CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, 0, rightDayView.width - APPCONFIG_UI_VIEW_BETWEEN_PADDING * 2, rightDayView.height - rightDayTipLabel.height - APPCONFIG_UI_VIEW_BETWEEN_PADDING)];
+    [rightDayView addSubview:levelProgressBar];
+    [levelProgressBar bottomOfView:rightDayTipLabel];
+
+    //////////时间紧，先不改了///////////////
     //盖一层下拉scrollview
-    UIScrollView* fatGuyScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 315)];
+    UIScrollView* fatGuyScrollView = [[UIScrollView alloc] initWithFrame:fatGuyView.bounds];
     [fatGuyScrollView setDelegate:self];
-    [fatGuyScrollView setContentSize:CGSizeMake(fatGuyScrollView.frame.size.width, fatGuyScrollView.frame.size.height * 2)];
+    [fatGuyScrollView setContentSize:CGSizeMake(fatGuyScrollView.width, fatGuyScrollView.height * 2)];
     [fatGuyScrollView setPagingEnabled:YES];
     fatGuyScrollView.showsVerticalScrollIndicator = false;
     fatGuyScrollView.bounces = false;
-    [fatGuyScrollView setContentOffset:CGPointMake(0, 315)];
     [self.view addSubview:fatGuyScrollView];
     
     //日历页
-    UIView* calendarBackground = [[UIView alloc] initWithFrame:CGRectMake(2.5, 2.5, fatGuyScrollView.frame.size.width - 5, fatGuyScrollView.frame.size.height - 5)];
+    UIView* calendarBackground = [[UIView alloc] initWithFrame:fatGuyScrollView.bounds];
     [calendarBackground setBackgroundColor:[UIColor whiteColor]];
     [fatGuyScrollView addSubview:calendarBackground];
     
     NSDate* today = [NSDate date];
     
-    UILabel* calendarDate = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 200, 30)];
-    [calendarDate setTextColor:themeBlueColor];
-    [calendarDate setFont:[UIFont boldSystemFontOfSize:22]];
+    UILabel* calendarDate = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 200, 20)];
+    [calendarDate setTextColor:tipTitleLabelColor];
+    [calendarDate setFont:[UIFont boldSystemFontOfSize:16]];
     [calendarDate setText:[NSString stringWithFormat:@"%lu.%.2lu", (unsigned long)today.year, (unsigned long)today.month]];
     [calendarBackground addSubview:calendarDate];
     
     if ([today numberOfWeeksInMonth] == 6) {
-        WQCalendar* calendar = [[WQCalendar alloc] initWithFrame:CGRectMake(10, 40, calendarBackground.frame.size.width - 20, 245)];
+        WQCalendar* calendar = [[WQCalendar alloc] initWithFrame:CGRectMake(10, 20, calendarBackground.frame.size.width - 20, 245)];
         [calendarBackground addSubview:calendar];
     } else {
         float tileWidth = (calendarBackground.frame.size.width - 20) / 7;
         for (int i = 0; i < 7; i++) {
-            UILabel* calendarTitle = [[UILabel alloc] initWithFrame:CGRectMake(10 + i * tileWidth, 40, tileWidth, tileWidth)];
+            UILabel* calendarTitle = [[UILabel alloc] initWithFrame:CGRectMake(10 + i * tileWidth, 20 + 10, tileWidth, tileWidth - 10)];
             [calendarTitle setTextAlignment:NSTextAlignmentCenter];
-            [calendarTitle setFont:[UIFont systemFontOfSize:20]];
+            [calendarTitle setFont:[UIFont systemFontOfSize:16]];
             [calendarBackground addSubview:calendarTitle];
             
             switch (i) {
@@ -218,15 +222,17 @@
             }
         }
         
-        WQCalendar* calendar = [[WQCalendar alloc] initWithFrame:CGRectMake(10, 40 + tileWidth, calendarBackground.frame.size.width - 20, 245)];
+        WQCalendar* calendar = [[WQCalendar alloc] initWithFrame:CGRectMake(10, 20 + tileWidth, calendarBackground.frame.size.width - 20, 245)];
         [calendarBackground addSubview:calendar];
     }
     //全局下拉块
-    scrollBlock = [[UIView alloc] initWithFrame:CGRectMake(0, 315 + 5, 60, 3)];
+    scrollBlock = [[UIView alloc] initWithFrame:CGRectMake(0, 315 + 5, 40, 2)];
     [scrollBlock setCenter:CGPointMake(fatGuyScrollView.center.x, scrollBlock.center.y)];
-    [scrollBlock setBackgroundColor:themeBlueColor];
+    [scrollBlock setBackgroundColor:[UIColor whiteColor]];
     [[scrollBlock layer] setCornerRadius:2];
     [fatGuyScrollView addSubview:scrollBlock];
+    
+    [fatGuyScrollView setContentOffset:CGPointMake(0, fatGuyScrollView.height)];
 }
 
 #pragma mark - Class Extention Delegate
@@ -236,36 +242,16 @@
     [self.navigationController pushViewController:new animated:YES];
 }
 
-- (float)getExpFromLevel:(NSString *)level
-{
-    int l = [level intValue];
-    switch (l) {
-        case 1:
-            return 200;
-            break;
-        case 2:
-            return 1000;
-            break;
-        case 3:
-            return 4000;
-            break;
-        case 4:
-            return 12000;
-            break;
-        default:
-            return 0;
-            break;
-    }
-}
-
 #pragma mark - Scroll View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    float verticalY = 315 - scrollView.contentOffset.y;
+    float verticalY = scrollView.height - scrollView.contentOffset.y;
     if (verticalY < 20) {
-        scrollBlock.frame = CGRectMake(scrollBlock.frame.origin.x, 315 + 5 - verticalY, scrollBlock.frame.size.width, scrollBlock.frame.size.height);
+        scrollBlock.frame = CGRectMake(scrollBlock.frame.origin.x, scrollView.height + 5 - verticalY, scrollBlock.frame.size.width, scrollBlock.frame.size.height);
+        scrollBlock.backgroundColor = [UIColor whiteColor];
     } else {
-        scrollBlock.frame = CGRectMake(scrollBlock.frame.origin.x, 315 + 5 - 20, scrollBlock.frame.size.width, scrollBlock.frame.size.height);
+        scrollBlock.frame = CGRectMake(scrollBlock.frame.origin.x, scrollView.height + 5 - 20, scrollBlock.frame.size.width, scrollBlock.frame.size.height);
+        scrollBlock.backgroundColor = themeBlueColor;
     }
 }
 

@@ -43,6 +43,13 @@
     if (self) {
         // Initialization code
         _type = FilledIndicator;
+        
+        //阴影
+        self.layer.shadowColor = circleGreyColor.CGColor;
+        self.layer.shadowOffset = CGSizeMake(5, 5);
+        self.layer.shadowOpacity = 1;
+        self.layer.shadowRadius = 0;
+        
         [self initAttributes];
     }
     return self;
@@ -54,6 +61,13 @@
     if (self) {
         // Initialization code
         _type = type;
+        
+        //阴影
+        self.layer.shadowColor = circleGreyColor.CGColor;
+        self.layer.shadowOffset = CGSizeMake(5, 5);
+        self.layer.shadowOpacity = 1;
+        self.layer.shadowRadius = 0;
+        
         [self initAttributes];
     }
     return self;

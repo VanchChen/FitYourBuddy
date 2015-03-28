@@ -19,6 +19,11 @@
     WQCircleProgressBar     *closedIndicator;
     
     NSInteger               count;
+    NSInteger               targetNum;
+    NSInteger               maxExerciseNum;
+    UILabel                 *recordLabel;
+    
+    UIButton                *soundButton;
     
     NSArray                 *soundArray;
     NSUInteger              soundIndex;
@@ -31,63 +36,62 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = themeBlueColor;
+    self.view.backgroundColor = indexBackgroundColor;
     
     //获取3个值 单次最大记录，目标数，今天的总数
     NSError *error;
-    NSInteger maxExerciseNum = [ExerciseCoreDataHelper getBestNumByType:ExerciseTypePushUp withError:&error];
-    NSString *maxNumString = [NSString stringWithFormat:@"%ld", (long)maxExerciseNum];
-    NSInteger targetNum = [[AccountCoreDataHelper getDataByName:@"pushUpLevel" withError:&error] integerValue] - 1 + 10;
-    NSString *targetNumString = [NSString stringWithFormat:@"%ld", (long)targetNum];
+    maxExerciseNum = [ExerciseCoreDataHelper getBestNumByType:ExerciseTypePushUp withError:&error];
+    NSString *maxNumString = [NSString getFromInteger:maxExerciseNum];
+    targetNum = [[AccountCoreDataHelper getDataByName:@"pushUpLevel" withError:&error] integerValue] - 1 + 10;
+    NSString *targetNumString = [NSString getFromInteger:targetNum];
     
-    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 15, 100, 44)];
-    [titleLabel setText:@"俯卧撑"];
-    [titleLabel setTextColor:[UIColor whiteColor]];
-    [titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
+    //navigation bar
+    UIView *navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPCONFIG_UI_VIEW_FWIDTH, APPCONFIG_UI_STATUSBAR_HEIGHT + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT)];
+    navBarView.backgroundColor = pushUpColor;
+    [self.view addSubview:navBarView];
+    
+    UILabel* titleLabel = [CommonUtil createLabelWithText:@"俯卧撑" andTextColor:[UIColor whiteColor] andFont:[UIFont boldSystemFontOfSize:20] andTextAlignment:NSTextAlignmentCenter];
+    titleLabel.frame = CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - 100.f) / 2.f, APPCONFIG_UI_STATUSBAR_HEIGHT, 100, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
     [self.view addSubview:titleLabel];
     
-    UIView* ballon = [[UIView alloc] initWithFrame:CGRectMake(110, 15 + 10, 24, 24)];
-    [ballon setBackgroundColor:pushUpColor];
-    [[ballon layer] setCornerRadius:12];
-    [self.view addSubview:ballon];
+    //声音图标
+    soundButton = [[UIButton alloc] init];
+    soundButton.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_BETWEEN_PADDING - 30, 25, 30, 30);
+    [soundButton setImage:[UIImage imageNamed:@"SoundEnabledIcon"] forState:UIControlStateNormal];
+    [soundButton setImage:nil forState:UIControlStateHighlighted];
+    [soundButton setImage:[UIImage imageNamed:@"SoundDisenabledIcon"] forState:UIControlStateSelected];
+    [soundButton addTarget:self action:@selector(tappedSoundBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:soundButton];
     
-    UIView* line = [[UIView alloc] initWithFrame:CGRectMake(0, 63, self.view.bounds.size.width, 1)];
-    [line setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:line];
+    //今日目标
+    UIView *todayTargetView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, APPCONFIG_UI_VIEW_BETWEEN_PADDING + APPCONFIG_UI_STATUSBAR_HEIGHT + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT, 120, 30) andHasBorder:NO];
+    [self.view addSubview:todayTargetView];
     
-    UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 64 + 5, 80, 30)];
-    [textLabel setText:@"今日目标"];
-    [textLabel setTextColor:[UIColor whiteColor]];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:18]];
-    [self.view addSubview:textLabel];
+    UILabel* textLabel = [CommonUtil createLabelWithText:@"今日目标" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:16]];
+    textLabel.frame = CGRectMake(10, 0, 70, 30);
+    [todayTargetView addSubview:textLabel];
     
-    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 64 + 5, 50, 30)];
-    [textLabel setTextColor:themeRedColor];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:20]];
-    [textLabel setText:targetNumString];
-    [self.view addSubview:textLabel];
+    textLabel = [CommonUtil createLabelWithText:targetNumString andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:18] andTextAlignment:NSTextAlignmentCenter];
+    textLabel.frame = CGRectMake(80, 0, 40, 30);
+    [todayTargetView addSubview:textLabel];
     
-    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 120, self.view.bounds.size.height - 64 - 40, 80, 40)];
-    [textLabel setText:@"个人记录"];
-    [textLabel setTextColor:[UIColor whiteColor]];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:18]];
-    [self.view addSubview:textLabel];
+    //个人记录
+    UIView *maxRecordView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - 120 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, APPCONFIG_UI_SCREEN_FHEIGHT - APPCONFIG_UI_TABBAR_HEIGHT - APPCONFIG_UI_STATUSBAR_HEIGHT - 30 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, 120, 30) andHasBorder:NO];
+    [self.view addSubview:maxRecordView];
     
-    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 40, self.view.bounds.size.height - 64 - 40, 40, 40)];
-    [textLabel setTextColor:[UIColor whiteColor]];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:20]];
-    [textLabel setText:maxNumString];
-    [self.view addSubview:textLabel];
+    textLabel = [CommonUtil createLabelWithText:@"个人记录" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:16]];
+    textLabel.frame = CGRectMake(10, 0, 70, 30);
+    [maxRecordView addSubview:textLabel];
     
-    line = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 64, self.view.bounds.size.width, 1)];
-    [line setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:line];
+    recordLabel = [CommonUtil createLabelWithText:maxNumString andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:18] andTextAlignment:NSTextAlignmentCenter];
+    recordLabel.frame = CGRectMake(80, 0, 40, 30);
+    [maxRecordView addSubview:recordLabel];
     
     UIButton* saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 63, self.view.bounds.size.width, 63)];
-    [saveButton setBackgroundColor:saveButtonGreyColor];
+    [saveButton setBackgroundColor:pushUpColor];
     [saveButton addTarget:self action:@selector(tappedSaveBtn) forControlEvents:UIControlEventTouchUpInside];
     [saveButton setTitle:@"保存并退出" forState:UIControlStateNormal];
-    [saveButton setTitleColor:saveTextGreyColor forState:UIControlStateNormal];
+    [saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:saveButton];
     
     float progressOriginY, progressWidth;
@@ -101,13 +105,13 @@
     
     closedIndicator = [[WQCircleProgressBar alloc]initWithFrame:CGRectMake((self.view.bounds.size.width - progressWidth)/2, progressOriginY, progressWidth, progressWidth) type:ClosedIndicator];
     [closedIndicator setBackgroundColor:[UIColor clearColor]];
-    [closedIndicator setFillColor:themeRedColor];
-    [closedIndicator setStrokeColor:themeRedColor];
+    [closedIndicator setFillColor:pushUpColor];
+    [closedIndicator setStrokeColor:pushUpColor];
     [self.view addSubview:closedIndicator];
     [closedIndicator loadIndicator];
     
     progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-    [progressLabel setTextColor:[UIColor whiteColor]];
+    [progressLabel setTextColor:tipTitleLabelColor];
     [progressLabel setFont:[UIFont boldSystemFontOfSize:80]];
     [progressLabel setTextAlignment:NSTextAlignmentCenter];
     [progressLabel setText:@"0"];
@@ -116,12 +120,12 @@
     
     textLabel = [[UILabel alloc] initWithFrame:CGRectMake(progressLabel.frame.origin.x, progressLabel.frame.origin.y - 30, 100, 30)];
     [textLabel setText:@"已完成"];
-    [textLabel setTextColor:[UIColor whiteColor]];
+    [textLabel setTextColor:tipTitleLabelColor];
     [textLabel setFont:[UIFont boldSystemFontOfSize:20]];
     [textLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:textLabel];
     
-    soundArray = [[NSArray alloc] initWithObjects:@"c4",@"c4",@"g4",@"g4",@"a4",@"a4",@"g4",@"",@"f4",@"f4",@"e4",@"e4",@"d4",@"d4",@"c4",@"", nil];
+    soundArray = [[NSArray alloc] initWithObjects:@"c4",@"d4",@"e4",@"g4",@"a4",@"c5",@"a4",@"g4",@"e4",@"d4", nil];
     soundIndex = 0;
     
     //开启距离监测传感器
@@ -139,13 +143,20 @@
 {
     if (device.proximityState) {
         count++;
-        [closedIndicator updateWithTotalBytes:20 downloadedBytes:count];
+        [closedIndicator updateWithTotalBytes:targetNum downloadedBytes:count];
         [progressLabel setText:[NSString stringWithFormat:@"%ld", (long)count]];
         
+        if (count > maxExerciseNum) {
+            maxExerciseNum = count;
+            recordLabel.text = [NSString getFromInteger:maxExerciseNum];
+        }
+        
         //播放声音
-        [SoundTool playsound:[soundArray objectAtIndex:soundIndex]];
-        soundIndex ++;
-        if (soundIndex == [soundArray count]) soundIndex = 0;
+        if (!soundButton.selected) {
+            [SoundTool playsound:[soundArray objectAtIndex:soundIndex]];
+            soundIndex ++;
+            if (soundIndex == [soundArray count]) soundIndex = 0;
+        }
     }
 }
 
@@ -158,6 +169,10 @@
     completeVC.exerciseType = ExerciseTypePushUp;
     
     [self presentViewController:completeVC animated:NO completion:nil];
+}
+
+- (void)tappedSoundBtn:(UIButton *)button {
+    button.selected = !button.selected;
 }
 
 

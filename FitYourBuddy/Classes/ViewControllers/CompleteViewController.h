@@ -8,7 +8,7 @@
 
 @interface CompleteViewController : UIViewController
 
-@property(nonatomic, assign) ExerciseType                           exerciseType;//类别
-@property(nonatomic, assign) NSInteger                              exerciseNum;//数值
+@property(nonatomic, assign) ExerciseType     exerciseType;//类别
+@property(nonatomic, assign) NSInteger        exerciseNum;//数值
 
 @end

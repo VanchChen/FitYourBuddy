@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 xpz. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
 
 @interface SquatViewController : UIViewController

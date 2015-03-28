@@ -159,6 +159,16 @@
     self.frame = rect;
 }
 
+//获得视图宽
+- (CGFloat)width {
+    return CGRectGetWidth(self.frame);
+}
+
+//获得视图高
+- (CGFloat)height {
+    return CGRectGetHeight(self.frame);
+}
+
 #pragma mark -
 #pragma mark 其他
 //添加单机手势

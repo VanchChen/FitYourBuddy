@@ -44,6 +44,12 @@
 /**设置视图高*/
 - (void)setHeight:(CGFloat)height;
 
+/**获得视图宽*/
+- (CGFloat)width;
+
+/**获得视图高*/
+- (CGFloat)height;
+
 /**设置起点的y值*/
 - (void)setMinY:(CGFloat)top;
 
