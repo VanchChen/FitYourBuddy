@@ -214,4 +214,9 @@ static CGFloat const AccountButtonBottomPadding = 40.0f;
     return YES;
 }
 
+//强制竖屏
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 @end
