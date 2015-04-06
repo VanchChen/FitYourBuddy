@@ -7,10 +7,24 @@
 //
 
 #import "HistoryViewController.h"
+#import "HistoryExerciseView.h"
+
+static CGFloat const ScrollTitleViewHeight = 75.0f;             //整个条的高度
+static CGFloat const BallonHeight = 24.0f;                      //小球的高度
+static CGFloat const BallonHalfHeight = BallonHeight / 2.0f;    //小球一半高度，用来计算边角
+static CGFloat const BallonTopPadding = (ScrollTitleViewHeight - BallonHeight) / 2.0f;//小球的上边距
+static CGFloat const BallonTitlePadding = 5.0f;                 //球和标题的间距
+static CGFloat const TitleWidth = 80.0f;                        //标题框的宽度
+static CGFloat const FontFloat = 18.0f;                         //字体
+
+static CGFloat const TriangleWidht = 16.0f;                     //小三角
+static CGFloat const TriangleHeight = 12.0f;
+static CGFloat const TriangleLeftPadding = 40.0f;
+
 
 @interface HistoryViewController ()<UIScrollViewDelegate>
 {
-    float fadeRatio;
+    float fadeRatio;                //左边小球的移动系数
     float fontRatio;
     float longDistanceRatio;
     float shortDistanceRatio;
@@ -19,6 +33,8 @@
     
     UIView *melodyB, *melodyC, *melodyD, *melodyE, *melodyF, *melodyG, *melodyA;
     UILabel *sharpB, *sharpC, *sharpD, *sharpA;
+    
+    NSArray *viewArray;
 }
 
 @end
@@ -30,105 +46,108 @@
     
     self.title = @"统计";
     
-    //标题栏
-    fadeRatio = 55.f/320.f;
-    fontRatio = 20.f/320.f;
-    longDistanceRatio = 175.f / 320.f;
-    shortDistanceRatio = 45.f / 320.f;
+    //各种系数
+    fadeRatio = (BallonHeight + APPCONFIG_UI_VIEW_BETWEEN_PADDING * 2) / (APPCONFIG_UI_SCREEN_FWIDTH);
+    fontRatio = FontFloat / APPCONFIG_UI_SCREEN_FWIDTH;
+    longDistanceRatio = (APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 3 - APPCONFIG_UI_VIEW_BETWEEN_PADDING) / APPCONFIG_UI_SCREEN_FWIDTH;
+    shortDistanceRatio = (BallonHeight + APPCONFIG_UI_VIEW_BETWEEN_PADDING) / (APPCONFIG_UI_SCREEN_FWIDTH);
     page = 1;
     
-    UIView* scrollTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 75)];
+    UIView* scrollTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPCONFIG_UI_SCREEN_FWIDTH, ScrollTitleViewHeight)];
     [scrollTitleView setBackgroundColor:indexBackgroundColor];
     [self.view addSubview:scrollTitleView];
     
-    melodyB = [[UIView alloc] initWithFrame:CGRectMake(-45, 20, 35, 35)];
+    //小三角
+    UIImageView *triangleView = [[UIImageView alloc] initWithFrame:CGRectMake(TriangleLeftPadding, scrollTitleView.height - TriangleHeight, TriangleWidht, TriangleHeight)];
+    triangleView.image = [UIImage imageNamed:@"HistoryTriangleIcon"];
+    [scrollTitleView addSubview:triangleView];
+    
+    melodyB = [[UIView alloc] initWithFrame:CGRectMake(- APPCONFIG_UI_VIEW_BETWEEN_PADDING - BallonHeight, BallonTopPadding, BallonHeight, BallonHeight)];
     [melodyB setBackgroundColor:walkColor];
-    [[melodyB layer] setCornerRadius:17.5f];
+    [[melodyB layer] setCornerRadius:BallonHalfHeight];
     [scrollTitleView addSubview:melodyB];
     
-    sharpB = [[UILabel alloc] initWithFrame:CGRectMake(-5, 20, 100, 35)];
+    sharpB = [[UILabel alloc] initWithFrame:CGRectMake(BallonTitlePadding - APPCONFIG_UI_VIEW_BETWEEN_PADDING , BallonTopPadding, TitleWidth, BallonHeight)];
     [sharpB setText:@"步行"];
     [sharpB setTextColor:tipTitleLabelColor];
     [sharpB setFont:[UIFont boldSystemFontOfSize:0.f]];
     [sharpB setAlpha:0];
     [scrollTitleView addSubview:sharpB];
     
-    melodyC = [[UIView alloc] initWithFrame:CGRectMake(10, 20, 35, 35)];
+    melodyC = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, BallonTopPadding, BallonHeight, BallonHeight)];
     [melodyC setBackgroundColor:sitUpColor];
-    [[melodyC layer] setCornerRadius:17.5f];
+    [[melodyC layer] setCornerRadius:BallonHalfHeight];
     [scrollTitleView addSubview:melodyC];
     
-    sharpC = [[UILabel alloc] initWithFrame:CGRectMake(50, 20, 100, 35)];
+    sharpC = [[UILabel alloc] initWithFrame:CGRectMake(BallonHeight + APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonTitlePadding, BallonTopPadding, TitleWidth, BallonHeight)];
     [sharpC setText:@"仰卧起坐"];
     [sharpC setTextColor:tipTitleLabelColor];
-    [sharpC setFont:[UIFont boldSystemFontOfSize:20.f]];
+    [sharpC setFont:[UIFont boldSystemFontOfSize:FontFloat]];
     [sharpC setAlpha:1];
     [scrollTitleView addSubview:sharpC];
     
-    melodyD = [[UIView alloc] initWithFrame:CGRectMake(185, 20, 35, 35)];
+    melodyD = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 3, BallonTopPadding, BallonHeight, BallonHeight)];
     [melodyD setBackgroundColor:pushUpColor];
-    [[melodyD layer] setCornerRadius:17.5f];
+    [[melodyD layer] setCornerRadius:BallonHalfHeight];
     [scrollTitleView addSubview:melodyD];
     
-    sharpD = [[UILabel alloc] initWithFrame:CGRectMake(225, 20, 100, 35)];
+    sharpD = [[UILabel alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 2 - BallonTitlePadding, BallonTopPadding, TitleWidth, BallonHeight)];
     [sharpD setText:@"俯卧撑"];
     [sharpD setTextColor:tipTitleLabelColor];
     [sharpD setFont:[UIFont boldSystemFontOfSize:0.f]];
     [sharpD setAlpha:0];
     [scrollTitleView addSubview:sharpD];
     
-    melodyE = [[UIView alloc] initWithFrame:CGRectMake(230, 20, 35, 35)];
+    melodyE = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 2, BallonTopPadding, BallonHeight, BallonHeight)];
     [melodyE setBackgroundColor:squatColor];
-    [[melodyE layer] setCornerRadius:17.5f];
+    [[melodyE layer] setCornerRadius:BallonHalfHeight];
     [scrollTitleView addSubview:melodyE];
     
-    melodyF = [[UIView alloc] initWithFrame:CGRectMake(275, 20, 35, 35)];
+    melodyF = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_BETWEEN_PADDING - BallonHeight, BallonTopPadding, BallonHeight, BallonHeight)];
     [melodyF setBackgroundColor:walkColor];
-    [[melodyF layer] setCornerRadius:17.5f];
+    [[melodyF layer] setCornerRadius:BallonHalfHeight];
     [scrollTitleView addSubview:melodyF];
     
-    melodyG = [[UIView alloc] initWithFrame:CGRectMake(330, 20, 35, 35)];
+    melodyG = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH + APPCONFIG_UI_VIEW_BETWEEN_PADDING, BallonTopPadding, BallonHeight, BallonHeight)];
     [melodyG setBackgroundColor:sitUpColor];
-    [[melodyG layer] setCornerRadius:17.5f];
+    [[melodyG layer] setCornerRadius:BallonHalfHeight];
     [scrollTitleView addSubview:melodyG];
     
     melodyA = nil;sharpA = nil;
     
     //统计滚动视图
-    UIScrollView* scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 75, self.view.frame.size.width, self.view.frame.size.height - 49 - 75 - 64)];
+    UIScrollView* scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, ScrollTitleViewHeight, APPCONFIG_UI_SCREEN_FWIDTH, APPCONFIG_UI_SCREEN_VHEIGHT - ScrollTitleViewHeight)];
     [scrollView setDelegate:self];
-    [scrollView setBackgroundColor:themeBlueColor];
     [scrollView setPagingEnabled:YES];
     scrollView.showsHorizontalScrollIndicator = NO;
-    [scrollView setContentSize:CGSizeMake(scrollView.frame.size.width * 5, scrollView.frame.size.height)];
-    [scrollView setContentOffset:CGPointMake(scrollView.frame.size.width, 0)];
+    [scrollView setContentSize:CGSizeMake(scrollView.width * 5, scrollView.height)];
+    [scrollView setContentOffset:CGPointMake(scrollView.width, 0)];
     [self.view addSubview:scrollView];
     
-    UIView* walkView = [self createInitViewWithFrame:CGRectMake(0, 0, scrollView.width, scrollView.height) andColor:walkColor];
+    HistoryExerciseView *walkView = [[HistoryExerciseView alloc] initWithFrame:CGRectMake(0, 0, scrollView.width, scrollView.height) andExerciseType:ExerciseTypeWalk];
     [scrollView addSubview:walkView];
     
-    UIView* sitUpView = [self createInitViewWithFrame:CGRectMake(scrollView.width, 0, scrollView.width, scrollView.height) andColor:sitUpColor];
+    HistoryExerciseView *sitUpView = [[HistoryExerciseView alloc] initWithFrame:CGRectMake(scrollView.width, 0, scrollView.width, scrollView.height) andExerciseType:ExerciseTypeSitUp];
     [scrollView addSubview:sitUpView];
     
-    UIView* pushUpView = [self createInitViewWithFrame:CGRectMake(scrollView.width * 2, 0, scrollView.width, scrollView.height) andColor:pushUpColor];
+    HistoryExerciseView *pushUpView = [[HistoryExerciseView alloc] initWithFrame:CGRectMake(scrollView.width * 2, 0, scrollView.width, scrollView.height) andExerciseType:ExerciseTypePushUp];
     [scrollView addSubview:pushUpView];
     
-    UIView* squatView = [self createInitViewWithFrame:CGRectMake(scrollView.width * 3, 0, scrollView.width, scrollView.height) andColor:squatColor];
+    HistoryExerciseView *squatView = [[HistoryExerciseView alloc] initWithFrame:CGRectMake(scrollView.width * 3, 0, scrollView.width, scrollView.height) andExerciseType:ExerciseTypeSquat];
     [scrollView addSubview:squatView];
     
-    UIView* walkView2 = [self createInitViewWithFrame:CGRectMake(scrollView.width * 4, 0, scrollView.width, scrollView.height) andColor:walkColor];
+    HistoryExerciseView *walkView2 = [[HistoryExerciseView alloc] initWithFrame:CGRectMake(scrollView.width * 4, 0, scrollView.width, scrollView.height) andExerciseType:ExerciseTypeWalk];
     [scrollView addSubview:walkView2];
+    
+    //所有view添加到array
+    viewArray = @[walkView, sitUpView, pushUpView, squatView, walkView2];
 }
 
-#pragma mark - Class Extention
-- (UIView *)createInitViewWithFrame:(CGRect)frame andColor:(UIColor *)color
-{
-    UIView *view = [[UIView alloc] initWithFrame:frame];
-    view.backgroundColor = [UIColor whiteColor];
-    
-    
-    
-    return view;
+- (void)viewWillAppear:(BOOL)animated {
+    //每次进入都要重载一下数据
+    for (HistoryExerciseView *view in viewArray) {
+        [view reloadData];
+    }
 }
 
 #pragma mark - Scroll View Delegate
@@ -137,45 +156,46 @@
     float x = scrollView.contentOffset.x;
     if (x < 0) {
         [self changeScrollViewWithPage:4];
-        [scrollView setContentOffset:CGPointMake(scrollView.frame.size.width * 4 + x, 0)];
+        [scrollView setContentOffset:CGPointMake(scrollView.width * 4 + x, 0)];
     } else if (x > scrollView.frame.size.width * 4) {
         [self changeScrollViewWithPage:0];
-        [scrollView setContentOffset:CGPointMake(x - scrollView.frame.size.width * 4, 0)];
+        [scrollView setContentOffset:CGPointMake(x - scrollView.width * 4, 0)];
     } else {
         //移动标题栏
-        float lx = page * 320 - x;
-        if (lx > 320 || lx < -320) {
-            NSInteger newPage = round(x / 320);
+        float lx = page * APPCONFIG_UI_SCREEN_FWIDTH - x;
+        if (lx > APPCONFIG_UI_SCREEN_FWIDTH || lx < - APPCONFIG_UI_SCREEN_FWIDTH) {
+            NSInteger newPage = round(x / APPCONFIG_UI_SCREEN_FWIDTH);
             [self changeScrollViewWithPage:newPage];
         } else {
+            //My Lord，写完根本看不懂了。。
             if (lx < 0) {
-                melodyC.frame = CGRectMake(10 + lx * fadeRatio, 20, 35, 35);
-                melodyD.frame = CGRectMake(185 + lx * longDistanceRatio, 20, 35, 35);
-                melodyE.frame = CGRectMake(230 + lx * shortDistanceRatio, 20, 35, 35);
-                melodyF.frame = CGRectMake(275 + lx * shortDistanceRatio, 20, 35, 35);
-                melodyG.frame = CGRectMake(330 + lx * fadeRatio, 20, 35, 35);
+                melodyC.frame = CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING + lx * fadeRatio, BallonTopPadding, BallonHeight, BallonHeight);
+                melodyD.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 3 + lx * longDistanceRatio, BallonTopPadding, BallonHeight, BallonHeight);
+                melodyE.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 2 + lx * shortDistanceRatio, BallonTopPadding, BallonHeight, BallonHeight);
+                melodyF.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_BETWEEN_PADDING - BallonHeight + lx * shortDistanceRatio, BallonTopPadding, BallonHeight, BallonHeight);
+                melodyG.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH + APPCONFIG_UI_VIEW_BETWEEN_PADDING + lx * fadeRatio, BallonTopPadding, BallonHeight, BallonHeight);
                 
                 
-                sharpC.frame = CGRectMake(50 + lx * fadeRatio, 20, 100, 35);
-                sharpC.font = [UIFont boldSystemFontOfSize:(20 + lx * fontRatio)];
-                sharpC.alpha = 1 + lx / 320.f;
-                sharpD.frame = CGRectMake(225 + lx * longDistanceRatio, 20, 100, 35);
+                sharpC.frame = CGRectMake(BallonHeight + APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonTitlePadding + lx * fadeRatio, BallonTopPadding, TitleWidth, BallonHeight);
+                sharpC.font = [UIFont boldSystemFontOfSize:(FontFloat + lx * fontRatio)];
+                sharpC.alpha = 1 + lx / APPCONFIG_UI_SCREEN_FWIDTH;
+                sharpD.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 2 - BallonTitlePadding + lx * longDistanceRatio, BallonTopPadding, TitleWidth, BallonHeight);
                 sharpD.font = [UIFont boldSystemFontOfSize:(0 - lx * fontRatio)];
-                sharpD.alpha = - lx / 320.f;
+                sharpD.alpha = - lx / APPCONFIG_UI_SCREEN_FWIDTH;
             } else {
-                melodyB.frame = CGRectMake(-45 + lx * fadeRatio, 20, 35, 35);
-                melodyC.frame = CGRectMake(10 + lx * longDistanceRatio, 20, 35, 35);
-                melodyD.frame = CGRectMake(185 + lx * shortDistanceRatio, 20, 35, 35);
-                melodyE.frame = CGRectMake(230 + lx * shortDistanceRatio, 20, 35, 35);
-                melodyF.frame = CGRectMake(275 + lx * fadeRatio, 20, 35, 35);
+                melodyB.frame = CGRectMake(- APPCONFIG_UI_VIEW_BETWEEN_PADDING - BallonHeight + lx * fadeRatio, BallonTopPadding, BallonHeight, BallonHeight);
+                melodyC.frame = CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING + lx * longDistanceRatio, BallonTopPadding, BallonHeight, BallonHeight);
+                melodyD.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 3 + lx * shortDistanceRatio, BallonTopPadding, BallonHeight, BallonHeight);
+                melodyE.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 2 + lx * shortDistanceRatio, BallonTopPadding, BallonHeight, BallonHeight);
+                melodyF.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_BETWEEN_PADDING - BallonHeight + lx * fadeRatio, BallonTopPadding, BallonHeight, BallonHeight);
                 
                 
-                sharpC.frame = CGRectMake(50 + lx * longDistanceRatio, 20, 100, 35);
-                sharpC.font = [UIFont boldSystemFontOfSize:(20 - lx * fontRatio)];
-                sharpC.alpha = 1 - lx / 320.f;
-                sharpB.frame = CGRectMake(-5 + lx * fadeRatio, 20, 100, 35);
+                sharpC.frame = CGRectMake(BallonHeight + APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonTitlePadding + lx * longDistanceRatio, BallonTopPadding, TitleWidth, BallonHeight);
+                sharpC.font = [UIFont boldSystemFontOfSize:(FontFloat - lx * fontRatio)];
+                sharpC.alpha = 1 - lx / APPCONFIG_UI_SCREEN_FWIDTH;
+                sharpB.frame = CGRectMake(BallonTitlePadding - APPCONFIG_UI_VIEW_BETWEEN_PADDING + lx * fadeRatio, BallonTopPadding, TitleWidth, BallonHeight);
                 sharpB.font = [UIFont boldSystemFontOfSize:(lx * fontRatio)];
-                sharpB.alpha = lx / 320.f;
+                sharpB.alpha = lx / APPCONFIG_UI_SCREEN_FWIDTH;
             }
         }
     }
@@ -183,7 +203,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSInteger newPage = scrollView.contentOffset.x / 320;
+    NSInteger newPage = scrollView.contentOffset.x / APPCONFIG_UI_SCREEN_FWIDTH;
     [self changeScrollViewWithPage:newPage];
 }
 
@@ -251,7 +271,7 @@
 
 - (void)scrollViewMoveLeft
 {
-    melodyB.frame = CGRectMake(330, 20, 35, 35);
+    melodyB.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH + APPCONFIG_UI_VIEW_BETWEEN_PADDING, BallonTopPadding, BallonHeight, BallonHeight);
     melodyA = melodyB;
     melodyB = melodyC;
     melodyC = melodyD;
@@ -263,7 +283,7 @@
     melodyB.backgroundColor = melodyF.backgroundColor;
     melodyA = nil;
     
-    sharpB.frame = CGRectMake(225, 20, 100, 35);
+    sharpB.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 2 - BallonTitlePadding, BallonTopPadding, TitleWidth, BallonHeight);
     sharpA = sharpB;
     sharpB = sharpC;
     sharpC = sharpD;
@@ -273,7 +293,7 @@
 
 - (void)scrollViewMoveRight
 {
-    melodyG.frame = CGRectMake(-45, 20, 35, 35);
+    melodyG.frame = CGRectMake(- APPCONFIG_UI_VIEW_BETWEEN_PADDING - BallonHeight, BallonTopPadding, BallonHeight, BallonHeight);
     melodyA = melodyG;
     melodyG = melodyF;
     melodyF = melodyE;
@@ -285,7 +305,7 @@
     melodyB.backgroundColor = melodyF.backgroundColor;
     melodyA = nil;
     
-    sharpD.frame = CGRectMake(-5, 20, 100, 35);
+    sharpD.frame = CGRectMake(BallonTitlePadding - APPCONFIG_UI_VIEW_BETWEEN_PADDING, BallonTopPadding, TitleWidth, BallonHeight);
     sharpA = sharpD;
     sharpD = sharpC;
     sharpC = sharpB;

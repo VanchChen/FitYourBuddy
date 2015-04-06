@@ -8,6 +8,7 @@
 
 @interface NSString (Base)
 
+#pragma mark - 字符串处理
 /** 给字符串加下划线 */
 - (NSAttributedString *)bottomLineString;
 
@@ -22,5 +23,15 @@
 
 /** 从数字转到字符串 */
 + (NSString *)getFromInteger:(NSInteger)num;
+
+#pragma mark - 处理时间
+/** 返回标准格式的今天日期 */
++ (NSString *)today;
+
+/** 从标准的日期字符串去除年月时分秒 只要天 */
+- (NSString *)formatDay;
+
+/** 从标准的日期字符串去除时分秒 yyyy-MM-dd */
+- (NSString *)formatDate;
 
 @end

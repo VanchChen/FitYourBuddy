@@ -18,16 +18,25 @@ typedef NS_ENUM(NSInteger, ExerciseType) {
 
 @interface ExerciseCoreDataHelper : NSObject
 
-//根据类型得到当天锻炼总次数
+/**根据类型得到当天锻炼总次数*/
++ (NSInteger)getHistoryDayByType:(ExerciseType)type withError:(NSError **)error;
+
+/**根据类型得到当天锻炼总次数*/
 + (NSInteger)getTodayNumByType:(ExerciseType)type withError:(NSError **)error;
 
-//根据类型得到锻炼总次数
+/**根据类型得到某一天的锻炼次数*/
 + (NSInteger)getNumByType:(ExerciseType)type andDate:(NSString *)date withError:(NSError **)error;
 
-//根据类型得到最好成绩
+/**根据类型得到最好成绩*/
 + (NSInteger)getBestNumByType:(ExerciseType)type withError:(NSError **)error;
 
-//根据类型存数据
+/**根据类型得到总记录*/
++ (NSInteger)getTotalNumByType:(ExerciseType)type withError:(NSError **)error;
+
+/**根据类型得到一周的数据*/
++ (NSDictionary *)getOneWeekNumByType:(ExerciseType)type withError:(NSError **)error;
+
+/**根据类型存数据*/
 + (BOOL)addExerciseByType:(ExerciseType)type andNum:(NSInteger)num withError:(NSError **)error;
 
 @end

@@ -38,11 +38,14 @@
 		D676E4371AA21A4A003BF293 /* EBStepManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D676E4321AA21A4A003BF293 /* EBStepManager.m */; };
 		D676E43A1AA21CA5003BF293 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D676E4391AA21CA5003BF293 /* CoreMotion.framework */; };
 		D676E43C1AA21CB3003BF293 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D676E43B1AA21CB3003BF293 /* CoreGraphics.framework */; };
+		D67CE88A1ACC42C7005E8BB9 /* HistoryExerciseView.m in Sources */ = {isa = PBXBuildFile; fileRef = D67CE8891ACC42C7005E8BB9 /* HistoryExerciseView.m */; };
 		D6A69ECF1A9C58CD0061603F /* PushUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A69ECE1A9C58CD0061603F /* PushUpViewController.m */; };
 		D6A8CB531ABD7FEB003F7650 /* UIView+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A8CB521ABD7FEB003F7650 /* UIView+Base.m */; };
 		D6AFCAEE1AC5A62400400358 /* UIImage+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AFCAED1AC5A62400400358 /* UIImage+Base.m */; };
 		D6AFCAF21AC5AA8A00400358 /* CommonUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AFCAF11AC5AA8A00400358 /* CommonUtil.m */; };
 		D6B5D59C1AB51D4700B6BA01 /* CompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B5D59B1AB51D4700B6BA01 /* CompleteViewController.m */; };
+		D6B6B7B71ACFFFDC00264C5D /* Exercise.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B6B7B61ACFFFDC00264C5D /* Exercise.m */; };
+		D6B6B7BA1ACFFFDD00264C5D /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B6B7B91ACFFFDD00264C5D /* Account.m */; };
 		D6BBD0821AC310B300B56935 /* NSString+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BBD0811AC310B300B56935 /* NSString+Base.m */; };
 		D6C5FAE81A9DCC3B00BABA36 /* SitUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAE71A9DCC3B00BABA36 /* SitUpViewController.m */; };
 		D6C5FAEB1A9DCC4E00BABA36 /* SquatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAEA1A9DCC4E00BABA36 /* SquatViewController.m */; };
@@ -53,6 +56,8 @@
 		D6F53B8A1AC6660500289E6C /* c5.wav in Resources */ = {isa = PBXBuildFile; fileRef = D6F53B861AC6660500289E6C /* c5.wav */; };
 		D6F53B8D1AC6663B00289E6C /* coin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6F53B8B1AC6663B00289E6C /* coin.mp3 */; };
 		D6F53B8E1AC6663B00289E6C /* exercise.wav in Resources */ = {isa = PBXBuildFile; fileRef = D6F53B8C1AC6663B00289E6C /* exercise.wav */; };
+		D6F8D9721ACE5A2B001B8772 /* NSDate+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D6F8D9711ACE5A2B001B8772 /* NSDate+Base.m */; };
+		D6FFCDDA1AD0EB9100EB8305 /* StoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FFCDD91AD0EB9100EB8305 /* StoreViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +125,8 @@
 		D676E4331AA21A4A003BF293 /* ManagerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagerCommon.h; sourceTree = "<group>"; };
 		D676E4391AA21CA5003BF293 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		D676E43B1AA21CB3003BF293 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D67CE8881ACC42C7005E8BB9 /* HistoryExerciseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryExerciseView.h; path = Classes/Views/HistoryExerciseView.h; sourceTree = "<group>"; };
+		D67CE8891ACC42C7005E8BB9 /* HistoryExerciseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryExerciseView.m; path = Classes/Views/HistoryExerciseView.m; sourceTree = "<group>"; };
 		D6A69ECD1A9C58CD0061603F /* PushUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushUpViewController.h; path = Classes/ViewControllers/PushUpViewController.h; sourceTree = "<group>"; };
 		D6A69ECE1A9C58CD0061603F /* PushUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushUpViewController.m; path = Classes/ViewControllers/PushUpViewController.m; sourceTree = "<group>"; };
 		D6A8CB4F1ABD6D83003F7650 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -132,6 +139,10 @@
 		D6AFCAF11AC5AA8A00400358 /* CommonUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonUtil.m; path = Classes/Util/CommonUtil.m; sourceTree = "<group>"; };
 		D6B5D59A1AB51D4700B6BA01 /* CompleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompleteViewController.h; path = Classes/ViewControllers/CompleteViewController.h; sourceTree = "<group>"; };
 		D6B5D59B1AB51D4700B6BA01 /* CompleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CompleteViewController.m; path = Classes/ViewControllers/CompleteViewController.m; sourceTree = "<group>"; };
+		D6B6B7B51ACFFFDC00264C5D /* Exercise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exercise.h; path = Classes/Entities/Exercise.h; sourceTree = "<group>"; };
+		D6B6B7B61ACFFFDC00264C5D /* Exercise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Exercise.m; path = Classes/Entities/Exercise.m; sourceTree = "<group>"; };
+		D6B6B7B81ACFFFDD00264C5D /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Account.h; path = Classes/Entities/Account.h; sourceTree = "<group>"; };
+		D6B6B7B91ACFFFDD00264C5D /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Account.m; path = Classes/Entities/Account.m; sourceTree = "<group>"; };
 		D6BBD0801AC310B300B56935 /* NSString+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base.h"; sourceTree = "<group>"; };
 		D6BBD0811AC310B300B56935 /* NSString+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base.m"; sourceTree = "<group>"; };
 		D6C5FAE61A9DCC3B00BABA36 /* SitUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SitUpViewController.h; path = Classes/ViewControllers/SitUpViewController.h; sourceTree = "<group>"; };
@@ -148,6 +159,10 @@
 		D6F53B861AC6660500289E6C /* c5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = c5.wav; path = Classes/Sounds/c5.wav; sourceTree = "<group>"; };
 		D6F53B8B1AC6663B00289E6C /* coin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = coin.mp3; path = Classes/Sounds/coin.mp3; sourceTree = "<group>"; };
 		D6F53B8C1AC6663B00289E6C /* exercise.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = exercise.wav; path = Classes/Sounds/exercise.wav; sourceTree = "<group>"; };
+		D6F8D9701ACE5A2B001B8772 /* NSDate+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Base.h"; sourceTree = "<group>"; };
+		D6F8D9711ACE5A2B001B8772 /* NSDate+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Base.m"; sourceTree = "<group>"; };
+		D6FFCDD81AD0EB9100EB8305 /* StoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreViewController.h; path = Classes/ViewControllers/StoreViewController.h; sourceTree = "<group>"; };
+		D6FFCDD91AD0EB9100EB8305 /* StoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreViewController.m; path = Classes/ViewControllers/StoreViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +287,10 @@
 		D639C44E1A90DC9B00715BA9 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				D6B6B7B81ACFFFDD00264C5D /* Account.h */,
+				D6B6B7B91ACFFFDD00264C5D /* Account.m */,
+				D6B6B7B51ACFFFDC00264C5D /* Exercise.h */,
+				D6B6B7B61ACFFFDC00264C5D /* Exercise.m */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -291,6 +310,7 @@
 		D639C4501A90DCAB00715BA9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				D6FFCDD71AD0EB5400EB8305 /* Store */,
 				D65467B51AACAD6100FE38E3 /* WelcomeViewController */,
 				D6C5FAEF1A9DD0F800BABA36 /* TarBar */,
 				D6DC62D11A9B34A800E03ED6 /* Exercise */,
@@ -334,6 +354,8 @@
 			children = (
 				D63FCF3F1A962EA100582386 /* HistoryViewController.h */,
 				D63FCF401A962EA100582386 /* HistoryViewController.m */,
+				D67CE8881ACC42C7005E8BB9 /* HistoryExerciseView.h */,
+				D67CE8891ACC42C7005E8BB9 /* HistoryExerciseView.m */,
 			);
 			name = History;
 			sourceTree = "<group>";
@@ -428,12 +450,14 @@
 		D6A8CB4A1ABD6663003F7650 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				D6A8CB511ABD7FEB003F7650 /* UIView+Base.h */,
-				D6A8CB521ABD7FEB003F7650 /* UIView+Base.m */,
+				D6F8D9701ACE5A2B001B8772 /* NSDate+Base.h */,
+				D6F8D9711ACE5A2B001B8772 /* NSDate+Base.m */,
 				D6BBD0801AC310B300B56935 /* NSString+Base.h */,
 				D6BBD0811AC310B300B56935 /* NSString+Base.m */,
 				D6AFCAEC1AC5A62400400358 /* UIImage+Base.h */,
 				D6AFCAED1AC5A62400400358 /* UIImage+Base.m */,
+				D6A8CB511ABD7FEB003F7650 /* UIView+Base.h */,
+				D6A8CB521ABD7FEB003F7650 /* UIView+Base.m */,
 			);
 			name = Category;
 			path = Classes/Category;
@@ -484,6 +508,15 @@
 				D6B5D59B1AB51D4700B6BA01 /* CompleteViewController.m */,
 			);
 			name = Exercise;
+			sourceTree = "<group>";
+		};
+		D6FFCDD71AD0EB5400EB8305 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				D6FFCDD81AD0EB9100EB8305 /* StoreViewController.h */,
+				D6FFCDD91AD0EB9100EB8305 /* StoreViewController.m */,
+			);
+			name = Store;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -600,6 +633,7 @@
 				D6DC62D41A9B355700E03ED6 /* ExerciseViewController.m in Sources */,
 				D65467B81AACADF300FE38E3 /* WelcomeViewController.m in Sources */,
 				D639C42A1A90DA2800715BA9 /* AppDelegate.m in Sources */,
+				D6B6B7B71ACFFFDC00264C5D /* Exercise.m in Sources */,
 				D65467B11AACA86300FE38E3 /* AccountCoreDataHelper.m in Sources */,
 				D676E4361AA21A4A003BF293 /* EBMotionManager.m in Sources */,
 				D639C4271A90DA2800715BA9 /* main.m in Sources */,
@@ -612,17 +646,21 @@
 				D63FCF411A962EA100582386 /* HistoryViewController.m in Sources */,
 				D6BBD0821AC310B300B56935 /* NSString+Base.m in Sources */,
 				D639C42D1A90DA2800715BA9 /* FitYourBuddy.xcdatamodeld in Sources */,
+				D6B6B7BA1ACFFFDD00264C5D /* Account.m in Sources */,
 				D61A102B1A972F4100B2C64C /* NSDate+Calendar.m in Sources */,
 				D676E4241AA1AE98003BF293 /* SoundTool.m in Sources */,
 				D6B5D59C1AB51D4700B6BA01 /* CompleteViewController.m in Sources */,
 				D63FCF371A9628EE00582386 /* SettingsViewController.m in Sources */,
+				D67CE88A1ACC42C7005E8BB9 /* HistoryExerciseView.m in Sources */,
 				D6C5FAF21A9DD1A600BABA36 /* TarBarViewController.m in Sources */,
 				D6C5FAEB1A9DCC4E00BABA36 /* SquatViewController.m in Sources */,
 				D6AFCAEE1AC5A62400400358 /* UIImage+Base.m in Sources */,
 				D669BE6F1A9D9A7B00DE6FA6 /* WQCircleProgressBar.m in Sources */,
+				D6F8D9721ACE5A2B001B8772 /* NSDate+Base.m in Sources */,
 				D61A10251A972F3100B2C64C /* WQProgressBar.m in Sources */,
 				D6C5FAEE1A9DCC6500BABA36 /* WalkViewController.m in Sources */,
 				D6A69ECF1A9C58CD0061603F /* PushUpViewController.m in Sources */,
+				D6FFCDDA1AD0EB9100EB8305 /* StoreViewController.m in Sources */,
 				D639C4561A90DE8400715BA9 /* IndexViewController.m in Sources */,
 				D6A8CB531ABD7FEB003F7650 /* UIView+Base.m in Sources */,
 				D61A102E1A97302F00B2C64C /* WQCalendarTile.m in Sources */,

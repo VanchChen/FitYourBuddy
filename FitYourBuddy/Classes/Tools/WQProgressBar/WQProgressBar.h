@@ -7,4 +7,6 @@
 //
 @interface WQProgressBar : UIView
 
+- (void)loadLevelAndExp; //更新等级和经验
+
 @end

@@ -35,6 +35,11 @@
                                            @"1",@"pushUpLevel",
                                            @"1",@"squatLevel",
                                            @"1",@"walkLevel",
+                                           @"0",@"coin",
+                                           @"0",@"hair",
+                                           @"0",@"eye",
+                                           @"0",@"mouth",
+                                           @"0",@"clothes",
                                            nil];
         for (NSString *key in dictionary)
         {

@@ -12,6 +12,8 @@
 static CGFloat const dataViewHeight = 100.0f;                   //数据框的高度
 static CGFloat const dataViewTopPadding = 28.0f;                //数据框的上边距
 static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的大小
+static CGFloat const arrowLeftPadding = 110.0f;                 //箭头的左边距
+static CGFloat const arrowWidth = 20.0f;                        //箭头的宽度
 
 @interface CompleteViewController ()
 {
@@ -24,6 +26,10 @@ static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的�
 
 @property(nonatomic, strong) UILabel        *titleLabel;        //标题文字
 @property(nonatomic, strong) UILabel        *textLabel;         //今日完成数目
+@property(nonatomic, strong) UILabel        *historyDayLabel;   //坚持天数
+@property(nonatomic, strong) UILabel        *coinLabel;         //金币框
+@property(nonatomic, strong) WQProgressBar  *levelProgressBar;  //经验框
+
 @property(nonatomic, strong) UIButton       *completeButton;    //完成按钮
 
 @end
@@ -83,117 +89,24 @@ static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的�
         leftCalendarImage.contentMode = UIViewContentModeScaleAspectFill;
         [dayView addSubview:leftCalendarImage];
         
-        UILabel *leftHistoryDayLabel = [CommonUtil createLabelWithText:@"10天" andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:30] andTextAlignment:NSTextAlignmentCenter];
-        leftHistoryDayLabel.frame = CGRectMake(0, APPCONFIG_UI_VIEW_BETWEEN_PADDING + 5, leftCalendarImage.width, leftCalendarImage.height - APPCONFIG_UI_VIEW_BETWEEN_PADDING - 5);
-        [leftCalendarImage addSubview:leftHistoryDayLabel];
+        _historyDayLabel = [CommonUtil createLabelWithText:@"10天" andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:30] andTextAlignment:NSTextAlignmentCenter];
+        _historyDayLabel.frame = CGRectMake(0, APPCONFIG_UI_VIEW_BETWEEN_PADDING + 5, leftCalendarImage.width, leftCalendarImage.height - APPCONFIG_UI_VIEW_BETWEEN_PADDING - 5);
+        [leftCalendarImage addSubview:_historyDayLabel];
         
         UIImageView *coinImage = [[UIImageView alloc] init];
         coinImage.image = [UIImage imageNamed:@"CoinIcon"];
         coinImage.frame = CGRectMake(150, 28, 44, 44);
         [coinView addSubview:coinImage];
         
-        UILabel *coinLabel = [CommonUtil createLabelWithText:@"55" andTextColor:themeDarkOrangeColor andFont:[UIFont boldSystemFontOfSize:28]];
-        coinLabel.frame = CGRectMake(0, 0, 80, 50);
-        [coinLabel rightOfView:coinImage withMargin:10 sameVertical:YES];
-        [coinView addSubview:coinLabel];
+        _coinLabel = [CommonUtil createLabelWithText:@"55" andTextColor:themeDarkOrangeColor andFont:[UIFont boldSystemFontOfSize:28]];
+        _coinLabel.frame = CGRectMake(0, 0, 80, 50);
+        [_coinLabel rightOfView:coinImage withMargin:10 sameVertical:YES];
+        [coinView addSubview:_coinLabel];
         
-        WQProgressBar *levelProgressBar = [[WQProgressBar alloc] initWithFrame:CGRectMake(130, 25, 130, 50)];
-        [levelView addSubview:levelProgressBar];
+        _levelProgressBar = [[WQProgressBar alloc] initWithFrame:CGRectMake(130, 25, 130, 50)];
+        [levelView addSubview:_levelProgressBar];
     }
     return self;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    NSString *exerciseTypeString, *exerciseCompleteString;
-    NSInteger targetNum, exerciseLevel, todayNum, beforeNum;
-    float   maxNum, expRatio, beforeExp, afterExp, levelExp;
-    
-    //保存数据
-//    NSError *error;
-//    [ExerciseCoreDataHelper addExerciseByType:self.exerciseType andNum:self.exerciseNum withError:&error];
-//    
-//    todayNum = [ExerciseCoreDataHelper getTodayNumByType:self.exerciseType withError:&error];
-//    beforeNum = todayNum - self.exerciseNum;
-//    
-//    switch (self.exerciseType) {
-//        case ExerciseTypePushUp:
-//            [_ballon setBackgroundColor:pushUpColor];
-//            exerciseTypeString = [NSString stringWithFormat:@"今天共完成%ld个俯卧撑", (long)todayNum];
-//            
-//            exerciseLevel = [[AccountCoreDataHelper getDataByName:@"pushUpLevel" withError:&error] integerValue];
-//            targetNum = exerciseLevel - 1 + 10;
-//            maxNum = targetNum + (exerciseLevel - 1) * 0.5 + 5;
-//            expRatio = (exerciseLevel - 1) * 0.1 + 2;
-//            
-//            break;
-//        case ExerciseTypeSitUp:
-//            [_ballon setBackgroundColor:sitUpColor];
-//            exerciseTypeString = [NSString stringWithFormat:@"今天共完成%ld个仰卧起坐", (long)todayNum];
-//            
-//            exerciseLevel = [[AccountCoreDataHelper getDataByName:@"sitUpLevel" withError:&error] integerValue];
-//            targetNum = exerciseLevel - 1 + 20;
-//            maxNum = targetNum + (exerciseLevel - 1) * 0.5 + 10;
-//            expRatio = (exerciseLevel - 1) * 0.1 + 1;
-//            
-//            break;
-//        case ExerciseTypeSquat:
-//            [_ballon setBackgroundColor:squatColor];
-//            exerciseTypeString = [NSString stringWithFormat:@"今天共完成%ld个深蹲", (long)todayNum];
-//            
-//            exerciseLevel = [[AccountCoreDataHelper getDataByName:@"squatLevel" withError:&error] integerValue];
-//            targetNum = exerciseLevel - 1 + 20;
-//            maxNum = targetNum + (exerciseLevel - 1) * 0.5 + 10;
-//            expRatio = (exerciseLevel - 1) * 0.1 + 1;
-//            
-//            break;
-//        case ExerciseTypeWalk:
-//            [_ballon setBackgroundColor:walkColor];
-//            exerciseTypeString = [NSString stringWithFormat:@"今天共完成%ld个步行", (long)todayNum];
-//            
-//            exerciseLevel = [[AccountCoreDataHelper getDataByName:@"walkLevel" withError:&error] integerValue];
-//            targetNum = (exerciseLevel - 1) * 100 + 1000;
-//            maxNum = targetNum + (exerciseLevel - 1) * 50 + 500;
-//            expRatio = (exerciseLevel - 1) * 0.001 + 0.02;
-//            
-//            break;
-//        default:
-//            break;
-//    }
-    
-//    //判断是否完成
-//    if (todayNum > targetNum) {
-//        exerciseCompleteString = @"目标完成！";
-//    } else {
-//        exerciseCompleteString = @"再接再厉";
-//    }
-//    
-//    //计算经验
-//    beforeExp = [[AccountCoreDataHelper getDataByName:@"exp" withError:&error] floatValue];
-//    if (todayNum > maxNum) todayNum = (NSInteger)floorf(maxNum); //限制为最大值
-//    if (beforeNum > maxNum) beforeNum = (NSInteger)floorf(maxNum); //限制为最大值
-//    
-//    afterExp = beforeExp + (todayNum - beforeNum) * expRatio;
-//    levelExp = [CommonUtil getExpFromLevel:[AccountCoreDataHelper getDataByName:@"level" withError:&error]];
-//    
-//    if (afterExp >= levelExp) {
-//        //升级啦
-//    }
-//    
-//    //保存新经验
-//    [AccountCoreDataHelper setDataByName:@"exp" andData:[NSString stringWithFormat:@"%f", afterExp] withError:&error];
-//    
-//    //标题
-//    [_titleLabel setText:exerciseCompleteString];
-//    //今天共完成
-//    [_textLabel setText:exerciseTypeString];
-//    
-//    //等级进度条
-//    _historyLevel.text = @"Lv.1";
-    
-    //WQProgressBar* historyProgressBar = [[WQProgressBar alloc] initWithFrame:CGRectMake(50, self.view.bounds.size.height - 63 - 50 + 13, 220, 23) fromStartRat:beforeExp/levelExp  toEndRat:afterExp/levelExp];
-    //[self.view addSubview:historyProgressBar];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -216,9 +129,166 @@ static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的�
     [levelView bottomOfView:coinView withMargin:APPCONFIG_UI_VIEW_PADDING];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    //各种乱七八糟的计算
+    NSString *exerciseTypeString, *exerciseCompleteString, *exerciseDayString;
+    NSInteger maxNum ,targetNum, exerciseLevel, todayNum, beforeNum, beforeTotalNum, afterTotalNum, beforeCoinNum, afterCoinNum;
+    float expRatio, beforeExp, afterExp, levelExp;
+    BOOL needCover = NO;
+    NSError *error;
+    NSDictionary *dict = [AccountCoreDataHelper getAccountDictionaryWithError:&error];
+    beforeTotalNum = [dict[@"count"] integerValue];
+    afterTotalNum = beforeTotalNum;
+    beforeCoinNum = [dict[@"coin"] integerValue];
+    afterCoinNum = beforeCoinNum;
+    
+    if (self.exerciseNum > 0) {
+        //保存数据
+        [ExerciseCoreDataHelper addExerciseByType:self.exerciseType andNum:self.exerciseNum withError:&error];
+        NSString *date = dict[@"date"];
+        NSString *today = [[NSString today] substringToIndex:9];
+        if (date.length == 0) {
+            needCover = YES;
+        } else {
+            date = [date substringToIndex:9];
+            if (![date isEqualToString:today]) {
+                needCover = YES;
+            }
+        }
+        if (needCover) {
+            afterTotalNum ++;
+            afterCoinNum += afterTotalNum;
+            [AccountCoreDataHelper setDataByName:@"count" andData:[NSString getFromInteger:afterTotalNum] withError:&error];
+            [AccountCoreDataHelper setDataByName:@"coin" andData:[NSString getFromInteger:afterCoinNum] withError:&error];
+            [AccountCoreDataHelper setDataByName:@"date" andData:[NSString today] withError:&error];
+        }
+    }
+    
+    todayNum = [ExerciseCoreDataHelper getTodayNumByType:self.exerciseType withError:&error];
+    beforeNum = todayNum - self.exerciseNum;
+    
+    switch (self.exerciseType) {
+        case ExerciseTypePushUp:
+            exerciseTypeString = [NSString stringWithFormat:@"今天共完成%ld个俯卧撑", (long)todayNum];
+            
+            exerciseLevel = [dict[@"pushUpLevel"] integerValue];
+            targetNum = exerciseLevel - 1 + 10;
+            maxNum = targetNum + (exerciseLevel - 1) * 0.5 + 5;
+            expRatio = (exerciseLevel - 1) * 0.1 + 2;
+            
+            break;
+        case ExerciseTypeSitUp:
+            exerciseTypeString = [NSString stringWithFormat:@"今天共完成%ld个仰卧起坐", (long)todayNum];
+            
+            exerciseLevel = [dict[@"sitUpLevel"] integerValue];
+            targetNum = exerciseLevel - 1 + 20;
+            maxNum = targetNum + (exerciseLevel - 1) * 0.5 + 10;
+            expRatio = (exerciseLevel - 1) * 0.1 + 1;
+            
+            break;
+        case ExerciseTypeSquat:
+            exerciseTypeString = [NSString stringWithFormat:@"今天共完成%ld个深蹲", (long)todayNum];
+            
+            exerciseLevel = [dict[@"squatLevel"] integerValue];
+            targetNum = exerciseLevel - 1 + 20;
+            maxNum = targetNum + (exerciseLevel - 1) * 0.5 + 10;
+            expRatio = (exerciseLevel - 1) * 0.1 + 1;
+            
+            break;
+        case ExerciseTypeWalk:
+            exerciseTypeString = [NSString stringWithFormat:@"今天共完成%ld个步行", (long)todayNum];
+            
+            exerciseLevel = [dict[@"walkLevel"] integerValue];
+            targetNum = (exerciseLevel - 1) * 100 + 1000;
+            maxNum = targetNum + (exerciseLevel - 1) * 50 + 500;
+            expRatio = (exerciseLevel - 1) * 0.001 + 0.02;
+            
+            break;
+        default:
+            break;
+    }
+    
+    //判断是否完成
+    if (todayNum > targetNum ) {
+        exerciseCompleteString = @"目标完成！";
+        //升锻炼等级
+#warning 这里有问题，如果锻炼超过了一个目标，经验怎么算？？？？？ 目标应该每天只能一次
+        
+        switch (self.exerciseType) {
+            case ExerciseTypePushUp:
+                [AccountCoreDataHelper setDataByName:@"pushUpLevel" andData:[NSString getFromInteger:exerciseLevel + 1] withError:&error];
+                break;
+            case ExerciseTypeSitUp:
+                [AccountCoreDataHelper setDataByName:@"sitUpLevel" andData:[NSString getFromInteger:exerciseLevel + 1] withError:&error];
+                break;
+            case ExerciseTypeSquat:
+                [AccountCoreDataHelper setDataByName:@"squatLevel" andData:[NSString getFromInteger:exerciseLevel + 1] withError:&error];
+                break;
+            case ExerciseTypeWalk:
+                [AccountCoreDataHelper setDataByName:@"walkLevel" andData:[NSString getFromInteger:exerciseLevel + 1] withError:&error];
+                break;
+            default:
+                break;
+        }
+        
+    } else {
+        exerciseCompleteString = @"再接再厉";
+    }
+    
+    //取锻炼天数
+    exerciseDayString = [NSString stringWithFormat:@"%ld天", (long)afterTotalNum];
+    if (needCover) {
+        //放置箭头
+        [dayView addSubview:[self createArrowView]];
+        [coinView addSubview:[self createArrowView]];
+    }
+    
+    //赋标签框
+    _titleLabel.text = exerciseCompleteString;
+    _textLabel.text = exerciseTypeString;
+    _historyDayLabel.text = exerciseDayString;
+    _coinLabel.text = [NSString getFromInteger:afterCoinNum];
+
+    //计算经验
+    beforeExp = [dict[@"exp"] floatValue];
+    if (todayNum > maxNum) todayNum = maxNum; //限制为最大值
+    if (beforeNum > maxNum) beforeNum = maxNum; //限制为最大值
+
+    afterExp = beforeExp + (todayNum - beforeNum) * expRatio;
+    levelExp = [CommonUtil getExpFromLevel:dict[@"level"]];
+
+    if (afterExp > beforeExp) {
+        //放置箭头
+        [levelView addSubview:[self createArrowView]];
+    }
+
+    if (afterExp >= levelExp) {
+        //升级啦
+        NSInteger level = [dict[@"level"] integerValue] + 1;
+        [AccountCoreDataHelper setDataByName:@"level" andData:[NSString getFromInteger:level] withError:&error];
+        
+        afterExp = afterExp - levelExp;
+    }
+
+    //保存新经验
+    [AccountCoreDataHelper setDataByName:@"exp" andData:[NSString stringWithFormat:@"%f", afterExp] withError:&error];
+    //重载经验条
+    [_levelProgressBar loadLevelAndExp];
+}
+
+
 - (void)tappedCompleteButton {
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"CompleteTapNote" object:nil];
+}
+
+- (UIImageView *)createArrowView {
+    UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, arrowWidth, arrowWidth)];
+    arrowView.image = [UIImage imageNamed:@"ArrowIcon"];
+    arrowView.center = CGPointMake(arrowLeftPadding + arrowWidth / 2.0f, dataViewHeight / 2.0f);
+    return arrowView;
 }
 
 - (NSUInteger)supportedInterfaceOrientations {

@@ -11,6 +11,7 @@
 #import "WQCalendar.h"
 
 #import "ExerciseViewController.h"
+#import "StoreViewController.h"
 
 static CGFloat const LevelViewHeight = 80.0f;
 static CGFloat const TitleLabelWidth = 40.0f;
@@ -23,9 +24,11 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
 
 @interface IndexViewController ()<UIScrollViewDelegate, UIGestureRecognizerDelegate>
 {
-    UIView              *scrollBlock;
-    
     NSDictionary        *accountDict;
+    UIView              *scrollBlock;
+    UIView              *fatGuyFrameView; //胖子圆框
+    
+    WQProgressBar       *levelProgressBar;//经验框
 }
 
 @end
@@ -41,7 +44,7 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
     //统一返回键
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     [backItem setBackButtonBackgroundImage:[[UIImage imageNamed:@"NavBackIcon"] resizableImageWithCapInsets:UIEdgeInsetsMake(0,15,0,0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [backItem setTitle:@""];
+    backItem.title = @"";
     self.navigationItem.backBarButtonItem = backItem;
     
     //获取姓名和性别
@@ -78,27 +81,16 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
     cloudImage.image = [UIImage imageNamed:@"CloudIcon"];
     [fatGuyView addSubview:cloudImage];
     
-    //临时小胖砸图
-    UIImage *fatGuyImage = [UIImage imageNamed:@"LittleFatGuy"];
-    //CGFloat tmpHeight = fatGuyViewHeight * FatGuyHeightRatio * FatGuyHeightRatio;
-    //fatGuyImage = [fatGuyImage transformToSize:CGSizeMake(tmpHeight * FatGuyWidthToHeightRatio, tmpHeight)];
-    
-    UIImageView* littleFatGuy = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, fatGuyViewHeight * FatGuyHeightRatio, fatGuyViewHeight * FatGuyHeightRatio)];
-    [littleFatGuy setBackgroundColor:[UIColor whiteColor]];
-    [littleFatGuy setContentMode:UIViewContentModeCenter];//UIViewContentModeScaleAspectFit
-    //[littleFatGuy setContentMode:UIViewContentModeScaleAspectFit];
-    [littleFatGuy setImage:fatGuyImage];
-    [littleFatGuy setCenter:CGPointMake(fatGuyView.center.x, fatGuyView.center.y + APPCONFIG_UI_VIEW_BETWEEN_PADDING)];
-    littleFatGuy.layer.cornerRadius = fatGuyViewHeight * FatGuyHeightRatio / 2.0f;
-    littleFatGuy.layer.shadowColor = themeDeepBlueColor.CGColor;
-    littleFatGuy.layer.shadowOffset = CGSizeMake(5, 5);
-    littleFatGuy.layer.shadowOpacity = 1;
-    littleFatGuy.layer.shadowRadius = 0;
-    [fatGuyView addSubview:littleFatGuy];
-    
-    //UIImageView *fatGuyImageView = [[UIImageView alloc] initWithImage:fatGuyImage];
-    //fatGuyImageView.center = littleFatGuy.center;
-    //[littleFatGuy addSubview:fatGuyImageView];
+    //胖子框
+    fatGuyFrameView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, fatGuyViewHeight * FatGuyHeightRatio, fatGuyViewHeight * FatGuyHeightRatio)];
+    [fatGuyFrameView setBackgroundColor:[UIColor whiteColor]];
+    [fatGuyFrameView setCenter:CGPointMake(fatGuyView.center.x, fatGuyView.center.y + APPCONFIG_UI_VIEW_BETWEEN_PADDING)];
+    fatGuyFrameView.layer.cornerRadius = fatGuyViewHeight * FatGuyHeightRatio / 2.0f;
+    fatGuyFrameView.layer.shadowColor = themeDeepBlueColor.CGColor;
+    fatGuyFrameView.layer.shadowOffset = CGSizeMake(5, 5);
+    fatGuyFrameView.layer.shadowOpacity = 1;
+    fatGuyFrameView.layer.shadowRadius = 0;
+    [fatGuyView addSubview:fatGuyFrameView];
     
     //开始锻炼按钮
     UIButton* startTrainBtn = [[UIButton alloc] initWithFrame:CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - StartButtonWidth) / 2, APPCONFIG_UI_SCREEN_VHEIGHT - APPCONFIG_UI_VIEW_BETWEEN_PADDING  - TitleLabelWidth, StartButtonWidth, TitleLabelWidth)];
@@ -142,7 +134,7 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
     rightDayTipLabel.frame = CGRectMake(0, 0, rightDayView.width, DayLabelHeight);
     [rightDayView addSubview:rightDayTipLabel];
     
-    WQProgressBar *levelProgressBar = [[WQProgressBar alloc] initWithFrame:CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, 0, rightDayView.width - APPCONFIG_UI_VIEW_BETWEEN_PADDING * 2, rightDayView.height - rightDayTipLabel.height - APPCONFIG_UI_VIEW_BETWEEN_PADDING)];
+    levelProgressBar = [[WQProgressBar alloc] initWithFrame:CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, 0, rightDayView.width - APPCONFIG_UI_VIEW_BETWEEN_PADDING * 2, rightDayView.height - rightDayTipLabel.height - APPCONFIG_UI_VIEW_BETWEEN_PADDING)];
     [rightDayView addSubview:levelProgressBar];
     [levelProgressBar bottomOfView:rightDayTipLabel];
 
@@ -155,6 +147,11 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
     fatGuyScrollView.showsVerticalScrollIndicator = false;
     fatGuyScrollView.bounces = false;
     [self.view addSubview:fatGuyScrollView];
+    
+    //先来个超大的按钮
+    UIButton *storeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, fatGuyScrollView.height, fatGuyScrollView.width, fatGuyScrollView.height)];
+    [storeButton addTarget:self action:@selector(tappedStoreBtn) forControlEvents:UIControlEventTouchUpInside];
+    [fatGuyScrollView addSubview:storeButton];
     
     //日历页
     UIView* calendarBackground = [[UIView alloc] initWithFrame:fatGuyScrollView.bounds];
@@ -235,16 +232,62 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
     [fatGuyScrollView setContentOffset:CGPointMake(0, fatGuyScrollView.height)];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    //先删光
+    [fatGuyFrameView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    //获取等级和配件
+    NSError *error;
+    NSDictionary *_dict = [AccountCoreDataHelper getAccountDictionaryWithError:&error];
+    
+    //体型
+    NSString *bodyImageUrl = [NSString stringWithFormat:@"body_%@_%@",_dict[@"gender"], _dict[@"level"]];
+    UIImageView *bodyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:bodyImageUrl]];
+    [bodyImage setCenter:CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f)];
+    [fatGuyFrameView addSubview:bodyImage];
+    
+    //发型
+    NSString *hairImageUrl = [NSString stringWithFormat:@"hair_%@", _dict[@"hair"]];
+    UIImageView *_hairImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:hairImageUrl]];
+    _hairImage.center = CGPointMake(fatGuyFrameView.width / 2.0f + 3.0f, 38.0f);
+    [fatGuyFrameView addSubview:_hairImage];
+    
+    //眼睛
+    NSString *eyeImageUrl = [NSString stringWithFormat:@"eye_%@", _dict[@"eye"]];
+    UIImageView *_eyeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:eyeImageUrl]];
+    _eyeImage.center = CGPointMake(fatGuyFrameView.width / 2.0f - 1.0f, 54.0f);
+    [fatGuyFrameView addSubview:_eyeImage];
+    
+    //嘴巴
+    NSString *mouthImageUrl = [NSString stringWithFormat:@"mouth_%@", _dict[@"mouth"]];
+    UIImageView *_mouthImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:mouthImageUrl]];
+    _mouthImage.center = CGPointMake(fatGuyFrameView.width / 2.0f - 1.0f, 80.0f);
+    [fatGuyFrameView addSubview:_mouthImage];
+    
+    //衣服
+    NSString *clothesImageUrl = [NSString stringWithFormat:@"clothes_%@_%@", _dict[@"clothes"], _dict[@"level"]];
+    UIImageView *_clothesImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:clothesImageUrl]];
+    _clothesImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, 136.0f);
+    [fatGuyFrameView addSubview:_clothesImage];
+    
+    //经验
+    [levelProgressBar loadLevelAndExp];
+}
+
 #pragma mark - Class Extention Delegate
-- (void)tappedStartTrainBtn
-{
+- (void)tappedStartTrainBtn {
     ExerciseViewController* new = [[ExerciseViewController alloc] init];
     [self.navigationController pushViewController:new animated:YES];
 }
 
+- (void)tappedStoreBtn {
+    StoreViewController *view = [[StoreViewController alloc] init];
+    [self.navigationController pushViewController:view animated:YES];
+}
+
 #pragma mark - Scroll View Delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     float verticalY = scrollView.height - scrollView.contentOffset.y;
     if (verticalY < 20) {
         scrollBlock.frame = CGRectMake(scrollBlock.frame.origin.x, scrollView.height + 5 - verticalY, scrollBlock.frame.size.width, scrollBlock.frame.size.height);

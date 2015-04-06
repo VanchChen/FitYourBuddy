@@ -15,8 +15,10 @@
 
 //扩展
 #import "CommonUtil.h"
-#import "UIView+Base.h"
 #import "NSString+Base.h"
+#import "NSDate+Base.h"
+
+#import "UIView+Base.h"
 #import "UIImage+Base.h"
 
 /** 色值 RGBA **/
@@ -52,6 +54,7 @@
 #define startTrainTargetGreyColor [UIColor colorWithRed:218.f/255.f green:218.f/255.f blue:218.f/255.f alpha:1]
 #define circleGreyColor [UIColor colorWithRed:205.f/255.f green:205.f/255.f blue:205.f/255.f alpha:1]
 
+//字体颜色
 #define tipTitleLabelColor [UIColor colorWithRed:66.f/255.f green:66.f/255.f blue:66.f/255.f alpha:1]
 
 //UI控件常规像素
