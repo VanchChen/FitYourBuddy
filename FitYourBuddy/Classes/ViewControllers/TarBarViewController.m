@@ -34,22 +34,22 @@
         nav1.tabBarItem.title = @"小胖砸";
         nav1.tabBarItem.image = [UIImage imageNamed:@"tabIndexSelectedIcon"];
         nav1.tabBarItem.selectedImage = [UIImage imageNamed:@"tabIndexIcon"];
-        //nav1.tabBarItem.imageInsets = UIEdgeInsetsMake(2, 1, 0, 1);
+        nav1.tabBarItem.imageInsets = UIEdgeInsetsMake(2, 1, 0, 1);
         
         nav2.tabBarItem.title = @"统计";
         nav2.tabBarItem.image = [UIImage imageNamed:@"tabHistorySelectedIcon"];
         nav2.tabBarItem.selectedImage = [UIImage imageNamed:@"tabHistoryIcon"];
-        //nav2.tabBarItem.imageInsets = UIEdgeInsetsMake(2, 1, 0, 1);
+        nav2.tabBarItem.imageInsets = UIEdgeInsetsMake(2, 1, 0, 1);
         
         nav3.tabBarItem.title = @"萌胖圈";
         nav3.tabBarItem.image = [UIImage imageNamed:@"tabFriendsSelectedIcon"];
         nav3.tabBarItem.selectedImage = [UIImage imageNamed:@"tabFriendsIcon"];
-        //nav3.tabBarItem.imageInsets = UIEdgeInsetsMake(2, 1, 0, 1);
+        nav3.tabBarItem.imageInsets = UIEdgeInsetsMake(2, 1, 0, 1);
         
         nav4.tabBarItem.title = @"设置";
         nav4.tabBarItem.image = [UIImage imageNamed:@"tabSettingsSelectedIcon"];
         nav4.tabBarItem.selectedImage = [UIImage imageNamed:@"tabSettingsIcon"];
-        //nav4.tabBarItem.imageInsets = UIEdgeInsetsMake(2, 1, 0, 1);
+        nav4.tabBarItem.imageInsets = UIEdgeInsetsMake(2, 1, 0, 1);
         
         [self setViewControllers:@[nav1,nav2,nav3,nav4]];
     }

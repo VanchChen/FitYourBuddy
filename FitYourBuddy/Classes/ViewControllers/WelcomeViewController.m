@@ -50,8 +50,9 @@ static CGFloat const AccountButtonBottomPadding = 40.0f;
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, TitleLabelTopPadding, APPCONFIG_UI_SCREEN_FWIDTH, TitleLabelWidth)];
     [titleLabel setFont:[UIFont systemFontOfSize:30.f]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [titleLabel setTextColor:tipTitleLabelColor];
     [titleLabel setText:@"快来创造小胖砸！"];
-    [titleLabel setCenter:CGPointMake(self.view.center.x, titleLabel.center.y)];
+    [titleLabel setCenter:CGPointMake(self.view.center.x + 5.0f, titleLabel.center.y)];
     [self.view addSubview:titleLabel];
     
     //居中一个内容框
@@ -63,6 +64,7 @@ static CGFloat const AccountButtonBottomPadding = 40.0f;
     UILabel* genderLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, APPCONFIG_UI_SCREEN_FWIDTH, GenderLabelHeight)];
     [genderLabel setFont:[UIFont systemFontOfSize:25.f]];
     [genderLabel setTextAlignment:NSTextAlignmentCenter];
+    [genderLabel setTextColor:tipTitleLabelColor];
     [genderLabel setText:@"我是..."];
     [contentView addSubview:genderLabel];
     //男女按钮
@@ -104,6 +106,7 @@ static CGFloat const AccountButtonBottomPadding = 40.0f;
     //已有账号
     UIButton *accountButton = [[UIButton alloc] init];
     [accountButton setAttributedTitle:[@"已有账号，请直接登录>" bottomLineString] forState:UIControlStateNormal];
+    [accountButton setTitleColor:saveTextGreyColor forState:UIControlStateNormal];
     accountButton.frame = CGRectMake(0, APPCONFIG_UI_SCREEN_FHEIGHT - AccountButtonBottomPadding - AccountButtonHeight, AccountButtonWidth, AccountButtonHeight);
     [accountButton centerOfView:self.view];
     [self.view addSubview:accountButton];
@@ -136,8 +139,8 @@ static CGFloat const AccountButtonBottomPadding = 40.0f;
     
     popViewTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 60, CGRectGetWidth(popView.bounds) - 40, 40)];
     popViewTextField.backgroundColor = [UIColor whiteColor];
-    popViewTextField.tintColor = [UIColor blackColor];
-    popViewTextField.textColor = [UIColor blackColor];
+    popViewTextField.tintColor = tipTitleLabelColor;
+    popViewTextField.textColor = tipTitleLabelColor;
     popViewTextField.font = [UIFont boldSystemFontOfSize:20];
     popViewTextField.keyboardType = UIKeyboardTypeNamePhonePad;
     popViewTextField.returnKeyType = UIReturnKeyDone;
@@ -168,7 +171,7 @@ static CGFloat const AccountButtonBottomPadding = 40.0f;
 {
     NSString *name = popViewTextField.text;
     name = [name trim];
-    if (!name && name.length == 0) {//没输入名字
+    if (!name || name.length == 0) {//没输入名字
         return;
     }
     if (name.length > 10) {//名字太长

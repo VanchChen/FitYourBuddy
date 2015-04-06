@@ -106,8 +106,8 @@
     
     closedIndicator = [[WQCircleProgressBar alloc]initWithFrame:CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - 220)/2, 50, 220, 220) type:ClosedIndicator];
     [closedIndicator setBackgroundColor:[UIColor clearColor]];
-    [closedIndicator setFillColor:sitUpColor];
-    [closedIndicator setStrokeColor:sitUpColor];
+    [closedIndicator setFillColor:squatColor];
+    [closedIndicator setStrokeColor:squatColor];
     [self.view addSubview:closedIndicator];
     [closedIndicator loadIndicator];
     

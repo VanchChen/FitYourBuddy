@@ -265,6 +265,10 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
     _mouthImage.center = CGPointMake(fatGuyFrameView.width / 2.0f - 1.0f, 80.0f);
     [fatGuyFrameView addSubview:_mouthImage];
     
+    CGRect frame = _mouthImage.frame;
+    frame.origin.y = 75.0f;
+    _mouthImage.frame = frame;
+    
     //衣服
     NSString *clothesImageUrl = [NSString stringWithFormat:@"clothes_%@_%@", _dict[@"clothes"], _dict[@"level"]];
     UIImageView *_clothesImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:clothesImageUrl]];
