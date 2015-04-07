@@ -12,6 +12,7 @@
 #import "WelcomeViewController.h"
 
 #import "TarBarViewController.h"
+#import "TimerManager.h"
 
 @interface AppDelegate ()
 
@@ -35,6 +36,9 @@
     [[UINavigationBar appearance] setBarTintColor:themePureBlueColor];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:20]}];
+    
+    //开始计时器
+    [[TimerManager sharedManager] startTickTock];
     
     //判断是否有本地数据
     NSError *error;

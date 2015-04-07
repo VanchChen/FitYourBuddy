@@ -174,7 +174,7 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
             exerciseTypeString = [NSString stringWithFormat:@"今天共完成%ld个俯卧撑", (long)todayNum];
             
             exerciseLevel = [dict[@"pushUpLevel"] integerValue];
-            targetNum = exerciseLevel - 1 + 10;
+            targetNum = [CommonUtil getTargetNumFromType:self.exerciseType andLevel:exerciseLevel];
             maxNum = targetNum + (exerciseLevel - 1) * 0.5 + 5;
             expRatio = (exerciseLevel - 1) * 0.1 + 2;
             
@@ -183,7 +183,7 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
             exerciseTypeString = [NSString stringWithFormat:@"今天共完成%ld个仰卧起坐", (long)todayNum];
             
             exerciseLevel = [dict[@"sitUpLevel"] integerValue];
-            targetNum = exerciseLevel - 1 + 20;
+            targetNum = [CommonUtil getTargetNumFromType:self.exerciseType andLevel:exerciseLevel];
             maxNum = targetNum + (exerciseLevel - 1) * 0.5 + 10;
             expRatio = (exerciseLevel - 1) * 0.1 + 1;
             
@@ -192,7 +192,7 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
             exerciseTypeString = [NSString stringWithFormat:@"今天共完成%ld个深蹲", (long)todayNum];
             
             exerciseLevel = [dict[@"squatLevel"] integerValue];
-            targetNum = exerciseLevel - 1 + 20;
+            targetNum = [CommonUtil getTargetNumFromType:self.exerciseType andLevel:exerciseLevel];
             maxNum = targetNum + (exerciseLevel - 1) * 0.5 + 10;
             expRatio = (exerciseLevel - 1) * 0.1 + 1;
             
@@ -201,7 +201,7 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
             exerciseTypeString = [NSString stringWithFormat:@"今天共完成%ld个步行", (long)todayNum];
             
             exerciseLevel = [dict[@"walkLevel"] integerValue];
-            targetNum = (exerciseLevel - 1) * 100 + 1000;
+            targetNum = [CommonUtil getTargetNumFromType:self.exerciseType andLevel:exerciseLevel];
             maxNum = targetNum + (exerciseLevel - 1) * 50 + 500;
             expRatio = (exerciseLevel - 1) * 0.001 + 0.02;
             
@@ -211,28 +211,8 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
     }
     
     //判断是否完成
-    if (todayNum > targetNum ) {
+    if (todayNum > targetNum) {
         exerciseCompleteString = @"目标完成！";
-        //升锻炼等级
-#warning 这里有问题，如果锻炼超过了一个目标，经验怎么算？？？？？ 目标应该每天只能一次
-        
-        switch (self.exerciseType) {
-            case ExerciseTypePushUp:
-                [AccountCoreDataHelper setDataByName:@"pushUpLevel" andData:[NSString getFromInteger:exerciseLevel + 1] withError:&error];
-                break;
-            case ExerciseTypeSitUp:
-                [AccountCoreDataHelper setDataByName:@"sitUpLevel" andData:[NSString getFromInteger:exerciseLevel + 1] withError:&error];
-                break;
-            case ExerciseTypeSquat:
-                [AccountCoreDataHelper setDataByName:@"squatLevel" andData:[NSString getFromInteger:exerciseLevel + 1] withError:&error];
-                break;
-            case ExerciseTypeWalk:
-                [AccountCoreDataHelper setDataByName:@"walkLevel" andData:[NSString getFromInteger:exerciseLevel + 1] withError:&error];
-                break;
-            default:
-                break;
-        }
-        
     } else {
         exerciseCompleteString = @"再接再厉";
     }

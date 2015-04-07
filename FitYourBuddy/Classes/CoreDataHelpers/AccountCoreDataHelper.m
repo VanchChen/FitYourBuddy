@@ -40,6 +40,7 @@
                                            @"0",@"eye",
                                            @"0",@"mouth",
                                            @"0",@"clothes",
+                                           @"",@"lastLaunchDate",
                                            nil];
         for (NSString *key in dictionary)
         {

@@ -287,6 +287,7 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
 
 - (void)tappedStoreBtn {
     StoreViewController *view = [[StoreViewController alloc] init];
+    [view setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:view animated:YES];
 }
 

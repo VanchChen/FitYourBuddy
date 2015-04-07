@@ -26,6 +26,16 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     UIImageView         *arrowImage;
     
     NSDictionary        *accountDict;
+    
+    UIView              *sitUpMission;
+    UIView              *pushUpMission;
+    UIView              *squatMission;
+    UIView              *walkMission;
+    
+    UILabel             *sitUpLabel;
+    UILabel             *pushUpLabel;
+    UILabel             *squatLabel;
+    UILabel             *walkLabel;
 }
 
 @end
@@ -46,73 +56,25 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     self.title = @"开始锻炼";
     self.view.backgroundColor = [UIColor whiteColor];
     
-    //读取训练等级
-    NSError *error;
-    accountDict = [AccountCoreDataHelper getAccountDictionaryWithError:&error];
-    //目标数目
-    NSInteger sitUpNum = ([accountDict[@"sitUpLevel"] integerValue] - 1) + 20;
-    NSInteger pushUpNum = ([accountDict[@"pushUpLevel"] integerValue] - 1) + 10;
-    NSInteger squatNum = ([accountDict[@"squatLevel"] integerValue] - 1) + 20;
-    NSInteger walkNum = ([accountDict[@"walkLevel"] integerValue] - 1) * 100 + 1000;
-    //已完成数目
-    NSInteger sitUpDoneNum = [ExerciseCoreDataHelper getTodayNumByType:ExerciseTypeSitUp withError:&error];
-    NSInteger pushUpDoneNum = [ExerciseCoreDataHelper getTodayNumByType:ExerciseTypePushUp withError:&error];
-    NSInteger squatDoneNum = [ExerciseCoreDataHelper getTodayNumByType:ExerciseTypeSquat withError:&error];
-    NSInteger walkDoneNum = [ExerciseCoreDataHelper getTodayNumByType:ExerciseTypeWalk withError:&error];
-    
     //先创建按钮
-    UIView* sitUpMission = [[UIView alloc] initWithFrame:CGRectMake(20, 80, self.view.frame.size.width - 40, 40)];
+    sitUpMission = [[UIView alloc] initWithFrame:CGRectMake(20, 80, self.view.frame.size.width - 40, 40)];
     [[sitUpMission layer] setCornerRadius:15];
     [self.view addSubview:sitUpMission];
     
-    UIView* pushUpMission = [[UIView alloc] initWithFrame:CGRectMake(20, 125, self.view.frame.size.width - 40, 40)];
+    pushUpMission = [[UIView alloc] initWithFrame:CGRectMake(20, 125, self.view.frame.size.width - 40, 40)];
     [pushUpMission setBackgroundColor:themeBlueColor];
     [[pushUpMission layer] setCornerRadius:15];
     [self.view addSubview:pushUpMission];
     
-    UIView* squatMission = [[UIView alloc] initWithFrame:CGRectMake(20, 170, self.view.frame.size.width - 40, 40)];
+    squatMission = [[UIView alloc] initWithFrame:CGRectMake(20, 170, self.view.frame.size.width - 40, 40)];
     [squatMission setBackgroundColor:themeBlueColor];
     [[squatMission layer] setCornerRadius:15];
     [self.view addSubview:squatMission];
     
-    UIView* walkMission = [[UIView alloc] initWithFrame:CGRectMake(20, 215, self.view.frame.size.width - 40, 40)];
+    walkMission = [[UIView alloc] initWithFrame:CGRectMake(20, 215, self.view.frame.size.width - 40, 40)];
     [walkMission setBackgroundColor:themeBlueColor];
     [[walkMission layer] setCornerRadius:15];
     [self.view addSubview:walkMission];
-    //计算内容
-    NSString *sitUpString, *pushUpString, *squatString, *walkString;
-    if (sitUpDoneNum >= sitUpNum) {
-        sitUpString = [NSString stringWithFormat:@"%ld/%ld", (long)sitUpNum, (long)sitUpNum];
-        [sitUpMission setBackgroundColor:themeBlueColor];
-    } else{
-        sitUpString = [NSString stringWithFormat:@"%ld/%ld", (long)sitUpDoneNum, (long)sitUpNum];
-        [sitUpMission setBackgroundColor:startTrainTargetGreyColor];
-    }
-    
-    if (pushUpDoneNum >= pushUpNum) {
-        pushUpString = [NSString stringWithFormat:@"%ld/%ld", (long)pushUpNum, (long)pushUpNum];
-        [pushUpMission setBackgroundColor:themeBlueColor];
-    } else{
-        pushUpString = [NSString stringWithFormat:@"%ld/%ld", (long)pushUpDoneNum, (long)pushUpNum];
-        [pushUpMission setBackgroundColor:startTrainTargetGreyColor];
-    }
-    
-    if (squatDoneNum >= squatNum) {
-        squatString = [NSString stringWithFormat:@"%ld/%ld", (long)squatNum, (long)squatNum];
-        [squatMission setBackgroundColor:themeBlueColor];
-    } else{
-        squatString = [NSString stringWithFormat:@"%ld/%ld", (long)squatDoneNum, (long)squatNum];
-        [squatMission setBackgroundColor:startTrainTargetGreyColor];
-    }
-    
-    if (walkDoneNum >= walkNum) {
-        walkString = [NSString stringWithFormat:@"%ld/%ld", (long)walkNum, (long)walkNum];
-        [walkMission setBackgroundColor:themeBlueColor];
-    } else{
-        walkString = [NSString stringWithFormat:@"%ld/%ld", (long)walkDoneNum, (long)walkNum];
-        [walkMission setBackgroundColor:startTrainTargetGreyColor];
-    }
-    
     
     //加载按钮
     UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 80, 30)];
@@ -133,12 +95,11 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     [textLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [sitUpMission addSubview:textLabel];
     
-    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(sitUpMission.frame.size.width - 100, 0, 80, 40)];
-    [textLabel setText:sitUpString];
-    [textLabel setTextColor:[UIColor whiteColor]];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    [textLabel setTextAlignment:NSTextAlignmentRight];
-    [sitUpMission addSubview:textLabel];
+    sitUpLabel = [[UILabel alloc] initWithFrame:CGRectMake(sitUpMission.frame.size.width - 100, 0, 80, 40)];
+    [sitUpLabel setTextColor:[UIColor whiteColor]];
+    [sitUpLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [sitUpLabel setTextAlignment:NSTextAlignmentRight];
+    [sitUpMission addSubview:sitUpLabel];
     
     textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 150, 40)];
     [textLabel setText:@"俯卧撑"];
@@ -146,12 +107,11 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     [textLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [pushUpMission addSubview:textLabel];
     
-    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(sitUpMission.frame.size.width - 100, 0, 80, 40)];
-    [textLabel setText:pushUpString];
-    [textLabel setTextColor:[UIColor whiteColor]];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    [textLabel setTextAlignment:NSTextAlignmentRight];
-    [pushUpMission addSubview:textLabel];
+    pushUpLabel = [[UILabel alloc] initWithFrame:CGRectMake(sitUpMission.frame.size.width - 100, 0, 80, 40)];
+    [pushUpLabel setTextColor:[UIColor whiteColor]];
+    [pushUpLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [pushUpLabel setTextAlignment:NSTextAlignmentRight];
+    [pushUpMission addSubview:pushUpLabel];
     
     textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 150, 40)];
     [textLabel setText:@"深蹲"];
@@ -159,12 +119,11 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     [textLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [squatMission addSubview:textLabel];
     
-    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(sitUpMission.frame.size.width - 100, 0, 80, 40)];
-    [textLabel setText:squatString];
-    [textLabel setTextColor:[UIColor whiteColor]];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    [textLabel setTextAlignment:NSTextAlignmentRight];
-    [squatMission addSubview:textLabel];
+    squatLabel = [[UILabel alloc] initWithFrame:CGRectMake(sitUpMission.frame.size.width - 100, 0, 80, 40)];
+    [squatLabel setTextColor:[UIColor whiteColor]];
+    [squatLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [squatLabel setTextAlignment:NSTextAlignmentRight];
+    [squatMission addSubview:squatLabel];
     
     textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 150, 40)];
     [textLabel setText:@"步行"];
@@ -172,15 +131,13 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     [textLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [walkMission addSubview:textLabel];
     
-    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(sitUpMission.frame.size.width - 100, 0, 80, 40)];
-    [textLabel setText:walkString];
-    [textLabel setTextColor:[UIColor whiteColor]];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    [textLabel setTextAlignment:NSTextAlignmentRight];
-    [walkMission addSubview:textLabel];
+    walkLabel = [[UILabel alloc] initWithFrame:CGRectMake(sitUpMission.frame.size.width - 100, 0, 80, 40)];
+    [walkLabel setTextColor:[UIColor whiteColor]];
+    [walkLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [walkLabel setTextAlignment:NSTextAlignmentRight];
+    [walkMission addSubview:walkLabel];
     
     //按钮页面
-    
     buttonView = [[UIView alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 64 - 49 - 80)];
     [buttonView setBackgroundColor:indexBackgroundColor];
     [buttonView setClipsToBounds:YES];
@@ -210,6 +167,52 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     [self createExerciseButtonWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, ExerciseViewButtonTopPadding + ExerciseViewSmallPadding * 3 + buttonHeight * 3, ExerciseViewButtonWidth, buttonHeight) andSelector:@selector(tappedWalkBtn) andBallonColor:walkColor andLabel:@"步行"];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    //读取训练等级
+    NSError *error;
+    accountDict = [AccountCoreDataHelper getAccountDictionaryWithError:&error];
+    //目标数目
+    NSInteger sitUpNum = [CommonUtil getTargetNumFromType:ExerciseTypeSitUp andLevel:[accountDict[@"sitUpLevel"] integerValue]];
+    NSInteger pushUpNum = [CommonUtil getTargetNumFromType:ExerciseTypePushUp andLevel:[accountDict[@"pushUpLevel"] integerValue]];
+    NSInteger squatNum = [CommonUtil getTargetNumFromType:ExerciseTypeSquat andLevel:[accountDict[@"squatLevel"] integerValue]];
+    NSInteger walkNum = [CommonUtil getTargetNumFromType:ExerciseTypeWalk andLevel:[accountDict[@"walkLevel"] integerValue]];
+    //已完成数目
+    NSInteger sitUpDoneNum = [ExerciseCoreDataHelper getTodayNumByType:ExerciseTypeSitUp withError:&error];
+    NSInteger pushUpDoneNum = [ExerciseCoreDataHelper getTodayNumByType:ExerciseTypePushUp withError:&error];
+    NSInteger squatDoneNum = [ExerciseCoreDataHelper getTodayNumByType:ExerciseTypeSquat withError:&error];
+    NSInteger walkDoneNum = [ExerciseCoreDataHelper getTodayNumByType:ExerciseTypeWalk withError:&error];
+    
+    
+    //计算内容
+    sitUpLabel.text = [NSString stringWithFormat:@"%ld/%ld", (long)sitUpDoneNum, (long)sitUpNum];
+    pushUpLabel.text = [NSString stringWithFormat:@"%ld/%ld", (long)pushUpDoneNum, (long)pushUpNum];
+    squatLabel.text = [NSString stringWithFormat:@"%ld/%ld", (long)squatDoneNum, (long)squatNum];
+    walkLabel.text = [NSString stringWithFormat:@"%ld/%ld", (long)walkDoneNum, (long)walkNum];
+    if (sitUpDoneNum >= sitUpNum) {
+        [sitUpMission setBackgroundColor:themeBlueColor];
+    } else{
+        [sitUpMission setBackgroundColor:startTrainTargetGreyColor];
+    }
+    
+    if (pushUpDoneNum >= pushUpNum) {
+        [pushUpMission setBackgroundColor:themeBlueColor];
+    } else{
+        [pushUpMission setBackgroundColor:startTrainTargetGreyColor];
+    }
+    
+    if (squatDoneNum >= squatNum) {
+        [squatMission setBackgroundColor:themeBlueColor];
+    } else{
+        [squatMission setBackgroundColor:startTrainTargetGreyColor];
+    }
+    
+    if (walkDoneNum >= walkNum) {
+        [walkMission setBackgroundColor:themeBlueColor];
+    } else{
+        [walkMission setBackgroundColor:startTrainTargetGreyColor];
+    }
+}
+
 #pragma mark - Class Extention
 - (void)tappedSitUpBtn {
     SitUpViewController *sitUpVC = [[SitUpViewController alloc] init];
@@ -233,28 +236,24 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
 
 // 创建按钮
 - (void)createExerciseButtonWithFrame:(CGRect)frame andSelector:(SEL)action andBallonColor:(UIColor *)color andLabel:(NSString *)label {
-    UIButton* walkButton = [[UIButton alloc] initWithFrame:frame];
-    [walkButton setBackgroundColor:[UIColor whiteColor]];
-    [walkButton addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
-    walkButton.layer.cornerRadius = 15;
-    walkButton.layer.borderWidth = 1;
-    walkButton.layer.borderColor = themeGreyColor.CGColor;
-    //walkButton.layer.shadowColor = themeGreyColor.CGColor;
-    //walkButton.layer.shadowOffset = CGSizeMake(5, 2);
-    //walkButton.layer.shadowOpacity = 1;
-    //walkButton.layer.shadowRadius = 0;
-    [buttonView addSubview:walkButton];
+    UIButton* tmpButton = [[UIButton alloc] initWithFrame:frame];
+    [tmpButton setBackgroundColor:[UIColor whiteColor]];
+    [tmpButton addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    tmpButton.layer.cornerRadius = 15;
+    tmpButton.layer.borderWidth = 1;
+    tmpButton.layer.borderColor = themeGreyColor.CGColor;
+    [buttonView addSubview:tmpButton];
     
-    UIView* walkBallon = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, (frame.size.height - ExerciseViewBallonWidth) / 2, ExerciseViewBallonWidth, ExerciseViewBallonWidth)];
-    [walkBallon setBackgroundColor:color];
-    walkBallon.layer.cornerRadius = 15;
-    [walkButton addSubview:walkBallon];
+    UIView* tmpBallon = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, (frame.size.height - ExerciseViewBallonWidth) / 2, ExerciseViewBallonWidth, ExerciseViewBallonWidth)];
+    [tmpBallon setBackgroundColor:color];
+    tmpBallon.layer.cornerRadius = 15;
+    [tmpButton addSubview:tmpBallon];
     
-    UILabel* walkLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(walkBallon.frame) + APPCONFIG_UI_VIEW_PADDING, 0, CGRectGetMaxX(frame) - CGRectGetMaxX(walkBallon.frame) - APPCONFIG_UI_VIEW_PADDING, CGRectGetHeight(frame))];
-    [walkLabel setTextColor:tipTitleLabelColor];
-    [walkLabel setFont:[UIFont systemFontOfSize:24]];
-    [walkLabel setText:label];
-    [walkButton addSubview:walkLabel];
+    UILabel* tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(tmpBallon.frame) + APPCONFIG_UI_VIEW_PADDING, 0, CGRectGetMaxX(frame) - CGRectGetMaxX(tmpBallon.frame) - APPCONFIG_UI_VIEW_PADDING, CGRectGetHeight(frame))];
+    [tmpLabel setTextColor:tipTitleLabelColor];
+    [tmpLabel setFont:[UIFont systemFontOfSize:24]];
+    [tmpLabel setText:label];
+    [tmpButton addSubview:tmpLabel];
 }
 
 #pragma mark - Gesture Delegate

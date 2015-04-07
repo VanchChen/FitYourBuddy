@@ -6,8 +6,6 @@
 //  Copyright (c) 2015年 xpz. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 //存放公用方法
 @interface CommonUtil : NSObject
 
@@ -31,5 +29,7 @@
 
 /**根据经验得到等级*/
 + (float)getExpFromLevel:(NSString *)level;
+/**根据类型和等级得到目标数*/
++ (NSInteger)getTargetNumFromType:(ExerciseType)type andLevel:(NSInteger)level;
 
 @end

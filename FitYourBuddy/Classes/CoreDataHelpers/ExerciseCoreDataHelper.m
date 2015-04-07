@@ -12,7 +12,7 @@
 
 @implementation ExerciseCoreDataHelper
 
-/**根据类型得到当天锻炼总次数*/
+/**根据类型得到锻炼天数（已废，现用数据库记录）*/
 + (NSInteger)getHistoryDayByType:(ExerciseType)type withError:(NSError **)error {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
@@ -41,7 +41,6 @@
     }
     
     return count;
-    
 }
 
 //根据类型得到当天锻炼次数
@@ -96,24 +95,12 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type = %d", type];
     [fetchRequest setPredicate:predicate];
     
-    //排序和取一个
-//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"num" ascending:NO comparator:^NSComparisonResult(id obj1, id obj2) {
-//        NSInteger num1 = [obj1 integerValue];
-//        NSInteger num2 = [obj2 integerValue];
-//        if (num1 > num2) {
-//            return NSOrderedDescending;
-//        }
-//        if (num1 == num2) {
-//            return NSOrderedSame;
-//        }
-//        return NSOrderedAscending;
-//    }];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"num" ascending:NO];
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     NSArray *objects = [context executeFetchRequest:fetchRequest error:error];
-    
+    //先全部取出来后，再排序
     NSArray *array = [objects sortedArrayUsingComparator:^NSComparisonResult(Exercise *obj1, Exercise *obj2) {
         NSInteger num1 = [obj1.num integerValue];
         NSInteger num2 = [obj2.num integerValue];

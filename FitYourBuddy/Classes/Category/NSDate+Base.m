@@ -192,4 +192,18 @@
     }
 }
 
+#pragma mark - 转型成字符串
+/** 转成标准日期字符串 yyyy-MM-dd HH:mm:ss */
+- (NSString *)dateString {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    return [dateFormatter stringFromDate:self];
+}
+/** 转成日期天字符串 yyyy-MM-dd */
+- (NSString *)dayString {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    return [dateFormatter stringFromDate:self];
+}
+
 @end

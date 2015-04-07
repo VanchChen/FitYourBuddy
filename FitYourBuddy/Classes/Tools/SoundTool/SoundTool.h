@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 xpz. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface SoundTool : NSObject

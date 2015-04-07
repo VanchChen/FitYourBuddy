@@ -79,4 +79,10 @@
 /** 比较是否同一天，不管时分秒 */
 - (BOOL)sameDayWithDate:(NSDate *)otherDate;
 
+#pragma mark - 转型成字符串
+/** 转成标准日期字符串 yyyy-MM-dd HH:mm:ss */
+- (NSString *)dateString;
+/** 转成日期天字符串 yyyy-MM-dd */
+- (NSString *)dayString;
+
 @end

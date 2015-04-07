@@ -17,6 +17,7 @@
 		D639C4351A90DA2800715BA9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D639C4341A90DA2800715BA9 /* Images.xcassets */; };
 		D639C4441A90DA2900715BA9 /* FitYourBuddyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D639C4431A90DA2900715BA9 /* FitYourBuddyTests.m */; };
 		D639C4561A90DE8400715BA9 /* IndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D639C4551A90DE8400715BA9 /* IndexViewController.m */; };
+		D63E2DB31AD3B63A00D86030 /* TimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D63E2DB21AD3B63A00D86030 /* TimerManager.m */; };
 		D63FCF371A9628EE00582386 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63FCF361A9628EE00582386 /* SettingsViewController.m */; };
 		D63FCF3E1A96293A00582386 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63FCF3D1A96293A00582386 /* FriendsViewController.m */; };
 		D63FCF411A962EA100582386 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63FCF401A962EA100582386 /* HistoryViewController.m */; };
@@ -91,6 +92,8 @@
 		D639C4431A90DA2900715BA9 /* FitYourBuddyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FitYourBuddyTests.m; sourceTree = "<group>"; };
 		D639C4541A90DE8400715BA9 /* IndexViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IndexViewController.h; path = Classes/ViewControllers/IndexViewController.h; sourceTree = "<group>"; };
 		D639C4551A90DE8400715BA9 /* IndexViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IndexViewController.m; path = Classes/ViewControllers/IndexViewController.m; sourceTree = "<group>"; };
+		D63E2DB11AD3B63A00D86030 /* TimerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimerManager.h; path = Classes/Util/TimerManager.h; sourceTree = "<group>"; };
+		D63E2DB21AD3B63A00D86030 /* TimerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimerManager.m; path = Classes/Util/TimerManager.m; sourceTree = "<group>"; };
 		D63FCF351A9628EE00582386 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Classes/ViewControllers/SettingsViewController.h; sourceTree = "<group>"; };
 		D63FCF361A9628EE00582386 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = Classes/ViewControllers/SettingsViewController.m; sourceTree = "<group>"; };
 		D63FCF3C1A96293A00582386 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsViewController.h; path = Classes/ViewControllers/FriendsViewController.h; sourceTree = "<group>"; };
@@ -478,6 +481,8 @@
 			children = (
 				D6AFCAF01AC5AA8A00400358 /* CommonUtil.h */,
 				D6AFCAF11AC5AA8A00400358 /* CommonUtil.m */,
+				D63E2DB11AD3B63A00D86030 /* TimerManager.h */,
+				D63E2DB21AD3B63A00D86030 /* TimerManager.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -654,6 +659,7 @@
 				D67CE88A1ACC42C7005E8BB9 /* HistoryExerciseView.m in Sources */,
 				D6C5FAF21A9DD1A600BABA36 /* TarBarViewController.m in Sources */,
 				D6C5FAEB1A9DCC4E00BABA36 /* SquatViewController.m in Sources */,
+				D63E2DB31AD3B63A00D86030 /* TimerManager.m in Sources */,
 				D6AFCAEE1AC5A62400400358 /* UIImage+Base.m in Sources */,
 				D669BE6F1A9D9A7B00DE6FA6 /* WQCircleProgressBar.m in Sources */,
 				D6F8D9721ACE5A2B001B8772 /* NSDate+Base.m in Sources */,

@@ -6,8 +6,6 @@
 //  Copyright (c) 2015年 xpz. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 //帖子类型
 typedef NS_ENUM(NSInteger, ExerciseType) {
     ExerciseTypeSitUp,
@@ -18,7 +16,7 @@ typedef NS_ENUM(NSInteger, ExerciseType) {
 
 @interface ExerciseCoreDataHelper : NSObject
 
-/**根据类型得到当天锻炼总次数*/
+/**根据类型得到锻炼天数（已废，现用数据库记录）*/
 + (NSInteger)getHistoryDayByType:(ExerciseType)type withError:(NSError **)error;
 
 /**根据类型得到当天锻炼总次数*/

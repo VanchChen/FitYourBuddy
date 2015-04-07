@@ -6,8 +6,6 @@
 //  Copyright (c) 2015年 xpz. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface AccountCoreDataHelper : NSObject
 
 //初始化账号数据库，添加字段

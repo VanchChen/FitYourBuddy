@@ -18,8 +18,8 @@ typedef NS_ENUM(NSInteger, PartType) {
 
 static CGFloat const FatGuyHeightRatio = 0.8f;          //外框对于背景的比例
 static CGFloat const typeScrollViewHeight = 30.0f;      //类型选择框的高度
-static CGFloat const pictureScrollViewHeight = 120.0f;  //图片选择框的高度
-static NSInteger const pictureScrollViewColumn = 4;     //列数
+static CGFloat const pictureScrollViewHeight = 169.0f;  //图片选择框的高度
+static NSInteger const pictureScrollViewColumn = 3;     //列数
 static NSInteger const pictureScrollViewRow = 2;        //行数
 static CGFloat const pictureButtonLeftPadding = 30.0f;  //图片的左间距
 static CGFloat const pictureButtonTopPadding = 10.0f;   //图片的上间距
@@ -66,7 +66,7 @@ static NSInteger const pictureButtonTag = 50;           //图片的起始tag
     
     self.title = @"商店";
     
-    CGFloat fatGuyViewHeight = APPCONFIG_UI_SCREEN_VHEIGHT - typeScrollViewHeight - pictureScrollViewHeight;
+    CGFloat fatGuyViewHeight = APPCONFIG_UI_SCREEN_FHEIGHT - APPCONFIG_UI_STATUSBAR_HEIGHT - APPCONFIG_UI_NAVIGATIONBAR_HEIGHT - typeScrollViewHeight - pictureScrollViewHeight;
     UIView* fatGuyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPCONFIG_UI_SCREEN_FWIDTH, fatGuyViewHeight)];
     [fatGuyView setBackgroundColor:themePureBlueColor];
     [self.view addSubview:fatGuyView];
@@ -113,7 +113,7 @@ static NSInteger const pictureButtonTag = 50;           //图片的起始tag
     //发型
     NSString *hairImageUrl = [NSString stringWithFormat:@"hair_%@", _dict[@"hair"]];
     _hairImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:hairImageUrl]];
-    _hairImage.center = CGPointMake(fatGuyFrameView.width / 2.0f + 3.0f, 38.0f);
+    _hairImage.center = CGPointMake(fatGuyFrameView.width / 2.0f + 3.0f, 38.0f); //3
     [fatGuyFrameView addSubview:_hairImage];
     
     //眼睛
@@ -170,7 +170,7 @@ static NSInteger const pictureButtonTag = 50;           //图片的起始tag
     //部件滑动框
     _partPictScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, APPCONFIG_UI_SCREEN_FWIDTH, pictureScrollViewHeight)];
     _partPictScrollView.backgroundColor = indexBackgroundColor;
-    _partPictScrollView.contentSize = CGSizeMake(APPCONFIG_UI_SCREEN_FWIDTH + 1.0f, pictureScrollViewHeight);//让他能动
+    _partPictScrollView.contentSize = CGSizeMake(APPCONFIG_UI_SCREEN_FWIDTH * 4, pictureScrollViewHeight);
     _partPictScrollView.showsVerticalScrollIndicator = NO;
     _partPictScrollView.pagingEnabled = YES;
     [_partPictScrollView bottomOfView:_partTypeScrollView];
@@ -213,6 +213,8 @@ static NSInteger const pictureButtonTag = 50;           //图片的起始tag
 #pragma mark - 点击事件
 // 点击类型按钮
 - (void)tappedTypeButton:(UIButton *)button {
+    //
+    
     UIButton *tmpButton;
     if (self.partType) {
         tmpButton = (UIButton *)[_partTypeScrollView viewWithTag:self.partType];
@@ -271,13 +273,14 @@ static NSInteger const pictureButtonTag = 50;           //图片的起始tag
         pictButton.backgroundColor = [UIColor whiteColor];
         pictButton.layer.cornerRadius = 12.0f;
         pictButton.layer.masksToBounds = YES;
-        pictButton.layer.borderColor = themeBlueColor.CGColor;
+        pictButton.layer.borderWidth = 2.0f;
         if (status == 2) {
-            pictButton.layer.borderWidth = 1.0f;
+            pictButton.layer.borderColor = themeBlueColor.CGColor;
         } else {
-            pictButton.layer.borderWidth = 0.0f;
+            pictButton.layer.borderColor = themeGreyColor.CGColor;
         }
-        [pictButton setBackgroundImage:[UIImage imageNamed:pictUrl] forState:UIControlStateNormal];
+        [pictButton setImage:[UIImage imageNamed:pictUrl] forState:UIControlStateNormal];
+        [pictButton setContentMode:UIViewContentModeScaleAspectFit];
         pictButton.frame = CGRectMake(page * _partPictScrollView.width + pictureButtonLeftPadding + column * (pictureButtonLeftPadding + pictButtonWidth), pictureButtonTopPadding + row * (pictureButtonTopPadding + pictButtonWidth), pictButtonWidth, pictButtonWidth);
         [pictButton addTarget:self action:@selector(tappedPictButton:) forControlEvents:UIControlEventTouchUpInside];
         [_partPictScrollView addSubview:pictButton];
@@ -313,9 +316,9 @@ static NSInteger const pictureButtonTag = 50;           //图片的起始tag
     }
     status += pictureButtonTag;
     UIButton *tmpButton = (UIButton *)[_partPictScrollView viewWithTag:status];
-    tmpButton.layer.borderWidth = 0.0f;
+    tmpButton.layer.borderColor = themeGreyColor.CGColor;
     //再设置现在为选中
-    button.layer.borderWidth = 1.0f;
+    button.layer.borderColor = themeBlueColor.CGColor;
     index = button.tag - pictureButtonTag;
     _partPictArray[index] = [NSNumber numberWithInt:2];
     CGPoint center;

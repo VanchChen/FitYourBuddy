@@ -28,6 +28,9 @@
 /** 返回标准格式的今天日期 */
 + (NSString *)today;
 
+/** 根据标准日期字符串返回日期 */
+- (NSDate *)dateFromString;
+
 /** 从标准的日期字符串去除年月时分秒 只要天 */
 - (NSString *)formatDay;
 

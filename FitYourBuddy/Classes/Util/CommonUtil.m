@@ -88,4 +88,26 @@
     }
 }
 
+/**根据类型和等级得到目标数*/
++ (NSInteger)getTargetNumFromType:(ExerciseType)type andLevel:(NSInteger)level {
+    NSInteger targetNum = 0;
+    switch (type) {
+        case ExerciseTypePushUp:
+            targetNum = level - 1 + 10;
+            break;
+        case ExerciseTypeSitUp:
+            targetNum = level - 1 + 20;
+            break;
+        case ExerciseTypeSquat:
+            targetNum = level - 1 + 20;
+            break;
+        case ExerciseTypeWalk:
+            targetNum = (level - 1) * 100 + 1000;
+            break;
+        default:
+            break;
+    }
+    return targetNum;
+}
+
 @end

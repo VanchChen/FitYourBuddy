@@ -16,9 +16,10 @@ static CGFloat const calorieLabelLeftPadding = 30.f;            //卡路里框�
 static CGFloat const calorieLabelTopPadding = 10.f;             //卡路里框上边距
 static CGFloat const calorieLabelHeight = 30.f;                 //卡路里框高度
 
-static CGFloat const histogramViewBetweenPadding = 10.f;        //柱状间距
-static CGFloat const histogramViewTopPadding = 50.f;            //柱状上间距
-static CGFloat const histogramLabelHeight = 30.f;               //柱状标签栏高度
+static CGFloat const histogramViewBetweenPadding = 10.f;        //柱状图间距
+static CGFloat const histogramViewTopPadding = 50.f;            //柱状图上间距
+static CGFloat const histogramLabelHeight = 30.f;               //柱状图标签栏高度
+static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空高度
 
 @interface HistoryExerciseView() {
     CGFloat histogramViewHeight;                                //柱状图的高度
@@ -67,10 +68,6 @@ static CGFloat const histogramLabelHeight = 30.f;               //柱状标签�
 }
 
 - (void)customeInit {
-    NSError *error;
-    NSInteger maxNum = [ExerciseCoreDataHelper getBestNumByType:self.exerciseType withError:&error];
-    NSInteger totalCount = [ExerciseCoreDataHelper getTotalNumByType:self.exerciseType withError:&error];
-    
     //个人记录框
     CGFloat recordWidth = (APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2 - recordViewBetweenPadding) / 2.0f;
     UIView *recordView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, APPCONFIG_UI_VIEW_PADDING, recordWidth, recordViewHeight)];
@@ -81,7 +78,7 @@ static CGFloat const histogramLabelHeight = 30.f;               //柱状标签�
     recordTipLabel.frame = CGRectMake(0, 0, recordWidth, recordViewTipLabelHeight);
     [recordView addSubview:recordTipLabel];
     
-    _recordLabel = [CommonUtil createLabelWithText:[NSString getFromInteger:maxNum] andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:18.0f] andTextAlignment:NSTextAlignmentCenter];
+    _recordLabel = [CommonUtil createLabelWithText:@"0" andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:18.0f] andTextAlignment:NSTextAlignmentCenter];
     _recordLabel.frame = CGRectMake(0, recordViewTipLabelHeight, recordWidth, recordViewHeight - recordViewTipLabelHeight - APPCONFIG_UI_VIEW_BETWEEN_PADDING);//底部留10px
     [recordView addSubview:_recordLabel];
     
@@ -95,7 +92,7 @@ static CGFloat const histogramLabelHeight = 30.f;               //柱状标签�
     countTipLabel.frame = CGRectMake(0, 0, recordWidth, recordViewTipLabelHeight);
     [countView addSubview:countTipLabel];
     
-    _countLabel = [CommonUtil createLabelWithText:[NSString getFromInteger:totalCount] andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:18.0f] andTextAlignment:NSTextAlignmentCenter];
+    _countLabel = [CommonUtil createLabelWithText:@"0" andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:18.0f] andTextAlignment:NSTextAlignmentCenter];
     _countLabel.frame = CGRectMake(0, recordViewTipLabelHeight, recordWidth, recordViewHeight - recordViewTipLabelHeight - APPCONFIG_UI_VIEW_BETWEEN_PADDING);//底部留10px
     [countView addSubview:_countLabel];
     
@@ -127,7 +124,7 @@ static CGFloat const histogramLabelHeight = 30.f;               //柱状标签�
         dayLabel.frame = CGRectMake(histogramViewBetweenPadding + (histogramViewBetweenPadding + histogramViewWidth) * (6 - i), histogramViewMinY + histogramViewHeight, histogramViewWidth, histogramLabelHeight);
         [_dataView addSubview:dayLabel];
         
-        UIView *histogramView = [[UIView alloc] initWithFrame:CGRectMake(histogramViewBetweenPadding + (histogramViewBetweenPadding + histogramViewWidth) * (6 - i), 0 , histogramViewWidth, 10)];
+        UIView *histogramView = [[UIView alloc] initWithFrame:CGRectMake(histogramViewBetweenPadding + (histogramViewBetweenPadding + histogramViewWidth) * (6 - i), 0 , histogramViewWidth, histogramViewDefaultHeight)];
         histogramView.tag = day;
         [histogramView setBackgroundColor:[UIColor whiteColor]];
         histogramView.layer.cornerRadius = 5;
@@ -140,12 +137,18 @@ static CGFloat const histogramLabelHeight = 30.f;               //柱状标签�
 - (void)reloadData {
     //数据
     NSError *error;
+    NSInteger maxExerciseNum = [ExerciseCoreDataHelper getBestNumByType:self.exerciseType withError:&error];
+    NSInteger totalCount = [ExerciseCoreDataHelper getTotalNumByType:self.exerciseType withError:&error];
+    //更新个人记录和生涯总数
+    _recordLabel.text = [NSString getFromInteger:maxExerciseNum];
+    _countLabel.text = [NSString getFromInteger:totalCount];
+    //更新柱状图
     NSDictionary *dict = [ExerciseCoreDataHelper getOneWeekNumByType:self.exerciseType withError:&error];
     if (dict && dict.count > 0) {
-        NSInteger maxNum = 0, tmpNum = 0;
+        float maxNum = 0, tmpNum = 0;
         CGRect tmpFrame;
         for (NSString *akey in [dict allKeys]) {
-            tmpNum = [[dict objectForKey:akey] integerValue];
+            tmpNum = [[dict objectForKey:akey] floatValue];
             if (tmpNum > maxNum) {
                 maxNum = tmpNum;
             }
@@ -154,12 +157,14 @@ static CGFloat const histogramLabelHeight = 30.f;               //柱状标签�
             for (NSString *akey in [dict allKeys]) {
                 UIView *view = [self findViewByTag:[akey integerValue]];
                 if (view) {
-                    tmpNum = [[dict objectForKey:akey] integerValue];
-                    tmpFrame = view.frame;
-                    tmpFrame.size.height = (tmpNum / maxNum) * histogramViewHeight;
-                    view.frame = tmpFrame;
-                    
-                    [view topOfView:dayLabel];
+                    tmpNum = [[dict objectForKey:akey] floatValue];
+                    if (tmpNum > 0) {//必须大于0才有数据条
+                        tmpFrame = view.frame;
+                        tmpFrame.size.height = (tmpNum / maxNum) * histogramViewHeight;
+                        view.frame = tmpFrame;
+                        
+                        [view topOfView:dayLabel];
+                    }
                 }
             }
         }

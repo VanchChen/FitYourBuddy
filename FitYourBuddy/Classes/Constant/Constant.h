@@ -8,6 +8,7 @@
 
 //UI系统库
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //数据库小帮手
 #import "AccountCoreDataHelper.h"

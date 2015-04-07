@@ -68,6 +68,16 @@
     return [formatter stringFromDate:[NSDate date]];
 }
 
+/** 根据标准日期字符串返回日期 */
+- (NSDate *)dateFromString {
+    if (self == nil || self.length < 19) {
+        return nil;
+    }
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    return [formatter dateFromString:self];
+}
+
 /** 从标准的日期字符串去除年月时分秒 只要天 */
 - (NSString *)formatDay {
     if (self == nil || self.length < 10) {
