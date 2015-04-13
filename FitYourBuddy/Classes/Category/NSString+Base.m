@@ -56,7 +56,7 @@
 }
 
 /** 从数字转到字符串 */
-+ (NSString *)getFromInteger:(NSInteger)num {
++ (NSString *)stringFromInteger:(NSInteger)num {
     return [NSString stringWithFormat:@"%ld", (long)num];
 }
 
@@ -86,7 +86,7 @@
     
     NSString *dayString = [self substringWithRange:NSMakeRange(8, 2)];
     
-    return [NSString getFromInteger:[dayString integerValue]]; //转一下去除0
+    return [NSString stringFromInteger:[dayString integerValue]]; //转一下去除0
 }
 
 /** 从标准的日期字符串去除时分秒 yyyy-MM-dd */

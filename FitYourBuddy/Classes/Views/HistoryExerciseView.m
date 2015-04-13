@@ -33,7 +33,12 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
 @property(nonatomic, strong) UILabel *countLabel;               //生涯总数框
 @property(nonatomic, strong) UILabel *calorieLabel;             //卡路里框
 
+@property(nonatomic, strong) UILabel *numLabel;                 //数字框
+
 @property(nonatomic, strong) UIView *dataView;                  //统计框
+
+@property(nonatomic, strong) NSDictionary *dataDict;            //数据
+
 @end
 
 @implementation HistoryExerciseView
@@ -68,6 +73,8 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
 }
 
 - (void)customeInit {
+    _numLabel = nil;//数字框，一开始不显示
+    
     //个人记录框
     CGFloat recordWidth = (APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2 - recordViewBetweenPadding) / 2.0f;
     UIView *recordView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, APPCONFIG_UI_VIEW_PADDING, recordWidth, recordViewHeight)];
@@ -120,19 +127,23 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
     for (int i = 6; i >= 0; i--) {
         NSInteger day = [today previousDayWithNum:i].day;
         
-        dayLabel = [CommonUtil createLabelWithText:[NSString getFromInteger:day] andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:14.0f] andTextAlignment:NSTextAlignmentCenter];
+        dayLabel = [CommonUtil createLabelWithText:[NSString stringFromInteger:day] andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:14.0f] andTextAlignment:NSTextAlignmentCenter];
         dayLabel.frame = CGRectMake(histogramViewBetweenPadding + (histogramViewBetweenPadding + histogramViewWidth) * (6 - i), histogramViewMinY + histogramViewHeight, histogramViewWidth, histogramLabelHeight);
         [_dataView addSubview:dayLabel];
         
-        UIView *histogramView = [[UIView alloc] initWithFrame:CGRectMake(histogramViewBetweenPadding + (histogramViewBetweenPadding + histogramViewWidth) * (6 - i), 0 , histogramViewWidth, histogramViewDefaultHeight)];
+        UIButton *histogramView = [[UIButton alloc] initWithFrame:CGRectMake(histogramViewBetweenPadding + (histogramViewBetweenPadding + histogramViewWidth) * (6 - i), 0 , histogramViewWidth, histogramViewDefaultHeight)];
         histogramView.tag = day;
-        [histogramView setBackgroundColor:[UIColor whiteColor]];
         histogramView.layer.cornerRadius = 5;
         histogramView.layer.masksToBounds = YES;
+        [histogramView setBackgroundImage:[UIImage imageWithUIColor:[UIColor whiteColor] andCGSize:histogramView.bounds.size] forState:UIControlStateNormal];
+        [histogramView setBackgroundImage:[UIImage imageWithUIColor:transparentWhiteColor andCGSize:histogramView.bounds.size] forState:UIControlStateSelected];
+        [histogramView addTarget:self action:@selector(tappedHistogramView:) forControlEvents:UIControlEventTouchUpInside];
         [_dataView addSubview:histogramView];
         [histogramView topOfView:dayLabel];
     }
 }
+
+#pragma mark - 事件
 //由上层控制刷新视图
 - (void)reloadData {
     //数据
@@ -140,27 +151,31 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
     NSInteger maxExerciseNum = [ExerciseCoreDataHelper getBestNumByType:self.exerciseType withError:&error];
     NSInteger totalCount = [ExerciseCoreDataHelper getTotalNumByType:self.exerciseType withError:&error];
     //更新个人记录和生涯总数
-    _recordLabel.text = [NSString getFromInteger:maxExerciseNum];
-    _countLabel.text = [NSString getFromInteger:totalCount];
+    _recordLabel.text = [NSString stringFromInteger:maxExerciseNum];
+    _countLabel.text = [NSString stringFromInteger:totalCount];
     //更新柱状图
-    NSDictionary *dict = [ExerciseCoreDataHelper getOneWeekNumByType:self.exerciseType withError:&error];
-    if (dict && dict.count > 0) {
-        float maxNum = 0, tmpNum = 0;
+    _dataDict = [ExerciseCoreDataHelper getOneWeekNumByType:self.exerciseType withError:&error];
+    if (_dataDict && _dataDict.count > 0) {
+        float maxNum = 0, tmpNum = 0, tmpHeight;
         CGRect tmpFrame;
-        for (NSString *akey in [dict allKeys]) {
-            tmpNum = [[dict objectForKey:akey] floatValue];
+        for (NSString *akey in [_dataDict allKeys]) {
+            tmpNum = [[_dataDict objectForKey:akey] floatValue];
             if (tmpNum > maxNum) {
                 maxNum = tmpNum;
             }
         }
         if (maxNum > 0) {
-            for (NSString *akey in [dict allKeys]) {
+            for (NSString *akey in [_dataDict allKeys]) {
                 UIView *view = [self findViewByTag:[akey integerValue]];
                 if (view) {
-                    tmpNum = [[dict objectForKey:akey] floatValue];
+                    tmpNum = [[_dataDict objectForKey:akey] floatValue];
                     if (tmpNum > 0) {//必须大于0才有数据条
                         tmpFrame = view.frame;
-                        tmpFrame.size.height = (tmpNum / maxNum) * histogramViewHeight;
+                        tmpHeight = (tmpNum / maxNum) * histogramViewHeight;
+                        if (tmpHeight < histogramViewDefaultHeight) {
+                            tmpHeight = histogramViewDefaultHeight;
+                        }
+                        tmpFrame.size.height = tmpHeight;
                         view.frame = tmpFrame;
                         
                         [view topOfView:dayLabel];
@@ -171,12 +186,59 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
     }
 }
 
+//点击柱状图
+- (void)tappedHistogramView:(UIButton *)button {
+    //先找到上一个
+    UIButton *tmpButton = [self findButtonInView:_dataView];
+    if (tmpButton) {
+        tmpButton.selected = NO;
+    }
+    //再把当前这个选中
+    button.selected = YES;
+    
+    //显示框
+    NSString *numString = @"";
+    if (_dataDict && _dataDict.count > 0) {
+        numString = [_dataDict valueForKey:[NSString stringFromInteger:button.tag]];
+    }
+    
+    if (numString.length == 0) {
+        numString = @"0";
+    }
+    
+    if (!_numLabel) {
+        CGFloat histogramViewWidth = (_dataView.width - histogramViewBetweenPadding * 8) / 7.0f;
+        
+        _numLabel = [CommonUtil createLabelWithText:@"" andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:20] andTextAlignment:NSTextAlignmentCenter];
+        _numLabel.frame = CGRectMake(0, 0, histogramViewWidth, histogramViewWidth);
+        _numLabel.layer.borderColor = [UIColor whiteColor].CGColor;
+        _numLabel.layer.borderWidth = 1.0f;
+        [_dataView addSubview:_numLabel];
+    }
+    _numLabel.text = numString;
+    [_numLabel topOfView:button withMargin:APPCONFIG_UI_VIEW_BETWEEN_PADDING sameHorizontal:YES];
+}
+
 //根据tag找uiview 其实uilabel也是uiview
 - (UIView *)findViewByTag:(NSInteger)tag {
     for (id obj in _dataView.subviews) {
         if ([obj isKindOfClass:[UIView class]]) {
             if ([(UIView *)obj tag] == tag) {
                 return (UIView *)obj;
+            }
+        }
+    }
+    return nil;
+}
+
+//找到选中的button
+- (UIButton *)findButtonInView:(UIView *)view {
+    UIButton *tmpButton;
+    for (id obj in _dataView.subviews) {
+        if ([obj isMemberOfClass:[UIButton class]]) {
+            tmpButton = (UIButton *)obj;
+            if (tmpButton.selected) {
+                return tmpButton;
             }
         }
     }

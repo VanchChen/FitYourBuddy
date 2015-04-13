@@ -13,6 +13,7 @@
 //数据库小帮手
 #import "AccountCoreDataHelper.h"
 #import "ExerciseCoreDataHelper.h"
+#import "StoreCoreDataHelper.h"
 
 //扩展
 #import "CommonUtil.h"
@@ -30,33 +31,34 @@
 
 
 //公用颜色值
-#define themeBlueColor [UIColor colorWithRed:0.f/255.f green:150.f/255.f blue:255.f/255.f alpha:0.8]
-#define themePureBlueColor [UIColor colorWithRed:48.f/255.f green:168.f/255.f blue:252.f/255.f alpha:1]
-#define themeDeepBlueColor [UIColor colorWithRed:0.f/255.f green:150.f/255.f blue:255.f/255.f alpha:1]
-#define themeRedColor [UIColor colorWithRed:255.f/255.f green:126.f/255.f blue:121.f/255.f alpha:1]
-#define themeGreyColor [UIColor colorWithRed:214.f/255.f green:214.f/255.f blue:214.f/255.f alpha:1]
-#define themeOrangeColor [UIColor colorWithRed:255.f/255.f green:169.f/255.f blue:91.f/255.f alpha:1]
-#define themeDarkOrangeColor [UIColor colorWithRed:255.f/255.f green:139.f/255.f blue:0.f/255.f alpha:1]
+#define themeBlueColor              RGB_A(0, 150, 255, 0.8)
+#define themePureBlueColor          RGB_A(48, 168, 252, 1)
+#define themeDeepBlueColor          RGB_A(0, 150, 255, 1)
+#define themeRedColor               RGB_A(255, 126, 121, 1)
+#define themeGreyColor              RGB_A(214, 214, 214, 1)
+#define themeOrangeColor            RGB_A(255, 169, 91, 1)
+#define themeDarkOrangeColor        RGB_A(255, 139, 0, 1)
 
-#define indexBackgroundColor [UIColor colorWithRed:239.f/255.f green:239.f/255.f blue:239.f/255.f alpha:1]
+#define indexBackgroundColor        RGB_A(239, 239, 239, 1)
 
-#define sitUpColor [UIColor colorWithRed:179.f/255.f green:106.f/255.f blue:226.f/255.f alpha:0.8]
-//[UIColor colorWithRed:207.f/255.f green:111.f/255.f blue:233.f/255.f alpha:1]
-#define pushUpColor [UIColor colorWithRed:255.f/255.f green:169.f/255.f blue:91.f/255.f alpha:1]
-#define squatColor [UIColor colorWithRed:51.f/255.f green:228.f/255.f blue:188.f/255.f alpha:1]
-#define walkColor [UIColor colorWithRed:253.f/255.f green:101.f/255.f blue:109.f/255.f alpha:1]
+#define sitUpColor                  RGB_A(179, 106, 226, 0.8)
+#define pushUpColor                 RGB_A(255, 169, 91, 1)
+#define squatColor                  RGB_A(51, 228, 188, 1)
+#define walkColor                   RGB_A(253, 101, 109, 1)
 
-#define saveButtonGreyColor [UIColor colorWithRed:235.f/255.f green:235.f/255.f blue:235.f/255.f alpha:1]
-#define saveTextGreyColor [UIColor colorWithRed:192.f/255.f green:192.f/255.f blue:192.f/255.f alpha:1]
+#define saveButtonGreyColor         RGB_A(235, 235, 235, 1)
+#define saveTextGreyColor           RGB_A(192, 192, 192, 1)
 
-#define popBackgroundColor [UIColor colorWithRed:214.f/255.f green:214.f/255.f blue:214.f/255.f alpha:0.8]
+#define popBackgroundColor          RGB_A(214, 214, 214, 0.8)
+#define transparentBlackColor       RGB_A(0, 0, 0, 0.4)
+#define transparentWhiteColor       RGB_A(255, 255, 255, 0.4)
 
-#define levelPurpleColor [UIColor colorWithRed:132.f/255.f green:110.f/255.f blue:255.f/255.f alpha:1]
-#define startTrainTargetGreyColor [UIColor colorWithRed:218.f/255.f green:218.f/255.f blue:218.f/255.f alpha:1]
-#define circleGreyColor [UIColor colorWithRed:205.f/255.f green:205.f/255.f blue:205.f/255.f alpha:1]
+#define levelPurpleColor            RGB_A(132, 110, 255, 1)
+#define startTrainTargetGreyColor   RGB_A(218, 218, 218, 1)
+#define circleGreyColor             RGB_A(205, 205, 205, 1)
 
 //字体颜色
-#define tipTitleLabelColor [UIColor colorWithRed:66.f/255.f green:66.f/255.f blue:66.f/255.f alpha:1]
+#define tipTitleLabelColor          RGB_A(66, 66, 66, 1)
 
 //UI控件常规像素
 #define APPCONFIG_UI_STATUSBAR_HEIGHT       20.0f                       // 系统自带的状态条的高度

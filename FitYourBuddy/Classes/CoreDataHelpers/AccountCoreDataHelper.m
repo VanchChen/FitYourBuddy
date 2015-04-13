@@ -35,7 +35,7 @@
                                            @"1",@"pushUpLevel",
                                            @"1",@"squatLevel",
                                            @"1",@"walkLevel",
-                                           @"0",@"coin",
+                                           @"100",@"coin",
                                            @"0",@"hair",
                                            @"0",@"eye",
                                            @"0",@"mouth",

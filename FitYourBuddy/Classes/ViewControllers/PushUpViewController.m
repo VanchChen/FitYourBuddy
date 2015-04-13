@@ -41,9 +41,9 @@
     //获取3个值 单次最大记录，目标数，今天的总数
     NSError *error;
     maxExerciseNum = [ExerciseCoreDataHelper getBestNumByType:ExerciseTypePushUp withError:&error];
-    NSString *maxNumString = [NSString getFromInteger:maxExerciseNum];
-    targetNum = [[AccountCoreDataHelper getDataByName:@"pushUpLevel" withError:&error] integerValue] - 1 + 10;
-    NSString *targetNumString = [NSString getFromInteger:targetNum];
+    NSString *maxNumString = [NSString stringFromInteger:maxExerciseNum];
+    targetNum = [CommonUtil getTargetNumFromType:ExerciseTypePushUp andLevel:[[AccountCoreDataHelper getDataByName:@"pushUpLevel" withError:&error] integerValue]];
+    NSString *targetNumString = [NSString stringFromInteger:targetNum];
     
     //navigation bar
     UIView *navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPCONFIG_UI_VIEW_FWIDTH, APPCONFIG_UI_STATUSBAR_HEIGHT + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT)];
@@ -148,7 +148,7 @@
         
         if (count > maxExerciseNum) {
             maxExerciseNum = count;
-            recordLabel.text = [NSString getFromInteger:maxExerciseNum];
+            recordLabel.text = [NSString stringFromInteger:maxExerciseNum];
         }
         
         //播放声音

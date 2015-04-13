@@ -6,9 +6,10 @@
 //  Copyright (c) 2015年 xpz. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "WQCalendarTile.h"
 
 @interface WQCalendar : UIView
+
+- (void)reloadData;
 
 @end

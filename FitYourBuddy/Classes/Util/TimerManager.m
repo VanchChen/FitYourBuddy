@@ -76,7 +76,7 @@ static NSInteger const ExerciseLevelLimit = 31;     //锻炼等级上限
                 targetNum = [CommonUtil getTargetNumFromType:type andLevel:level];
                 if (lastDateNum > targetNum) {//升级
                     level ++;
-                    [AccountCoreDataHelper setDataByName:@"pushUpLevel" andData:[NSString getFromInteger:level] withError:&error];
+                    [AccountCoreDataHelper setDataByName:@"pushUpLevel" andData:[NSString stringFromInteger:level] withError:&error];
                 }
             }
             break;
@@ -86,7 +86,7 @@ static NSInteger const ExerciseLevelLimit = 31;     //锻炼等级上限
                 targetNum = [CommonUtil getTargetNumFromType:type andLevel:level];
                 if (lastDateNum > targetNum) {//升级
                     level ++;
-                    [AccountCoreDataHelper setDataByName:@"sitUpLevel" andData:[NSString getFromInteger:level] withError:&error];
+                    [AccountCoreDataHelper setDataByName:@"sitUpLevel" andData:[NSString stringFromInteger:level] withError:&error];
                 }
             }
             break;
@@ -96,7 +96,7 @@ static NSInteger const ExerciseLevelLimit = 31;     //锻炼等级上限
                 targetNum = [CommonUtil getTargetNumFromType:type andLevel:level];
                 if (lastDateNum > targetNum) {//升级
                     level ++;
-                    [AccountCoreDataHelper setDataByName:@"squatLevel" andData:[NSString getFromInteger:level] withError:&error];
+                    [AccountCoreDataHelper setDataByName:@"squatLevel" andData:[NSString stringFromInteger:level] withError:&error];
                 }
             }
             break;
@@ -106,7 +106,7 @@ static NSInteger const ExerciseLevelLimit = 31;     //锻炼等级上限
                 targetNum = [CommonUtil getTargetNumFromType:type andLevel:level];
                 if (lastDateNum > targetNum) {//升级
                     level ++;
-                    [AccountCoreDataHelper setDataByName:@"walkLevel" andData:[NSString getFromInteger:level] withError:&error];
+                    [AccountCoreDataHelper setDataByName:@"walkLevel" andData:[NSString stringFromInteger:level] withError:&error];
                 }
             }
             break;

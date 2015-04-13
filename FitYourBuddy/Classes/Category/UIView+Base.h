@@ -14,11 +14,17 @@
 /**移动到兄弟view的上方，指定间距*/
 - (void)topOfView:(UIView *)view withMargin:(CGFloat)margin;
 
+/**移动到兄弟view的上方，指定间距，并且指定是否水平居中*/
+- (void)topOfView:(UIView *)view withMargin:(CGFloat)margin sameHorizontal:(BOOL)same;
+
 /**移动到兄弟view的下方*/
 - (void)bottomOfView:(UIView *)view;
 
 /**移动到兄弟view的下方，指定间距*/
 - (void)bottomOfView:(UIView *)view withMargin:(CGFloat)margin;
+
+/**移动到兄弟view的下方，指定间距，并且指定是否水平居中*/
+- (void)bottomOfView:(UIView *)view withMargin:(CGFloat)margin sameHorizontal:(BOOL)same;
 
 /**移动到兄弟view的左方*/
 - (void)leftOfView:(UIView *)view;

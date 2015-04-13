@@ -74,13 +74,16 @@
             return 200;
             break;
         case 2:
-            return 1000;
+            return 800;
             break;
         case 3:
-            return 4000;
+            return 2000;
             break;
         case 4:
-            return 12000;
+            return 3500;
+            break;
+        case 5:
+            return 5500;
             break;
         default:
             return 0;
@@ -108,6 +111,23 @@
             break;
     }
     return targetNum;
+}
+
+#pragma mark - 方便计算的方法
+/**根据文字和字体返回可能的UILable尺寸*/
++ (CGSize)getLabelSizeByText:(NSString *)text andFont:(UIFont *)font {
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle.copy};
+    
+    CGSize labelSize = [text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+    /*
+     This method returns fractional sizes (in the size component of the returned CGRect); to use a returned size to size views, you must use raise its value to the nearest higher integer using the ceil function.
+     */
+    labelSize.height = ceilf(labelSize.height);
+    labelSize.width = ceilf(labelSize.width);
+    
+    return labelSize;
 }
 
 @end

@@ -180,6 +180,9 @@ static CGFloat const AccountButtonBottomPadding = 40.0f;
     
     NSError *error;
     if ([AccountCoreDataHelper initAccountWithName:popViewTextField.text andGender:[NSString stringWithFormat:@"%ld", (unsigned long)gender] andError:&error]) {
+        //顺便建立商店数据库
+        [StoreCoreDataHelper initStoreDataBaseWithError:&error];
+        
         //名字保存成功，跳到首页
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];

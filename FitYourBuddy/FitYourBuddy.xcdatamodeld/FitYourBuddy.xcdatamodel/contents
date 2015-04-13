@@ -9,8 +9,15 @@
         <attribute name="num" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Store" representedClassName="Store" syncable="YES">
+        <attribute name="cost" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hasBought" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Account" positionX="-63" positionY="-18" width="128" height="75"/>
         <element name="Exercise" positionX="-54" positionY="9" width="128" height="88"/>
+        <element name="Store" positionX="-54" positionY="18" width="128" height="103"/>
     </elements>
 </model>

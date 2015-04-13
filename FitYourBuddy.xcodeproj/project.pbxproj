@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		D61A10251A972F3100B2C64C /* WQProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D61A10231A972F3100B2C64C /* WQProgressBar.m */; };
 		D61A102A1A972F4100B2C64C /* WQCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = D61A10271A972F4100B2C64C /* WQCalendar.m */; };
-		D61A102B1A972F4100B2C64C /* NSDate+Calendar.m in Sources */ = {isa = PBXBuildFile; fileRef = D61A10281A972F4100B2C64C /* NSDate+Calendar.m */; };
 		D61A102E1A97302F00B2C64C /* WQCalendarTile.m in Sources */ = {isa = PBXBuildFile; fileRef = D61A102D1A97302F00B2C64C /* WQCalendarTile.m */; };
 		D639C4271A90DA2800715BA9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D639C4261A90DA2800715BA9 /* main.m */; };
 		D639C42A1A90DA2800715BA9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D639C4291A90DA2800715BA9 /* AppDelegate.m */; };
@@ -53,6 +52,8 @@
 		D6C5FAEE1A9DCC6500BABA36 /* WalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAED1A9DCC6500BABA36 /* WalkViewController.m */; };
 		D6C5FAF21A9DD1A600BABA36 /* TarBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAF11A9DD1A600BABA36 /* TarBarViewController.m */; };
 		D6DC62D41A9B355700E03ED6 /* ExerciseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DC62D31A9B355700E03ED6 /* ExerciseViewController.m */; };
+		D6DFAB391AD6158D00C5D37C /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DFAB381AD6158D00C5D37C /* Store.m */; };
+		D6DFAB3C1AD615CD00C5D37C /* StoreCoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DFAB3B1AD615CD00C5D37C /* StoreCoreDataHelper.m */; };
 		D6F53B891AC6660500289E6C /* b4.wav in Resources */ = {isa = PBXBuildFile; fileRef = D6F53B851AC6660500289E6C /* b4.wav */; };
 		D6F53B8A1AC6660500289E6C /* c5.wav in Resources */ = {isa = PBXBuildFile; fileRef = D6F53B861AC6660500289E6C /* c5.wav */; };
 		D6F53B8D1AC6663B00289E6C /* coin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6F53B8B1AC6663B00289E6C /* coin.mp3 */; };
@@ -76,8 +77,6 @@
 		D61A10241A972F3100B2C64C /* WQProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQProgressBar.h; path = Classes/Tools/WQProgressBar/WQProgressBar.h; sourceTree = "<group>"; };
 		D61A10261A972F4100B2C64C /* WQCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQCalendar.h; path = Classes/Tools/WQCalendar/WQCalendar.h; sourceTree = "<group>"; };
 		D61A10271A972F4100B2C64C /* WQCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WQCalendar.m; path = Classes/Tools/WQCalendar/WQCalendar.m; sourceTree = "<group>"; };
-		D61A10281A972F4100B2C64C /* NSDate+Calendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Calendar.m"; path = "Classes/Tools/WQCalendar/NSDate+Calendar.m"; sourceTree = "<group>"; };
-		D61A10291A972F4100B2C64C /* NSDate+Calendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Calendar.h"; path = "Classes/Tools/WQCalendar/NSDate+Calendar.h"; sourceTree = "<group>"; };
 		D61A102C1A97302F00B2C64C /* WQCalendarTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQCalendarTile.h; path = Classes/Tools/WQCalendar/WQCalendarTile.h; sourceTree = "<group>"; };
 		D61A102D1A97302F00B2C64C /* WQCalendarTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WQCalendarTile.m; path = Classes/Tools/WQCalendar/WQCalendarTile.m; sourceTree = "<group>"; };
 		D639C4211A90DA2800715BA9 /* FitYourBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitYourBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +157,10 @@
 		D6C5FAF11A9DD1A600BABA36 /* TarBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TarBarViewController.m; path = Classes/ViewControllers/TarBarViewController.m; sourceTree = "<group>"; };
 		D6DC62D21A9B355700E03ED6 /* ExerciseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExerciseViewController.h; path = Classes/ViewControllers/ExerciseViewController.h; sourceTree = "<group>"; };
 		D6DC62D31A9B355700E03ED6 /* ExerciseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExerciseViewController.m; path = Classes/ViewControllers/ExerciseViewController.m; sourceTree = "<group>"; };
+		D6DFAB371AD6158D00C5D37C /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Store.h; path = Classes/Entities/Store.h; sourceTree = "<group>"; };
+		D6DFAB381AD6158D00C5D37C /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Store.m; path = Classes/Entities/Store.m; sourceTree = "<group>"; };
+		D6DFAB3A1AD615CD00C5D37C /* StoreCoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreCoreDataHelper.h; path = Classes/CoreDataHelpers/StoreCoreDataHelper.h; sourceTree = "<group>"; };
+		D6DFAB3B1AD615CD00C5D37C /* StoreCoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreCoreDataHelper.m; path = Classes/CoreDataHelpers/StoreCoreDataHelper.m; sourceTree = "<group>"; };
 		D6F53B851AC6660500289E6C /* b4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = b4.wav; path = Classes/Sounds/b4.wav; sourceTree = "<group>"; };
 		D6F53B861AC6660500289E6C /* c5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = c5.wav; path = Classes/Sounds/c5.wav; sourceTree = "<group>"; };
 		D6F53B8B1AC6663B00289E6C /* coin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = coin.mp3; path = Classes/Sounds/coin.mp3; sourceTree = "<group>"; };
@@ -201,8 +204,6 @@
 		D61A101F1A972E1500B2C64C /* WQCalendar */ = {
 			isa = PBXGroup;
 			children = (
-				D61A10291A972F4100B2C64C /* NSDate+Calendar.h */,
-				D61A10281A972F4100B2C64C /* NSDate+Calendar.m */,
 				D61A10261A972F4100B2C64C /* WQCalendar.h */,
 				D61A10271A972F4100B2C64C /* WQCalendar.m */,
 				D61A102C1A97302F00B2C64C /* WQCalendarTile.h */,
@@ -283,6 +284,8 @@
 				D65467B01AACA86300FE38E3 /* AccountCoreDataHelper.m */,
 				D65467B21AACA8C600FE38E3 /* ExerciseCoreDataHelper.h */,
 				D65467B31AACA8C600FE38E3 /* ExerciseCoreDataHelper.m */,
+				D6DFAB3A1AD615CD00C5D37C /* StoreCoreDataHelper.h */,
+				D6DFAB3B1AD615CD00C5D37C /* StoreCoreDataHelper.m */,
 			);
 			name = CoreDataHelpers;
 			sourceTree = "<group>";
@@ -290,6 +293,8 @@
 		D639C44E1A90DC9B00715BA9 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				D6DFAB371AD6158D00C5D37C /* Store.h */,
+				D6DFAB381AD6158D00C5D37C /* Store.m */,
 				D6B6B7B81ACFFFDD00264C5D /* Account.h */,
 				D6B6B7B91ACFFFDD00264C5D /* Account.m */,
 				D6B6B7B51ACFFFDC00264C5D /* Exercise.h */,
@@ -652,10 +657,10 @@
 				D6BBD0821AC310B300B56935 /* NSString+Base.m in Sources */,
 				D639C42D1A90DA2800715BA9 /* FitYourBuddy.xcdatamodeld in Sources */,
 				D6B6B7BA1ACFFFDD00264C5D /* Account.m in Sources */,
-				D61A102B1A972F4100B2C64C /* NSDate+Calendar.m in Sources */,
 				D676E4241AA1AE98003BF293 /* SoundTool.m in Sources */,
 				D6B5D59C1AB51D4700B6BA01 /* CompleteViewController.m in Sources */,
 				D63FCF371A9628EE00582386 /* SettingsViewController.m in Sources */,
+				D6DFAB391AD6158D00C5D37C /* Store.m in Sources */,
 				D67CE88A1ACC42C7005E8BB9 /* HistoryExerciseView.m in Sources */,
 				D6C5FAF21A9DD1A600BABA36 /* TarBarViewController.m in Sources */,
 				D6C5FAEB1A9DCC4E00BABA36 /* SquatViewController.m in Sources */,
@@ -668,6 +673,7 @@
 				D6A69ECF1A9C58CD0061603F /* PushUpViewController.m in Sources */,
 				D6FFCDDA1AD0EB9100EB8305 /* StoreViewController.m in Sources */,
 				D639C4561A90DE8400715BA9 /* IndexViewController.m in Sources */,
+				D6DFAB3C1AD615CD00C5D37C /* StoreCoreDataHelper.m in Sources */,
 				D6A8CB531ABD7FEB003F7650 /* UIView+Base.m in Sources */,
 				D61A102E1A97302F00B2C64C /* WQCalendarTile.m in Sources */,
 			);

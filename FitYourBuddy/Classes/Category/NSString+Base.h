@@ -22,7 +22,7 @@
 - (BOOL)contains:(NSString *)str;
 
 /** 从数字转到字符串 */
-+ (NSString *)getFromInteger:(NSInteger)num;
++ (NSString *)stringFromInteger:(NSInteger)num;
 
 #pragma mark - 处理时间
 /** 返回标准格式的今天日期 */

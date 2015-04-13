@@ -147,23 +147,6 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
     if (self.exerciseNum > 0) {
         //保存数据
         [ExerciseCoreDataHelper addExerciseByType:self.exerciseType andNum:self.exerciseNum withError:&error];
-        NSString *date = dict[@"date"];
-        NSString *today = [[NSString today] substringToIndex:9];
-        if (date.length == 0) {
-            needCover = YES;
-        } else {
-            date = [date substringToIndex:9];
-            if (![date isEqualToString:today]) {
-                needCover = YES;
-            }
-        }
-        if (needCover) {
-            afterTotalNum ++;
-            afterCoinNum += afterTotalNum;
-            [AccountCoreDataHelper setDataByName:@"count" andData:[NSString getFromInteger:afterTotalNum] withError:&error];
-            [AccountCoreDataHelper setDataByName:@"coin" andData:[NSString getFromInteger:afterCoinNum] withError:&error];
-            [AccountCoreDataHelper setDataByName:@"date" andData:[NSString today] withError:&error];
-        }
     }
     
     todayNum = [ExerciseCoreDataHelper getTodayNumByType:self.exerciseType withError:&error];
@@ -213,23 +196,39 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
     //判断是否完成
     if (todayNum > targetNum) {
         exerciseCompleteString = @"目标完成！";
+        NSString *date = dict[@"date"];
+        NSString *today = [[NSString today] substringToIndex:10];
+        if (date.length == 0) {
+            needCover = YES;
+        } else {
+            date = [date substringToIndex:10];
+            if (![date isEqualToString:today]) {
+                needCover = YES;
+            }
+        }
+        if (needCover) {
+            afterTotalNum ++;
+            afterCoinNum += afterTotalNum;
+            [AccountCoreDataHelper setDataByName:@"count" andData:[NSString stringFromInteger:afterTotalNum] withError:&error];
+            [AccountCoreDataHelper setDataByName:@"coin" andData:[NSString stringFromInteger:afterCoinNum] withError:&error];
+            [AccountCoreDataHelper setDataByName:@"date" andData:[NSString today] withError:&error];
+            
+            //放置箭头
+            [dayView addSubview:[self createArrowView]];
+            [coinView addSubview:[self createArrowView]];
+        }
     } else {
         exerciseCompleteString = @"再接再厉";
     }
     
     //取锻炼天数
     exerciseDayString = [NSString stringWithFormat:@"%ld天", (long)afterTotalNum];
-    if (needCover) {
-        //放置箭头
-        [dayView addSubview:[self createArrowView]];
-        [coinView addSubview:[self createArrowView]];
-    }
     
     //赋标签框
     _titleLabel.text = exerciseCompleteString;
     _textLabel.text = exerciseTypeString;
     _historyDayLabel.text = exerciseDayString;
-    _coinLabel.text = [NSString getFromInteger:afterCoinNum];
+    _coinLabel.text = [NSString stringFromInteger:afterCoinNum];
 
     //计算经验
     beforeExp = [dict[@"exp"] floatValue];
@@ -247,7 +246,7 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
     if (afterExp >= levelExp) {
         //升级啦
         NSInteger level = [dict[@"level"] integerValue] + 1;
-        [AccountCoreDataHelper setDataByName:@"level" andData:[NSString getFromInteger:level] withError:&error];
+        [AccountCoreDataHelper setDataByName:@"level" andData:[NSString stringFromInteger:level] withError:&error];
         
         afterExp = afterExp - levelExp;
     }

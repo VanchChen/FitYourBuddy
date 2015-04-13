@@ -9,6 +9,7 @@
 //存放公用方法
 @interface CommonUtil : NSObject
 
+#pragma mark - UILabel
 /**建立标签*/
 + (UILabel *)createLabelWithText:(NSString *)text;
 /**建立标签*/
@@ -20,6 +21,7 @@
 /**建立标签*/
 + (UILabel *)createLabelWithText:(NSString *)text andTextColor:(UIColor *)color andFont:(UIFont *)font andTextAlignment:(NSTextAlignment)alignment;
 
+#pragma mark - UIView
 /**创建标准圆角白底框（没有frame）*/
 + (UIView *)createView;
 /**创建标准圆角白底框*/
@@ -27,9 +29,16 @@
 /**创建标准圆角白底框(没有边框)*/
 + (UIView *)createViewWithFrame:(CGRect)frame andHasBorder:(BOOL)hasBorder;
 
+#pragma mark - UIButton
+
+#pragma mark - 规则
 /**根据经验得到等级*/
 + (float)getExpFromLevel:(NSString *)level;
 /**根据类型和等级得到目标数*/
 + (NSInteger)getTargetNumFromType:(ExerciseType)type andLevel:(NSInteger)level;
+
+#pragma mark - 方便计算的方法
+/**根据文字和字体返回可能的UILable尺寸*/
++ (CGSize)getLabelSizeByText:(NSString *)text andFont:(UIFont *)font;
 
 @end

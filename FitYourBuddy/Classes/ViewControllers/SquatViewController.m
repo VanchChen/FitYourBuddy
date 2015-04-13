@@ -49,9 +49,9 @@
     //获取3个值 单次最大记录，目标数，今天的总数
     NSError *error;
     maxExerciseNum = [ExerciseCoreDataHelper getBestNumByType:ExerciseTypeSquat withError:&error];
-    NSString *maxNumString = [NSString getFromInteger:maxExerciseNum];
-    targetNum = [[AccountCoreDataHelper getDataByName:@"squatLevel" withError:&error] integerValue] - 1 + 10;
-    NSString *targetNumString = [NSString getFromInteger:targetNum];
+    NSString *maxNumString = [NSString stringFromInteger:maxExerciseNum];
+    targetNum = [CommonUtil getTargetNumFromType:ExerciseTypeSquat andLevel:[[AccountCoreDataHelper getDataByName:@"squatLevel" withError:&error] integerValue]];
+    NSString *targetNumString = [NSString stringFromInteger:targetNum];
     
     //navigation bar
     navBarView = [[UIView alloc] init];

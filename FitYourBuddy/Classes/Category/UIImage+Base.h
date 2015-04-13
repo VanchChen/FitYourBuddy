@@ -10,4 +10,7 @@
 /** 改变尺寸 */
 -(UIImage *)transformToSize:(CGSize)newsize;
 
+/** 根据颜色尺寸生成图片 */
++(UIImage *)imageWithUIColor:(UIColor *)color andCGSize:(CGSize)size;
+
 @end

@@ -19,6 +19,9 @@ static CGFloat const ExerciseViewButtonWidth = 220.0f;               //开始锻
 static CGFloat const ExerciseViewBallonWidth = 30.0f;                //开始锻炼按钮气球宽度
 static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻炼按钮气球宽度
 
+static CGFloat const ExerciseCheckImageViewWidth = 40.0f;            //开始锻炼打勾宽度
+static CGFloat const ExerciseCheckImageViewLeftPadding = 15.0f;      //开始锻炼打勾左边距
+
 @interface ExerciseViewController ()
 {
     BOOL                isPull;
@@ -36,6 +39,11 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     UILabel             *pushUpLabel;
     UILabel             *squatLabel;
     UILabel             *walkLabel;
+    
+    UIImageView         *sitUpCheck;
+    UIImageView         *pushUpCheck;
+    UIImageView         *squatCheck;
+    UIImageView         *walkCheck;
 }
 
 @end
@@ -161,10 +169,11 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
         buttonHeight = 55;
     }
     
-    [self createExerciseButtonWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, ExerciseViewButtonTopPadding, ExerciseViewButtonWidth, buttonHeight) andSelector:@selector(tappedSitUpBtn) andBallonColor:sitUpColor andLabel:@"仰卧起坐"];
-    [self createExerciseButtonWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, ExerciseViewButtonTopPadding + ExerciseViewSmallPadding + buttonHeight, ExerciseViewButtonWidth, buttonHeight) andSelector:@selector(tappedPushUpBtn) andBallonColor:pushUpColor andLabel:@"俯卧撑"];
-    [self createExerciseButtonWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, ExerciseViewButtonTopPadding + ExerciseViewSmallPadding * 2 + buttonHeight * 2, ExerciseViewButtonWidth, buttonHeight) andSelector:@selector(tappedSquatBtn) andBallonColor:squatColor andLabel:@"深蹲"];
-    [self createExerciseButtonWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, ExerciseViewButtonTopPadding + ExerciseViewSmallPadding * 3 + buttonHeight * 3, ExerciseViewButtonWidth, buttonHeight) andSelector:@selector(tappedWalkBtn) andBallonColor:walkColor andLabel:@"步行"];
+    //放按钮和勾
+    [self createExerciseButtonWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, ExerciseViewButtonTopPadding, ExerciseViewButtonWidth, buttonHeight) andType:ExerciseTypeSitUp];
+    [self createExerciseButtonWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, ExerciseViewButtonTopPadding + ExerciseViewSmallPadding + buttonHeight, ExerciseViewButtonWidth, buttonHeight) andType:ExerciseTypePushUp];
+    [self createExerciseButtonWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, ExerciseViewButtonTopPadding + ExerciseViewSmallPadding * 2 + buttonHeight * 2, ExerciseViewButtonWidth, buttonHeight) andType:ExerciseTypeSquat];
+    [self createExerciseButtonWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, ExerciseViewButtonTopPadding + ExerciseViewSmallPadding * 3 + buttonHeight * 3, ExerciseViewButtonWidth, buttonHeight) andType:ExerciseTypeWalk];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -190,26 +199,34 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     walkLabel.text = [NSString stringWithFormat:@"%ld/%ld", (long)walkDoneNum, (long)walkNum];
     if (sitUpDoneNum >= sitUpNum) {
         [sitUpMission setBackgroundColor:themeBlueColor];
+        [sitUpCheck setHidden:NO];
     } else{
         [sitUpMission setBackgroundColor:startTrainTargetGreyColor];
+        [sitUpCheck setHidden:YES];
     }
     
     if (pushUpDoneNum >= pushUpNum) {
         [pushUpMission setBackgroundColor:themeBlueColor];
+        [pushUpCheck setHidden:NO];
     } else{
         [pushUpMission setBackgroundColor:startTrainTargetGreyColor];
+        [pushUpCheck setHidden:YES];
     }
     
     if (squatDoneNum >= squatNum) {
         [squatMission setBackgroundColor:themeBlueColor];
+        [squatCheck setHidden:NO];
     } else{
         [squatMission setBackgroundColor:startTrainTargetGreyColor];
+        [squatCheck setHidden:YES];
     }
     
     if (walkDoneNum >= walkNum) {
         [walkMission setBackgroundColor:themeBlueColor];
+        [walkCheck setHidden:NO];
     } else{
         [walkMission setBackgroundColor:startTrainTargetGreyColor];
+        [walkCheck setHidden:YES];
     }
 }
 
@@ -235,7 +252,38 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
 }
 
 // 创建按钮
-- (void)createExerciseButtonWithFrame:(CGRect)frame andSelector:(SEL)action andBallonColor:(UIColor *)color andLabel:(NSString *)label {
+- (void)createExerciseButtonWithFrame:(CGRect)frame andType:(ExerciseType)type {
+    SEL action;
+    UIColor *color;
+    NSString *label;
+    switch (type) {
+        case ExerciseTypeSitUp:
+            action = @selector(tappedSitUpBtn);
+            color = sitUpColor;
+            label = @"仰卧起坐";
+            break;
+        case ExerciseTypePushUp:
+            action = @selector(tappedPushUpBtn);
+            color = pushUpColor;
+            label = @"俯卧撑";
+            break;
+        case ExerciseTypeSquat:
+            action = @selector(tappedSquatBtn);
+            color = squatColor;
+            label = @"深蹲";
+            break;
+        case ExerciseTypeWalk:
+            action = @selector(tappedWalkBtn);
+            color = walkColor;
+            label = @"步行";
+            break;
+        default:
+            action = nil;
+            color = nil;
+            label = nil;
+            break;
+    }
+    
     UIButton* tmpButton = [[UIButton alloc] initWithFrame:frame];
     [tmpButton setBackgroundColor:[UIColor whiteColor]];
     [tmpButton addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
@@ -254,6 +302,29 @@ static CGFloat const ExerciseViewSmallPadding = 10.0f;               //开始锻
     [tmpLabel setFont:[UIFont systemFontOfSize:24]];
     [tmpLabel setText:label];
     [tmpButton addSubview:tmpLabel];
+    
+    UIImageView *checkView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ExerciseCheckImageViewWidth, ExerciseCheckImageViewWidth)];
+    [checkView setHidden:YES];
+    [checkView setImage:[UIImage imageNamed:@"ExerciseCheckIcon"]];
+    [checkView rightOfView:tmpButton withMargin:ExerciseCheckImageViewLeftPadding sameVertical:YES];
+    [buttonView addSubview:checkView];
+    
+    switch (type) {
+        case ExerciseTypePushUp:
+            pushUpCheck = checkView;
+            break;
+        case ExerciseTypeSitUp:
+            sitUpCheck = checkView;
+            break;
+        case ExerciseTypeSquat:
+            squatCheck = checkView;
+            break;
+        case ExerciseTypeWalk:
+            walkCheck = checkView;
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - Gesture Delegate

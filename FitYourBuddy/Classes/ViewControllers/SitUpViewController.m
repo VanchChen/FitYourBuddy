@@ -49,9 +49,9 @@
     //获取3个值 单次最大记录，目标数，今天的总数
     NSError *error;
     maxExerciseNum = [ExerciseCoreDataHelper getBestNumByType:ExerciseTypePushUp withError:&error];
-    NSString *maxNumString = [NSString getFromInteger:maxExerciseNum];
-    targetNum = [[AccountCoreDataHelper getDataByName:@"pushUpLevel" withError:&error] integerValue] - 1 + 10;
-    NSString *targetNumString = [NSString getFromInteger:targetNum];
+    NSString *maxNumString = [NSString stringFromInteger:maxExerciseNum];
+    targetNum = [CommonUtil getTargetNumFromType:ExerciseTypeSitUp andLevel:[[AccountCoreDataHelper getDataByName:@"sitUpLevel" withError:&error] integerValue]];
+    NSString *targetNumString = [NSString stringFromInteger:targetNum];
     
     //navigation bar
     navBarView = [[UIView alloc] init];

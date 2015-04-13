@@ -40,9 +40,9 @@
     //获取3个值 单次最大记录，目标数，今天的总数
     NSError *error;
     maxExerciseNum = [ExerciseCoreDataHelper getBestNumByType:ExerciseTypeWalk withError:&error];
-    NSString *maxNumString = [NSString getFromInteger:maxExerciseNum];
-    targetNum = ([[AccountCoreDataHelper getDataByName:@"walkLevel" withError:&error] integerValue] - 1) * 100 + 1000;
-    NSString *targetNumString = [NSString getFromInteger:targetNum];
+    NSString *maxNumString = [NSString stringFromInteger:maxExerciseNum];
+    targetNum = [CommonUtil getTargetNumFromType:ExerciseTypeWalk andLevel:[[AccountCoreDataHelper getDataByName:@"walkLevel" withError:&error] integerValue]];
+    NSString *targetNumString = [NSString stringFromInteger:targetNum];
     
     //navigation bar
     UIView *navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPCONFIG_UI_VIEW_FWIDTH, APPCONFIG_UI_STATUSBAR_HEIGHT + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT)];

@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>EE28B609-E155-491D-BB31-2031B70CDA45</string>
 	<key>IDESourceControlProjectName</key>
-	<string>FitYourBuddy</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>E52C0D228EEC8CB556A05208F0371ADA5C01EF77</key>
 		<string>https://github.com/447389831/FitYourBuddy.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>FitYourBuddy.xcodeproj</string>
+	<string>FitYourBuddy.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>E52C0D228EEC8CB556A05208F0371ADA5C01EF77</key>

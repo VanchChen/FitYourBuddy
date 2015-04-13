@@ -36,6 +36,11 @@
 
 //在视图上方多少像素
 - (void)topOfView:(UIView *)view withMargin:(CGFloat)margin {
+    [self topOfView:view withMargin:margin sameHorizontal:NO];
+}
+
+/**移动到兄弟view的左方，指定间距，并且指定是否水平居中*/
+- (void)topOfView:(UIView *)view withMargin:(CGFloat)margin sameHorizontal:(BOOL)same {
     if (nil == view) {
         return;
     }
@@ -43,6 +48,10 @@
     CGRect rect = self.frame;
     
     rect.origin.y = view.frame.origin.y - self.frame.size.height - margin;
+    
+    if (same) {
+        rect.origin.x = view.frame.origin.x + (view.frame.size.width - rect.size.width) / 2;
+    }
     
     self.frame = rect;
 }
@@ -54,6 +63,11 @@
 
 //在视图下方多少像素
 - (void)bottomOfView:(UIView *)view withMargin:(CGFloat)margin {
+    [self bottomOfView:view withMargin:margin sameHorizontal:NO];
+}
+
+/**移动到兄弟view的下方，指定间距，并且指定是否水平居中*/
+- (void)bottomOfView:(UIView *)view withMargin:(CGFloat)margin sameHorizontal:(BOOL)same {
     if (nil == view) {
         return;
     }
@@ -61,6 +75,10 @@
     CGRect rect = self.frame;
     
     rect.origin.y = view.frame.origin.y + view.frame.size.height + margin;
+    
+    if (same) {
+        rect.origin.x = view.frame.origin.x + (view.frame.size.width - rect.size.width) / 2;
+    }
     
     self.frame = rect;
 }

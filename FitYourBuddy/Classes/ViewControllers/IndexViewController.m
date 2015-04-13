@@ -24,11 +24,14 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
 
 @interface IndexViewController ()<UIScrollViewDelegate, UIGestureRecognizerDelegate>
 {
-    NSDictionary        *accountDict;
     UIView              *scrollBlock;
-    UIView              *fatGuyFrameView; //胖子圆框
+    UIView              *fatGuyFrameView;   //胖子圆框
     
-    WQProgressBar       *levelProgressBar;//经验框
+    UILabel             *fatGuyNameLabel;   //名字框
+    UILabel             *leftHistoryDayLabel;//坚持天数
+    UILabel             *rightDayTipLabel;  //等级数字框
+    WQProgressBar       *levelProgressBar;  //经验框
+    WQCalendar          *calendar;          //日历
 }
 
 @end
@@ -47,24 +50,13 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
     backItem.title = @"";
     self.navigationItem.backBarButtonItem = backItem;
     
-    //获取姓名和性别
-    NSError *error;
-    accountDict = [AccountCoreDataHelper getAccountDictionaryWithError:&error];
-    NSString *fatGuyName = [NSString stringWithFormat:@"早上好，%@", accountDict[@"name"]];
-    NSString *fatGuyCount = [NSString stringWithFormat:@"%@天", accountDict[@"count"]];
-    NSString *fatGuyLevel = [NSString stringWithFormat:@"等级Lv.%@", accountDict[@"level"]];
-    float fullExp = [CommonUtil getExpFromLevel:accountDict[@"level"]];
-    float exp = [accountDict[@"exp"] floatValue];
-    exp = exp / fullExp;
-    
     //添加小胖砸界面
     CGFloat fatGuyViewHeight = APPCONFIG_UI_SCREEN_VHEIGHT - LevelViewHeight - TitleLabelWidth - APPCONFIG_UI_VIEW_BETWEEN_PADDING * 3;
     UIView* fatGuyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPCONFIG_UI_SCREEN_FWIDTH, fatGuyViewHeight)];
     [fatGuyView setBackgroundColor:themeBlueColor];
     [self.view addSubview:fatGuyView];
     
-    UILabel* fatGuyNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
-    [fatGuyNameLabel setText:fatGuyName];
+    fatGuyNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
     [fatGuyNameLabel setTextColor:[UIColor whiteColor]];
     [fatGuyNameLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [fatGuyNameLabel setBackgroundColor:[UIColor clearColor]];
@@ -120,7 +112,7 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
     [leftDayView addSubview:leftCalendarImage];
     [leftCalendarImage bottomOfView:leftDayTipLabel withMargin:CalendarImageMargin.bottom];
     
-    UILabel *leftHistoryDayLabel = [CommonUtil createLabelWithText:fatGuyCount andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:24] andTextAlignment:NSTextAlignmentCenter];
+    leftHistoryDayLabel = [CommonUtil createLabelWithText:@"" andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:24] andTextAlignment:NSTextAlignmentCenter];
     leftHistoryDayLabel.frame = CGRectMake(0, APPCONFIG_UI_VIEW_BETWEEN_PADDING, leftCalendarImage.width, leftCalendarImage.height - APPCONFIG_UI_VIEW_BETWEEN_PADDING);
     [leftCalendarImage addSubview:leftHistoryDayLabel];
     
@@ -130,7 +122,7 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
     [rightDayView topOfView:startTrainBtn withMargin:APPCONFIG_UI_VIEW_BETWEEN_PADDING];
     [rightDayView rightOfView:leftDayView withMargin:APPCONFIG_UI_VIEW_BETWEEN_PADDING];
     
-    UILabel *rightDayTipLabel = [CommonUtil createLabelWithText:fatGuyLevel andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:15] andTextAlignment:NSTextAlignmentCenter];
+    rightDayTipLabel = [CommonUtil createLabelWithText:@"" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:15] andTextAlignment:NSTextAlignmentCenter];
     rightDayTipLabel.frame = CGRectMake(0, 0, rightDayView.width, DayLabelHeight);
     [rightDayView addSubview:rightDayTipLabel];
     
@@ -167,7 +159,7 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
     [calendarBackground addSubview:calendarDate];
     
     if ([today numberOfWeeksInMonth] == 6) {
-        WQCalendar* calendar = [[WQCalendar alloc] initWithFrame:CGRectMake(10, 20, calendarBackground.frame.size.width - 20, 245)];
+        calendar = [[WQCalendar alloc] initWithFrame:CGRectMake(10, 20, calendarBackground.frame.size.width - 20, 245)];
         [calendarBackground addSubview:calendar];
     } else {
         float tileWidth = (calendarBackground.frame.size.width - 20) / 7;
@@ -219,7 +211,7 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
             }
         }
         
-        WQCalendar* calendar = [[WQCalendar alloc] initWithFrame:CGRectMake(10, 20 + tileWidth, calendarBackground.frame.size.width - 20, 245)];
+        calendar = [[WQCalendar alloc] initWithFrame:CGRectMake(10, 20 + tileWidth, calendarBackground.frame.size.width - 20, 245)];
         [calendarBackground addSubview:calendar];
     }
     //全局下拉块
@@ -250,33 +242,37 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
     //发型
     NSString *hairImageUrl = [NSString stringWithFormat:@"hair_%@", _dict[@"hair"]];
     UIImageView *_hairImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:hairImageUrl]];
-    _hairImage.center = CGPointMake(fatGuyFrameView.width / 2.0f + 3.0f, 38.0f);
+    _hairImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f);//fatGuyFrameView.width / 2.0f + 3.0f, 38.0f
     [fatGuyFrameView addSubview:_hairImage];
     
     //眼睛
     NSString *eyeImageUrl = [NSString stringWithFormat:@"eye_%@", _dict[@"eye"]];
     UIImageView *_eyeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:eyeImageUrl]];
-    _eyeImage.center = CGPointMake(fatGuyFrameView.width / 2.0f - 1.0f, 54.0f);
+    _eyeImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f);//fatGuyFrameView.width / 2.0f - 1.0f, 54.0f
     [fatGuyFrameView addSubview:_eyeImage];
     
     //嘴巴
     NSString *mouthImageUrl = [NSString stringWithFormat:@"mouth_%@", _dict[@"mouth"]];
     UIImageView *_mouthImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:mouthImageUrl]];
-    _mouthImage.center = CGPointMake(fatGuyFrameView.width / 2.0f - 1.0f, 80.0f);
+    _mouthImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f);//fatGuyFrameView.width / 2.0f - 1.0f, 80.0f
     [fatGuyFrameView addSubview:_mouthImage];
-    
-    CGRect frame = _mouthImage.frame;
-    frame.origin.y = 75.0f;
-    _mouthImage.frame = frame;
     
     //衣服
     NSString *clothesImageUrl = [NSString stringWithFormat:@"clothes_%@_%@", _dict[@"clothes"], _dict[@"level"]];
     UIImageView *_clothesImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:clothesImageUrl]];
-    _clothesImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, 136.0f);
+    _clothesImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f);
     [fatGuyFrameView addSubview:_clothesImage];
+    
+    //获取姓名和性别
+    fatGuyNameLabel.text = [NSString stringWithFormat:@"早上好，%@", _dict[@"name"]];
+    leftHistoryDayLabel.text = [NSString stringWithFormat:@"%@天", _dict[@"count"]];
+    rightDayTipLabel.text = [NSString stringWithFormat:@"等级Lv.%@", _dict[@"level"]];
     
     //经验
     [levelProgressBar loadLevelAndExp];
+    
+    //加载日历数据
+    [calendar reloadData];
 }
 
 #pragma mark - Class Extention Delegate

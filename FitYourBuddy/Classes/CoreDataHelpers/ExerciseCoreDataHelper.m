@@ -158,13 +158,11 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Exercise" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *today = [[NSDate date] endOfDay];
-    NSDate *dayFromLastWeek = today.associateDayOfThePreviousWeek.beginingOfDay;
+    NSString *today = [[[NSDate date] endOfDay] dateString];
+    NSString *dayFromLastWeek = [NSDate date].associateDayOfThePreviousWeek.beginingOfDay.dateString;
     
     //过滤
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type = %d and date > %@ and date < %@", type, [formatter stringFromDate:dayFromLastWeek], [formatter stringFromDate:today]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type = %d and date >= %@ and date <= %@", type, dayFromLastWeek, today];
     [fetchRequest setPredicate:predicate];
     //按照日期正序排序
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
@@ -187,19 +185,64 @@
                 lastDate = tmpDate;
                 count += [[obj valueForKey:@"num"] integerValue];
             } else {
-                [dictionary setObject:[NSString getFromInteger:count] forKey:lastDate];
+                [dictionary setObject:[NSString stringFromInteger:count] forKey:lastDate];
                 
                 lastDate = tmpDate;
                 count = [[obj valueForKey:@"num"] integerValue];
             }
         }
-        [dictionary setObject:[NSString getFromInteger:count] forKey:lastDate];
+        [dictionary setObject:[NSString stringFromInteger:count] forKey:lastDate];
         
         if (dictionary.count > 0) {
             return dictionary;
         }
         
-        return nil;;
+        return nil;
+    }
+}
+
+/**得到某一个月的锻炼情况*/
++ (NSArray *)getMonthExerciseDayByDate:(NSDate *)date withError:(NSError **)error {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context = [appDelegate managedObjectContext];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Exercise" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSString *firstDate = [[[date firstDayOfTheMonth] beginingOfDay] dateString];
+    NSString *lastDate = [[[date lastDayOfTheMonth] endOfDay] dateString];
+    
+    //过滤
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"date >= %@ and date <= %@", firstDate, lastDate];
+    [fetchRequest setPredicate:predicate];
+    
+    //按照日期正序排序
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    NSArray *objects = [context executeFetchRequest:fetchRequest error:error];
+    
+    if (objects == nil || [objects count] == 0) {
+        return nil;
+    } else {
+        NSInteger tmpDay = 0, lastDay = 0;
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        
+        for (Exercise *obj in objects)
+        {
+            tmpDay = [[obj.date formatDay] integerValue];
+            if (lastDay == 0) {
+                [array addObject:@(tmpDay)];
+                lastDay = tmpDay;
+            } else if (lastDay != tmpDay) {
+                [array addObject:@(tmpDay)];
+                lastDay = tmpDay;
+            }
+        }
+        
+        return array;
     }
 }
 
@@ -215,8 +258,8 @@
     NSManagedObject *theLine = [NSEntityDescription insertNewObjectForEntityForName:@"Exercise" inManagedObjectContext:context];
     
     [theLine setValue:[formatter stringFromDate:[NSDate date]] forKey:@"date"];
-    [theLine setValue:[NSString getFromInteger:num] forKey:@"num"];
-    [theLine setValue:[NSString getFromInteger:type] forKey:@"type"];
+    [theLine setValue:[NSString stringFromInteger:num] forKey:@"num"];
+    [theLine setValue:[NSString stringFromInteger:type] forKey:@"type"];
     
     if (![context save:error]) {
         return false;
