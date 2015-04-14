@@ -85,9 +85,13 @@ static const UIEdgeInsets CalendarImageMargin = (UIEdgeInsets){0,25,-5,25};
     [fatGuyView addSubview:fatGuyFrameView];
     
     //开始锻炼按钮
-    UIButton* startTrainBtn = [[UIButton alloc] initWithFrame:CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - StartButtonWidth) / 2, APPCONFIG_UI_SCREEN_VHEIGHT - APPCONFIG_UI_VIEW_BETWEEN_PADDING  - TitleLabelWidth, StartButtonWidth, TitleLabelWidth)];
-    [startTrainBtn setBackgroundColor:themeRedColor];
-    [[startTrainBtn layer] setCornerRadius:15];
+    UIButton* startTrainBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    startTrainBtn.frame = CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - StartButtonWidth) / 2, APPCONFIG_UI_SCREEN_VHEIGHT - APPCONFIG_UI_VIEW_BETWEEN_PADDING  - TitleLabelWidth, StartButtonWidth, TitleLabelWidth);
+    //[startTrainBtn setBackgroundColor:themeRedColor];
+    [startTrainBtn setBackgroundImage:[UIImage imageWithUIColor:themeGreyColor andCGSize:startTrainBtn.bounds.size] forState:UIControlStateDisabled];
+    [startTrainBtn setBackgroundImage:[UIImage imageWithUIColor:themeRedColor andCGSize:startTrainBtn.bounds.size] forState:UIControlStateNormal];
+    startTrainBtn.layer.cornerRadius = 15.0f;
+    startTrainBtn.layer.masksToBounds = YES;
     [startTrainBtn addTarget:self action:@selector(tappedStartTrainBtn) forControlEvents:UIControlEventTouchUpInside];
     [startTrainBtn setTitle:@"开始锻炼" forState:UIControlStateNormal];
     [startTrainBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

@@ -335,13 +335,9 @@ static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
 }
 
 - (void)tappedPictButton:(UIButton *)button {
-    NSInteger index = 0, newIndex = 0;
+    NSInteger index = 0, newIndex = button.tag - pictureButtonTag * self.storeType;
     
-    //先设置现在为选中
-    button.layer.borderColor = themeBlueColor.CGColor;
-    newIndex = button.tag - pictureButtonTag * self.storeType;
-    
-    //再找到原先选中的
+    //先找到原先选中的
     switch (self.storeType) {
         case StoreTypeHair:
             index = _hairChoice + pictureButtonTag * self.storeType;
@@ -368,6 +364,9 @@ static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
     }
     UIButton *tmpButton = (UIButton *)[_partPictScrollView viewWithTag:index];
     tmpButton.layer.borderColor = themeGreyColor.CGColor;
+    
+    //后设置现在为选中
+    button.layer.borderColor = themeBlueColor.CGColor;
 }
 
 //根据当前类型改变按钮选中状态
