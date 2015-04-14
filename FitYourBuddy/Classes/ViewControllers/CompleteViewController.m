@@ -194,7 +194,7 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
     }
     
     //判断是否完成
-    if (todayNum > targetNum) {
+    if (todayNum >= targetNum) {
         exerciseCompleteString = @"目标完成！";
         NSString *date = dict[@"date"];
         NSString *today = [[NSString today] substringToIndex:10];
