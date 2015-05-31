@@ -97,4 +97,19 @@
     return [self substringWithRange:NSMakeRange(0, 10)];
 }
 
+#pragma mark - 判断是否是数字
+/** 字符串是否是整形 */
+- (BOOL)isPureInt {
+    NSScanner* scan = [NSScanner scannerWithString:self];
+    int val;
+    return[scan scanInt:&val] && [scan isAtEnd];
+}
+
+/** 字符串是否是浮点型 */
+- (BOOL)isPureFloat {
+    NSScanner* scan = [NSScanner scannerWithString:self];
+    float val;
+    return[scan scanFloat:&val] && [scan isAtEnd];
+}
+
 @end

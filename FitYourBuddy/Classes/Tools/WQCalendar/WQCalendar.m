@@ -23,7 +23,7 @@ static NSInteger const titleTag = 100;              //单元格起始tag
     self = [super initWithFrame:frame];
     if (self) {
         _tileWidth = frame.size.width / 7;
-        NSDate* date = [[NSDate date] firstDayOfTheMonth];
+        NSDate* date = [[[NSDate date] firstDayOfTheMonth] associateDayOfThePreviousMonth];
         _row = (int)date.numberOfWeeksInMonth;
         NSInteger dayCount = date.weekday;
         dayCount = dayCount - (dayCount - 1) * 2;

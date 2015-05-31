@@ -37,6 +37,7 @@
     label.textColor = color;
     label.font = font;
     label.textAlignment = alignment;
+    label.adjustsFontSizeToFitWidth = YES;
     
     return label;
 }

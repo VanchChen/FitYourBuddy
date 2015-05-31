@@ -10,6 +10,18 @@
 
 @interface SoundTool : NSObject
 
-+(void)playsound:(NSString *)soundname;
+/** 播放准备音效 */
++(void)playSoundWithReadyNum:(NSInteger)num;
+
+/** 播放运动音效 */
++(void)playSoundWithExerciseNum:(NSInteger)num;
+
+/**
+ *  播放音效
+ *
+ *  @param soundname 音乐文件名
+ *  @param type      文件类型
+ */
++(void)playSound:(NSString *)soundname type:(NSString *)type;
 
 @end

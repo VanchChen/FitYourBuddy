@@ -26,9 +26,9 @@ static CGFloat const GenderButtonLeftPadding = 40.0f;
 static CGFloat const GenderButtonWidth = 110.0f;
 static CGFloat const GenderExplainLabelTopPadding = 10.0f;
 static CGFloat const GenderExplainLabelHeight = 20.0f;
-static CGFloat const AccountButtonHeight = 20.0f;
-static CGFloat const AccountButtonWidth = 200.0f;
-static CGFloat const AccountButtonBottomPadding = 40.0f;
+//static CGFloat const AccountButtonHeight = 20.0f;
+//static CGFloat const AccountButtonWidth = 200.0f;
+//static CGFloat const AccountButtonBottomPadding = 40.0f;
 
 @interface WelcomeViewController () <UITextFieldDelegate>
 {
@@ -51,7 +51,7 @@ static CGFloat const AccountButtonBottomPadding = 40.0f;
     [titleLabel setFont:[UIFont systemFontOfSize:30.f]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     [titleLabel setTextColor:tipTitleLabelColor];
-    [titleLabel setText:@"快来创造小胖砸！"];
+    [titleLabel setText:@"请先选择性别"];
     [titleLabel setCenter:CGPointMake(self.view.center.x + 5.0f, titleLabel.center.y)];
     [self.view addSubview:titleLabel];
     
@@ -104,12 +104,12 @@ static CGFloat const AccountButtonBottomPadding = 40.0f;
     [femaleLabel bottomOfView:maleImage withMargin:GenderExplainLabelTopPadding];
     
     //已有账号
-    UIButton *accountButton = [[UIButton alloc] init];
-    [accountButton setAttributedTitle:[@"已有账号，请直接登录>" bottomLineString] forState:UIControlStateNormal];
-    [accountButton setTitleColor:saveTextGreyColor forState:UIControlStateNormal];
-    accountButton.frame = CGRectMake(0, APPCONFIG_UI_SCREEN_FHEIGHT - AccountButtonBottomPadding - AccountButtonHeight, AccountButtonWidth, AccountButtonHeight);
-    [accountButton centerOfView:self.view];
-    [self.view addSubview:accountButton];
+//    UIButton *accountButton = [[UIButton alloc] init];
+//    [accountButton setAttributedTitle:[@"已有账号，请直接登录>" bottomLineString] forState:UIControlStateNormal];
+//    [accountButton setTitleColor:saveTextGreyColor forState:UIControlStateNormal];
+//    accountButton.frame = CGRectMake(0, APPCONFIG_UI_SCREEN_FHEIGHT - AccountButtonBottomPadding - AccountButtonHeight, AccountButtonWidth, AccountButtonHeight);
+//    [accountButton centerOfView:self.view];
+//    [self.view addSubview:accountButton];
 }
 
 #pragma mark - Name View
@@ -124,21 +124,26 @@ static CGFloat const AccountButtonBottomPadding = 40.0f;
     [popBackgroundButton addTarget:self action:@selector(tappedNameViewBackground:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:popBackgroundButton];
     
-    popView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(popBackgroundButton.bounds) - 40, 160)];
-    popView.backgroundColor = themeBlueColor;
+    popView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width - 40, 160)];
+    popView.backgroundColor = popContentColor;
     popView.center = popBackgroundButton.center;
     popView.layer.cornerRadius = 16;
     popView.layer.masksToBounds = YES;
-    [popBackgroundButton addSubview:popView];
+    popView.layer.borderColor = themeBlueColor.CGColor;
+    popView.layer.borderWidth = 2.0f;
+    [self.view addSubview:popView];
     
-    UILabel *popViewTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, CGRectGetWidth(popView.bounds) - 40, 40)];
-    popViewTitleLabel.textColor = [UIColor whiteColor];
-    popViewTitleLabel.font = [UIFont boldSystemFontOfSize:18];
-    popViewTitleLabel.text = @"我的名字是...";
+    UILabel *popViewTitleLabel = [CommonUtil createLabelWithText:@"我的名字是..." andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:18] andTextAlignment:NSTextAlignmentCenter];
+    popViewTitleLabel.frame = CGRectMake(20, 10, CGRectGetWidth(popView.bounds) - 40, 40);
     [popView addSubview:popViewTitleLabel];
     
     popViewTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 60, CGRectGetWidth(popView.bounds) - 40, 40)];
+    popViewTextField.layer.cornerRadius = 16;
+    popViewTextField.layer.masksToBounds = YES;
+    popViewTextField.layer.borderColor = tipTitleLabelColor.CGColor;
+    popViewTextField.layer.borderWidth = 0.5f;
     popViewTextField.backgroundColor = [UIColor whiteColor];
+    popViewTextField.textAlignment = NSTextAlignmentCenter;
     popViewTextField.tintColor = tipTitleLabelColor;
     popViewTextField.textColor = tipTitleLabelColor;
     popViewTextField.font = [UIFont boldSystemFontOfSize:20];
@@ -148,8 +153,8 @@ static CGFloat const AccountButtonBottomPadding = 40.0f;
     popViewTextField.delegate = self;
     [popView addSubview:popViewTextField];
     
-    UIButton *popViewCommitButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 113, CGRectGetWidth(popView.bounds) - 120, 34)];
-    popViewCommitButton.backgroundColor = themeOrangeColor;
+    UIButton *popViewCommitButton = [[UIButton alloc] initWithFrame:CGRectMake(75, 113, CGRectGetWidth(popView.bounds) - 150, 34)];
+    popViewCommitButton.backgroundColor = themeBlueColor;
     popViewCommitButton.titleLabel.textColor = [UIColor whiteColor];
     popViewCommitButton.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     popViewCommitButton.layer.cornerRadius = 10;
@@ -164,6 +169,7 @@ static CGFloat const AccountButtonBottomPadding = 40.0f;
 - (void)tappedNameViewBackground:(UIButton *)sender
 {
     [sender removeFromSuperview];
+    [popView removeFromSuperview];
 }
 
 //点击确认框

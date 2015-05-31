@@ -10,9 +10,33 @@
 
 @implementation SoundTool
 
-+(void)playsound:(NSString *)soundname{
+/** 播放准备音效 */
++(void)playSoundWithReadyNum:(NSInteger)num {
+    if (num == 4) {
+        [self playSound:@"ready" type:@"mp3"];
+    } else {
+        [self playSound:[NSString stringWithFormat:@"%ld", (long)num] type:@"mp3"];
+    }
+}
+
+/** 播放运动音效 */
++(void)playSoundWithExerciseNum:(NSInteger)num {
+    if (num == 0) {
+        return;
+    }
+    
+    //NSArray *soundArray = @[@"c4",@"d4",@"e4",@"g4",@"a4",@"c5",@"a4",@"g4",@"e4",@"d4"];
+    NSArray *canon = @[@"d4",@"a3",@"b3",@"f3#",@"g3",@"d3",@"g3",@"a3"];
+    NSInteger mod = num % canon.count - 1;
+    if (mod < 0) {
+        mod += canon.count;
+    }
+    [self playSound:canon[mod] type:@"wav"];
+}
+
++(void)playSound:(NSString *)soundname type:(NSString *)type{
     if (soundname.length > 0) {
-        NSURL* system_sound_url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:soundname ofType:@"wav"]];
+        NSURL* system_sound_url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:soundname ofType:type]];
         SystemSoundID system_sound_id;
         
         AudioServicesCreateSystemSoundID(

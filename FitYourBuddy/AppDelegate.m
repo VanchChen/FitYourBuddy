@@ -7,11 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
-#import "AccountCoreDataHelper.h"
-#import "WelcomeViewController.h"
-
-#import "TarBarViewController.h"
+#import "LoadingViewController.h"
 #import "TimerManager.h"
 
 @interface AppDelegate ()
@@ -31,29 +27,18 @@
     
     //设置导航条全局统一样式
     [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"NavShadowImage"]];
+    //[[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"NavShadowImage"]];
     [[UINavigationBar appearance] setTranslucent:NO];
-    [[UINavigationBar appearance] setBarTintColor:themePureBlueColor];
+    [[UINavigationBar appearance] setBarTintColor:tarBarColor];//themePureBlueColor
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:20]}];
     
     //开始计时器
     [[TimerManager sharedManager] startTickTock];
     
-    //判断是否有本地数据
-    NSError *error;
-    NSString* name = [AccountCoreDataHelper getDataByName:@"name" withError:&error];
-    if (name == nil) {
-        //第一次使用，创建初始存档
-        WelcomeViewController* welcomeView = [[WelcomeViewController alloc] init];
-        [self.window setRootViewController:welcomeView];
-    } else {
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-        
-        TarBarViewController* tabBarController = [[TarBarViewController alloc] init];
-        [self.window setRootViewController:tabBarController];
-    }
+    //进入欢迎页面
+    LoadingViewController *loadingVC = [[LoadingViewController alloc] init];
+    [self.window setRootViewController:loadingVC];
     
     return YES;
 }

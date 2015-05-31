@@ -33,23 +33,26 @@
 //公用颜色值
 #define themeBlueColor              RGB_A(0, 150, 255, 0.8)
 #define themePureBlueColor          RGB_A(48, 168, 252, 1)
+#define shadowBlueColor             RGB_A(47, 124, 201, 1)
 #define themeDeepBlueColor          RGB_A(0, 150, 255, 1)
 #define themeRedColor               RGB_A(255, 126, 121, 1)
 #define themeGreyColor              RGB_A(214, 214, 214, 1)
 #define themeOrangeColor            RGB_A(255, 169, 91, 1)
 #define themeDarkOrangeColor        RGB_A(255, 139, 0, 1)
 
-#define indexBackgroundColor        RGB_A(239, 239, 239, 1)
+#define indexBackgroundColor        RGB_A(246, 246, 246, 1)
+#define tarBarColor                 RGB_A(66, 66, 66, 1)
 
-#define sitUpColor                  RGB_A(179, 106, 226, 0.8)
-#define pushUpColor                 RGB_A(255, 169, 91, 1)
-#define squatColor                  RGB_A(51, 228, 188, 1)
-#define walkColor                   RGB_A(253, 101, 109, 1)
+#define sitUpColor                  RGB_A(112, 191, 65, 1)
+#define pushUpColor                 RGB_A(243, 144, 25, 1)
+#define squatColor                  RGB_A(236, 93, 87, 1)
+#define walkColor                   RGB_A(179, 106, 226, 1)
 
 #define saveButtonGreyColor         RGB_A(235, 235, 235, 1)
 #define saveTextGreyColor           RGB_A(192, 192, 192, 1)
 
-#define popBackgroundColor          RGB_A(214, 214, 214, 0.8)
+#define popBackgroundColor          RGB_A(66, 66, 66, 0.8)
+#define popContentColor             RGB_A(246, 246, 246, 1)
 #define transparentBlackColor       RGB_A(0, 0, 0, 0.4)
 #define transparentWhiteColor       RGB_A(255, 255, 255, 0.4)
 
@@ -66,6 +69,9 @@
 #define APPCONFIG_UI_TABBAR_HEIGHT          49.0f                       // 系统自带的导航条的高度
 #define APPCONFIG_UI_VIEW_PADDING           20.0f                       // 默认视图边距
 #define APPCONFIG_UI_VIEW_BETWEEN_PADDING   10.0f                       // 默认视图间距
+#define APPCONFIG_UI_TABLE_CELL_HEIGHT      44.0f                       // UITableView 单元格默认高度
+#define APPCONFIG_UI_ERROR_CELL_HEIGHT      180.0f                      // UITableView 异常单元格默认高度
+#define APPCONFIG_UI_TABLE_PADDING          10.0f                       // UITableView 的默认边距
 
 // UI 界面大小
 #define APPCONFIG_UI_SCREEN_FHEIGHT             ([UIScreen mainScreen].bounds.size.height)              //界面的高度 iphone5 568 其他480

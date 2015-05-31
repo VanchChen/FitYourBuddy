@@ -10,7 +10,7 @@
 
 static CGFloat const recordViewBetweenPadding = 20.f;           //个人记录框之间的间距
 static CGFloat const recordViewHeight = 70.f;                   //个人记录框高度
-static CGFloat const recordViewTipLabelHeight = 40.f;           //个人记录框标题高度
+static CGFloat const recordViewTipLabelHeight = 35.f;           //个人记录框标题高度
 
 static CGFloat const calorieLabelLeftPadding = 30.f;            //卡路里框左边距
 static CGFloat const calorieLabelTopPadding = 10.f;             //卡路里框上边距
@@ -79,43 +79,45 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
     CGFloat recordWidth = (APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2 - recordViewBetweenPadding) / 2.0f;
     UIView *recordView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, APPCONFIG_UI_VIEW_PADDING, recordWidth, recordViewHeight)];
     recordView.layer.borderColor = _typeColor.CGColor;
+    recordView.layer.borderWidth = 2.0f;
     [self addSubview:recordView];
     
-    UILabel *recordTipLabel = [CommonUtil createLabelWithText:@"个人记录" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:18.0] andTextAlignment:NSTextAlignmentCenter];
+    UILabel *recordTipLabel = [CommonUtil createLabelWithText:@"个人记录" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:16.0] andTextAlignment:NSTextAlignmentCenter];
     recordTipLabel.frame = CGRectMake(0, 0, recordWidth, recordViewTipLabelHeight);
     [recordView addSubview:recordTipLabel];
     
-    _recordLabel = [CommonUtil createLabelWithText:@"0" andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:18.0f] andTextAlignment:NSTextAlignmentCenter];
+    _recordLabel = [CommonUtil createLabelWithText:@"0" andTextColor:_typeColor andFont:[UIFont boldSystemFontOfSize:24.0f] andTextAlignment:NSTextAlignmentCenter];
     _recordLabel.frame = CGRectMake(0, recordViewTipLabelHeight, recordWidth, recordViewHeight - recordViewTipLabelHeight - APPCONFIG_UI_VIEW_BETWEEN_PADDING);//底部留10px
     [recordView addSubview:_recordLabel];
     
     //生涯总数框
     UIView *countView = [CommonUtil createViewWithFrame:CGRectMake(0, 0, recordWidth, recordViewHeight)];
     countView.layer.borderColor = _typeColor.CGColor;
+    countView.layer.borderWidth = 2.0f;
     [self addSubview:countView];
     [countView rightOfView:recordView withMargin:recordViewBetweenPadding sameVertical:YES];
     
-    UILabel *countTipLabel = [CommonUtil createLabelWithText:@"生涯总数" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:18.0] andTextAlignment:NSTextAlignmentCenter];
+    UILabel *countTipLabel = [CommonUtil createLabelWithText:@"生涯总数" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:16.0] andTextAlignment:NSTextAlignmentCenter];
     countTipLabel.frame = CGRectMake(0, 0, recordWidth, recordViewTipLabelHeight);
     [countView addSubview:countTipLabel];
     
-    _countLabel = [CommonUtil createLabelWithText:@"0" andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:18.0f] andTextAlignment:NSTextAlignmentCenter];
+    _countLabel = [CommonUtil createLabelWithText:@"0" andTextColor:_typeColor andFont:[UIFont boldSystemFontOfSize:24.0f] andTextAlignment:NSTextAlignmentCenter];
     _countLabel.frame = CGRectMake(0, recordViewTipLabelHeight, recordWidth, recordViewHeight - recordViewTipLabelHeight - APPCONFIG_UI_VIEW_BETWEEN_PADDING);//底部留10px
     [countView addSubview:_countLabel];
     
     //数据框
-    CGFloat dataViewHeight = self.height - CGRectGetMaxY(recordView.frame) - APPCONFIG_UI_VIEW_PADDING - APPCONFIG_UI_VIEW_BETWEEN_PADDING;
+    CGFloat dataViewHeight = self.height - CGRectGetMaxY(recordView.frame) - APPCONFIG_UI_VIEW_PADDING - APPCONFIG_UI_VIEW_PADDING;
     _dataView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, 0, APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2, dataViewHeight) andHasBorder:NO];
     _dataView.backgroundColor = _typeColor;
     [self addSubview:_dataView];
-    [_dataView bottomOfView:countView withMargin:APPCONFIG_UI_VIEW_BETWEEN_PADDING];
+    [_dataView bottomOfView:countView withMargin:APPCONFIG_UI_VIEW_PADDING];
     
     //卡路里框
-    _calorieLabel = [CommonUtil createLabelWithText:@"最近一周共消耗90大卡" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:16.0] andTextAlignment:NSTextAlignmentCenter];
+    _calorieLabel = [CommonUtil createLabelWithText:@"最近七天共消耗卡路里90千卡" andTextColor:[UIColor whiteColor] andFont:[UIFont boldSystemFontOfSize:16.0] andTextAlignment:NSTextAlignmentCenter];
     _calorieLabel.frame = CGRectMake(calorieLabelLeftPadding, calorieLabelTopPadding, _dataView.width - calorieLabelLeftPadding * 2, calorieLabelHeight);
-    _calorieLabel.backgroundColor = [UIColor whiteColor];
-    _calorieLabel.layer.cornerRadius = 12.0f;
-    _calorieLabel.layer.masksToBounds = YES;
+    _calorieLabel.backgroundColor = [UIColor clearColor];
+    //_calorieLabel.layer.cornerRadius = 12.0f;
+    //_calorieLabel.layer.masksToBounds = YES;
     [_dataView addSubview:_calorieLabel];
     
     //柱状图
@@ -212,7 +214,8 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
         _numLabel = [CommonUtil createLabelWithText:@"" andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:20] andTextAlignment:NSTextAlignmentCenter];
         _numLabel.frame = CGRectMake(0, 0, histogramViewWidth, histogramViewWidth);
         _numLabel.layer.borderColor = [UIColor whiteColor].CGColor;
-        _numLabel.layer.borderWidth = 1.0f;
+        _numLabel.layer.borderWidth = 2.0f;
+        _numLabel.layer.cornerRadius = 5.0f;
         [_dataView addSubview:_numLabel];
     }
     _numLabel.text = numString;

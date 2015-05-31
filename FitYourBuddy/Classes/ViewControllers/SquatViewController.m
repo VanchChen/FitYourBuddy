@@ -8,33 +8,27 @@
 
 #import "SquatViewController.h"
 #import "WQCircleProgressBar.h"
-#import "SoundTool.h"
 
 #import "CompleteViewController.h"
 
 @interface SquatViewController ()
 {
-    NSInteger               count;
-    NSInteger               targetNum;
     NSInteger               maxExerciseNum;
     UILabel                 *recordLabel;
     
-    UILabel                 *progressLabel;
-    WQCircleProgressBar     *closedIndicator;
-    CMMotionManager         *wqMotionManager;
-    
     UIButton                *soundButton;
-    
-    NSArray                 *soundArray;
-    NSUInteger              soundIndex;
     
     UIView                  *navBarView;
     UILabel                 *navTitleLabel;
     UIView                  *todayTargetView;
     UIView                  *maxRecordView;
     UIButton                *saveButton;
-    UILabel                 *completeLabel;
 }
+
+@property (nonatomic, assign) NSInteger                 targetNum;
+@property (nonatomic, assign) NSInteger                 count;
+@property (nonatomic, strong) CMMotionManager           *wqMotionManager;
+@property (nonatomic, strong) WQCircleProgressBar       *closedIndicator;
 
 @end
 
@@ -50,8 +44,8 @@
     NSError *error;
     maxExerciseNum = [ExerciseCoreDataHelper getBestNumByType:ExerciseTypeSquat withError:&error];
     NSString *maxNumString = [NSString stringFromInteger:maxExerciseNum];
-    targetNum = [CommonUtil getTargetNumFromType:ExerciseTypeSquat andLevel:[[AccountCoreDataHelper getDataByName:@"squatLevel" withError:&error] integerValue]];
-    NSString *targetNumString = [NSString stringFromInteger:targetNum];
+    _targetNum = [CommonUtil getTargetNumFromType:ExerciseTypeSquat andLevel:[[AccountCoreDataHelper getDataByName:@"squatLevel" withError:&error] integerValue]];
+    NSString *targetNumString = [NSString stringFromInteger:_targetNum];
     
     //navigation bar
     navBarView = [[UIView alloc] init];
@@ -68,13 +62,15 @@
     //声音图标
     soundButton = [[UIButton alloc] init];
     [soundButton setImage:[UIImage imageNamed:@"SoundEnabledIcon"] forState:UIControlStateNormal];
-    [soundButton setImage:nil forState:UIControlStateHighlighted];
     [soundButton setImage:[UIImage imageNamed:@"SoundDisenabledIcon"] forState:UIControlStateSelected];
+    [soundButton setImage:nil forState:UIControlStateHighlighted];
+    [soundButton setImage:nil forState:UIControlStateHighlighted | UIControlStateSelected];
     [soundButton addTarget:self action:@selector(tappedSoundBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:soundButton];
     
     //今日目标
     todayTargetView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, APPCONFIG_UI_VIEW_BETWEEN_PADDING + APPCONFIG_UI_STATUSBAR_HEIGHT + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT, 120, 30) andHasBorder:NO];
+    todayTargetView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:todayTargetView];
     
     UILabel* textLabel = [CommonUtil createLabelWithText:@"今日目标" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:16]];
@@ -87,6 +83,7 @@
     
     //个人记录
     maxRecordView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - 120 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, APPCONFIG_UI_SCREEN_FHEIGHT - APPCONFIG_UI_TABBAR_HEIGHT - APPCONFIG_UI_STATUSBAR_HEIGHT - 30 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, 120, 30) andHasBorder:NO];
+    maxRecordView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:maxRecordView];
     
     textLabel = [CommonUtil createLabelWithText:@"个人记录" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:16]];
@@ -104,105 +101,80 @@
     [saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:saveButton];
     
-    closedIndicator = [[WQCircleProgressBar alloc]initWithFrame:CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - 220)/2, 50, 220, 220) type:ClosedIndicator];
-    [closedIndicator setBackgroundColor:[UIColor clearColor]];
-    [closedIndicator setFillColor:squatColor];
-    [closedIndicator setStrokeColor:squatColor];
-    [self.view addSubview:closedIndicator];
-    [closedIndicator loadIndicator];
+    _closedIndicator = [[WQCircleProgressBar alloc]initWithFrame:CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - 220)/2, 50, 220, 220)];
+    [self.view addSubview:_closedIndicator];
     
-    progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-    [progressLabel setTextColor:tipTitleLabelColor];
-    [progressLabel setFont:[UIFont boldSystemFontOfSize:60]];
-    [progressLabel setTextAlignment:NSTextAlignmentCenter];
-    [progressLabel setText:@"0"];
-    [progressLabel setCenter:closedIndicator.center];
-    [self.view addSubview:progressLabel];
-    
-    completeLabel = [[UILabel alloc] initWithFrame:CGRectMake(progressLabel.frame.origin.x, progressLabel.frame.origin.y - 20, 100, 30)];
-    [completeLabel setText:@"已完成"];
-    [completeLabel setTextColor:tipTitleLabelColor];
-    [completeLabel setFont:[UIFont boldSystemFontOfSize:20]];
-    [completeLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:completeLabel];
-    
-    soundArray = [[NSArray alloc] initWithObjects:@"c4",@"d4",@"e4",@"g4",@"a4",@"c5",@"a4",@"g4",@"e4",@"d4", nil];
-    soundIndex = 0;
-    
-    //开启运动检测
-    count = 0;//计数器清空
-    wqMotionManager = [[CMMotionManager alloc]init];
-    if (wqMotionManager.deviceMotionAvailable) {
-        wqMotionManager.deviceMotionUpdateInterval = 0.2;
-        __block BOOL isStart = false;
-        [wqMotionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) {
-            
-            //NSLog(@"%f %f %f", round(motion.gravity.x * 10) / 10, round(motion.gravity.y * 10 / 10), round(motion.gravity.z * 10) / 10);
-            //NSLog(@"%f %f %f", motion.userAcceleration.x, motion.userAcceleration.y, motion.userAcceleration.z);
-            //NSLog(@"%.1f %.1f %.1f", motion.userAcceleration.x, motion.userAcceleration.y, motion.userAcceleration.z);
-            
-//            float f = motion.gravity.x, gx,gy,gz,ax,ay,az;
-//            if (f > -0.1 && f < 0.1) gx = 0; else gx = f;
-//            f = motion.gravity.y;
-//            if (f > -0.1 && f < 0.1) gy = 0; else gy = f;
-//            f = motion.gravity.z;
-//            if (f > -0.1 && f < 0.1) gz = 0; else gz = f;
-//            
-//            f = fabs(motion.userAcceleration.x);
-//            if (f >= 0.1) ax = f; else ax = 0;
-//            f = fabs(motion.userAcceleration.y);
-//            if (f >= 0.1) ay = f; else ay = 0;
-//            f = fabs(motion.userAcceleration.z);
-//            if (f >= 0.1) az = f; else az = 0;
-//            
-//            NSLog(@"%.1f %.1f %.1f", gx, gy, gz);
-            
-//            if(fabs(motion.userAcceleration.x)>1.3f)
-//                NSLog(@"x:%.2f" ,motion.userAcceleration.x);
-//            if(fabs(motion.userAcceleration.y)>1.3f)
-//                NSLog(@"y:%.2f" ,motion.userAcceleration.y);
-//            if(fabs(motion.userAcceleration.z)>1.3f)
-//                NSLog(@"z:%.2f" ,motion.userAcceleration.z);
-            
-            NSLog(@"%.2f", motion.userAcceleration.x);
-            
-            if (!isStart && motion.userAcceleration.x < -0.5) { //
-                isStart = true;
-                count++;
-                [progressLabel setText:[NSString stringWithFormat:@"%ld", (long)count]];
-                [closedIndicator updateWithTotalBytes:20 downloadedBytes:count];
+    __weak typeof(self) weakSelf = self;
+    [_closedIndicator setProgressDidReadyBlock:^(WQCircleProgressBar *progressBar){
+        //开启运动检测
+        weakSelf.wqMotionManager = [[CMMotionManager alloc]init];
+        if (weakSelf.wqMotionManager.deviceMotionAvailable) {
+            weakSelf.wqMotionManager.deviceMotionUpdateInterval = 0.2;
+            __block BOOL isStart = false;
+            [weakSelf.wqMotionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) {
                 
-                //播放声音
-                //播放声音
-                if (!soundButton.selected) {
-                    [SoundTool playsound:[soundArray objectAtIndex:soundIndex]];
-                    soundIndex ++;
-                    if (soundIndex == [soundArray count]) soundIndex = 0;
+                //NSLog(@"%f %f %f", round(motion.gravity.x * 10) / 10, round(motion.gravity.y * 10 / 10), round(motion.gravity.z * 10) / 10);
+                //NSLog(@"%f %f %f", motion.userAcceleration.x, motion.userAcceleration.y, motion.userAcceleration.z);
+                //NSLog(@"%.1f %.1f %.1f", motion.userAcceleration.x, motion.userAcceleration.y, motion.userAcceleration.z);
+                
+                //            float f = motion.gravity.x, gx,gy,gz,ax,ay,az;
+                //            if (f > -0.1 && f < 0.1) gx = 0; else gx = f;
+                //            f = motion.gravity.y;
+                //            if (f > -0.1 && f < 0.1) gy = 0; else gy = f;
+                //            f = motion.gravity.z;
+                //            if (f > -0.1 && f < 0.1) gz = 0; else gz = f;
+                //
+                //            f = fabs(motion.userAcceleration.x);
+                //            if (f >= 0.1) ax = f; else ax = 0;
+                //            f = fabs(motion.userAcceleration.y);
+                //            if (f >= 0.1) ay = f; else ay = 0;
+                //            f = fabs(motion.userAcceleration.z);
+                //            if (f >= 0.1) az = f; else az = 0;
+                //
+                //            NSLog(@"%.1f %.1f %.1f", gx, gy, gz);
+                
+                //            if(fabs(motion.userAcceleration.x)>1.3f)
+                //                NSLog(@"x:%.2f" ,motion.userAcceleration.x);
+                //            if(fabs(motion.userAcceleration.y)>1.3f)
+                //                NSLog(@"y:%.2f" ,motion.userAcceleration.y);
+                //            if(fabs(motion.userAcceleration.z)>1.3f)
+                //                NSLog(@"z:%.2f" ,motion.userAcceleration.z);
+                
+                NSLog(@"%.2f", motion.userAcceleration.x);
+                
+                if (!isStart && motion.userAcceleration.x < -0.5) { //
+                    isStart = true;
+                    weakSelf.count++;
+                    [weakSelf.closedIndicator updateWithTotalBytes:weakSelf.targetNum downloadedBytes:weakSelf.count];
                 }
-            }
+                
+                if (isStart && motion.userAcceleration.x > 0) { //
+                    isStart = false;
+                }
+                
+                
+                //NSLog(@"%.1f %.1f %.1f", ax, ay, az);
+                
+                //double re = gx * ax + gy * ay + gz * az;
+                
+                //double re = motion.userAcceleration.x * motion.gravity.x + motion.userAcceleration.y * motion.gravity.y + motion.userAcceleration.z * motion.gravity.z;
+                //NSLog(@"%.2f", re);
+                //            if (re > 2.0f) {
+                //                NSLog(@"11111");
+                //            }
+                //            if (re < -2.0f) {
+                //                NSLog(@"22222");
+                //            }
+            }];
             
-            if (isStart && motion.userAcceleration.x > 0) { //
-                isStart = false;
-            }
-            
-            
-            //NSLog(@"%.1f %.1f %.1f", ax, ay, az);
-            
-            //double re = gx * ax + gy * ay + gz * az;
-            
-            //double re = motion.userAcceleration.x * motion.gravity.x + motion.userAcceleration.y * motion.gravity.y + motion.userAcceleration.z * motion.gravity.z;
-            //NSLog(@"%.2f", re);
-//            if (re > 2.0f) {
-//                NSLog(@"11111");
-//            }
-//            if (re < -2.0f) {
-//                NSLog(@"22222");
-//            }
-        }];
-        
-    } else {
-        NSLog(@"并没有加速计");
-    }
+        } else {
+            NSLog(@"并没有加速计");
+        }
+    }];
+    [_closedIndicator setStrokeColor:squatColor];
+    [_closedIndicator loadIndicator];
+    
+    _count = 0;//计数器清空
 }
 
 - (void)viewDidLayoutSubviews {
@@ -216,11 +188,7 @@
     
     todayTargetView.frame = CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, APPCONFIG_UI_VIEW_BETWEEN_PADDING + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT, 120, 30);
     
-    closedIndicator.frame = CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - 220)/2, 50, 220, 220);
-    
-    progressLabel.center = closedIndicator.center;
-    [completeLabel topOfView:progressLabel withMargin:-10];
-    completeLabel.center = CGPointMake(progressLabel.center.x, completeLabel.center.y);
+    _closedIndicator.frame = CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - 220)/2, 50, 220, 220);
     
     maxRecordView.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - 120 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, APPCONFIG_UI_SCREEN_FHEIGHT - APPCONFIG_UI_TABBAR_HEIGHT - 30 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, 120, 30);
     saveButton.frame = CGRectMake(0, APPCONFIG_UI_SCREEN_FHEIGHT - 39, APPCONFIG_UI_SCREEN_FWIDTH, 39);
@@ -232,10 +200,10 @@
 
 - (void)tappedSaveBtn
 {
-    [wqMotionManager stopDeviceMotionUpdates];
+    [_wqMotionManager stopDeviceMotionUpdates];
     
     CompleteViewController *completeVC = [[CompleteViewController alloc] init];
-    completeVC.exerciseNum = count;
+    completeVC.exerciseNum = _count;
     completeVC.exerciseType = ExerciseTypeSquat;
     
     [self presentViewController:completeVC animated:NO completion:nil];
@@ -245,6 +213,7 @@
 
 - (void)tappedSoundBtn:(UIButton *)button {
     button.selected = !button.selected;
+    _closedIndicator.allowSoundPlay = !button.selected;
 }
 
 @end

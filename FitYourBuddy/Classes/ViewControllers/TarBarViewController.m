@@ -22,6 +22,10 @@
 - (id)init {
     self = [super init];
     if (self) {
+        [self.tabBar setBackgroundImage:[UIImage imageWithUIColor:tarBarColor andCGSize:self.tabBar.frame.size]];
+        [self.tabBar setOpaque:NO];
+        [self.tabBar setTranslucent:NO];
+        
         [self.tabBar setTintColor:themeBlueColor];
         [self.tabBar setBarTintColor:[UIColor whiteColor]];
         

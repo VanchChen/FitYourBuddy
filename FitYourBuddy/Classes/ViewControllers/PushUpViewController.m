@@ -8,14 +8,11 @@
 
 #import "PushUpViewController.h"
 #import "WQCircleProgressBar.h"
-#import "SoundTool.h"
 
 #import "CompleteViewController.h"
 
 @interface PushUpViewController ()
 {
-    UIDevice                *device;
-    UILabel                 *progressLabel;
     WQCircleProgressBar     *closedIndicator;
     
     NSInteger               count;
@@ -24,10 +21,9 @@
     UILabel                 *recordLabel;
     
     UIButton                *soundButton;
-    
-    NSArray                 *soundArray;
-    NSUInteger              soundIndex;
 }
+
+@property (nonatomic, strong) UIDevice *device;
 
 @end
 
@@ -58,13 +54,15 @@
     soundButton = [[UIButton alloc] init];
     soundButton.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_BETWEEN_PADDING - 30, 25, 30, 30);
     [soundButton setImage:[UIImage imageNamed:@"SoundEnabledIcon"] forState:UIControlStateNormal];
-    [soundButton setImage:nil forState:UIControlStateHighlighted];
     [soundButton setImage:[UIImage imageNamed:@"SoundDisenabledIcon"] forState:UIControlStateSelected];
+    [soundButton setImage:nil forState:UIControlStateHighlighted];
+    [soundButton setImage:nil forState:UIControlStateHighlighted | UIControlStateSelected];
     [soundButton addTarget:self action:@selector(tappedSoundBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:soundButton];
     
     //今日目标
     UIView *todayTargetView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, APPCONFIG_UI_VIEW_BETWEEN_PADDING + APPCONFIG_UI_STATUSBAR_HEIGHT + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT, 120, 30) andHasBorder:NO];
+    todayTargetView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:todayTargetView];
     
     UILabel* textLabel = [CommonUtil createLabelWithText:@"今日目标" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:16]];
@@ -77,6 +75,7 @@
     
     //个人记录
     UIView *maxRecordView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - 120 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, APPCONFIG_UI_SCREEN_FHEIGHT - APPCONFIG_UI_TABBAR_HEIGHT - APPCONFIG_UI_STATUSBAR_HEIGHT - 30 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, 120, 30) andHasBorder:NO];
+    maxRecordView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:maxRecordView];
     
     textLabel = [CommonUtil createLabelWithText:@"个人记录" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:16]];
@@ -90,7 +89,7 @@
     UIButton* saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 63, self.view.bounds.size.width, 63)];
     [saveButton setBackgroundColor:pushUpColor];
     [saveButton addTarget:self action:@selector(tappedSaveBtn) forControlEvents:UIControlEventTouchUpInside];
-    [saveButton setTitle:@"保存并退出" forState:UIControlStateNormal];
+    [saveButton setTitle:@"保存并退出>" forState:UIControlStateNormal];
     [saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:saveButton];
     
@@ -103,35 +102,20 @@
         progressWidth = 240;
     }
     
-    closedIndicator = [[WQCircleProgressBar alloc]initWithFrame:CGRectMake((self.view.bounds.size.width - progressWidth)/2, progressOriginY, progressWidth, progressWidth) type:ClosedIndicator];
-    [closedIndicator setBackgroundColor:[UIColor clearColor]];
-    [closedIndicator setFillColor:pushUpColor];
-    [closedIndicator setStrokeColor:pushUpColor];
+    closedIndicator = [[WQCircleProgressBar alloc]initWithFrame:CGRectMake((self.view.bounds.size.width - progressWidth)/2, progressOriginY, progressWidth, progressWidth)];
     [self.view addSubview:closedIndicator];
+    
+    __weak typeof(self) weakSelf = self;
+    [closedIndicator setProgressDidReadyBlock:^(WQCircleProgressBar *progressBar){
+        //开启距离监测传感器
+        weakSelf.device = [UIDevice currentDevice];
+        weakSelf.device.proximityMonitoringEnabled = true;
+        [[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(proximitySensorChange) name:@"UIDeviceProximityStateDidChangeNotification" object:nil];
+    }];
+    [closedIndicator setStrokeColor:pushUpColor];
     [closedIndicator loadIndicator];
     
-    progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-    [progressLabel setTextColor:tipTitleLabelColor];
-    [progressLabel setFont:[UIFont boldSystemFontOfSize:80]];
-    [progressLabel setTextAlignment:NSTextAlignmentCenter];
-    [progressLabel setText:@"0"];
-    [progressLabel setCenter:closedIndicator.center];
-    [self.view addSubview:progressLabel];
     
-    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(progressLabel.frame.origin.x, progressLabel.frame.origin.y - 30, 100, 30)];
-    [textLabel setText:@"已完成"];
-    [textLabel setTextColor:tipTitleLabelColor];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:20]];
-    [textLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:textLabel];
-    
-    soundArray = [[NSArray alloc] initWithObjects:@"c4",@"d4",@"e4",@"g4",@"a4",@"c5",@"a4",@"g4",@"e4",@"d4", nil];
-    soundIndex = 0;
-    
-    //开启距离监测传感器
-    device = [UIDevice currentDevice];
-    device.proximityMonitoringEnabled = true;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(proximitySensorChange) name:@"UIDeviceProximityStateDidChangeNotification" object:nil];
     count = 0;//计数器清空
 }
 
@@ -141,28 +125,20 @@
 
 - (void)proximitySensorChange
 {
-    if (device.proximityState) {
+    if (_device.proximityState) {
         count++;
         [closedIndicator updateWithTotalBytes:targetNum downloadedBytes:count];
-        [progressLabel setText:[NSString stringWithFormat:@"%ld", (long)count]];
         
         if (count > maxExerciseNum) {
             maxExerciseNum = count;
             recordLabel.text = [NSString stringFromInteger:maxExerciseNum];
-        }
-        
-        //播放声音
-        if (!soundButton.selected) {
-            [SoundTool playsound:[soundArray objectAtIndex:soundIndex]];
-            soundIndex ++;
-            if (soundIndex == [soundArray count]) soundIndex = 0;
         }
     }
 }
 
 - (void)tappedSaveBtn
 {
-    device.proximityMonitoringEnabled = false;
+    _device.proximityMonitoringEnabled = false;
     
     CompleteViewController *completeVC = [[CompleteViewController alloc] init];
     completeVC.exerciseNum = count;
@@ -173,6 +149,7 @@
 
 - (void)tappedSoundBtn:(UIButton *)button {
     button.selected = !button.selected;
+    closedIndicator.allowSoundPlay = !button.selected;
 }
 
 

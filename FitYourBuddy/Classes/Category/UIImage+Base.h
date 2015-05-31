@@ -13,4 +13,7 @@
 /** 根据颜色尺寸生成图片 */
 +(UIImage *)imageWithUIColor:(UIColor *)color andCGSize:(CGSize)size;
 
+/** 根据健身类型拿图标 */
++(UIImage *)imageWithExerciseType:(ExerciseType)type;
+
 @end

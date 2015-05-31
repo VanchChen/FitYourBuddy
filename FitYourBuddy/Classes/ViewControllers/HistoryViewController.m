@@ -9,13 +9,13 @@
 #import "HistoryViewController.h"
 #import "HistoryExerciseView.h"
 
-static CGFloat const ScrollTitleViewHeight = 75.0f;             //整个条的高度
-static CGFloat const BallonHeight = 24.0f;                      //小球的高度
-static CGFloat const BallonHalfHeight = BallonHeight / 2.0f;    //小球一半高度，用来计算边角
+static CGFloat const ScrollTitleViewHeight = 60.0f;             //整个条的高度
+static CGFloat const BallonHeight = 28.0f;                      //小球的高度
+//static CGFloat const BallonHalfHeight = BallonHeight / 2.0f;    //小球一半高度，用来计算边角
 static CGFloat const BallonTopPadding = (ScrollTitleViewHeight - BallonHeight) / 2.0f;//小球的上边距
 static CGFloat const BallonTitlePadding = 5.0f;                 //球和标题的间距
 static CGFloat const TitleWidth = 80.0f;                        //标题框的宽度
-static CGFloat const FontFloat = 18.0f;                         //字体
+static CGFloat const FontFloat = 16.0f;                         //字体
 
 static CGFloat const TriangleWidht = 16.0f;                     //小三角
 static CGFloat const TriangleHeight = 12.0f;
@@ -31,10 +31,10 @@ static CGFloat const TriangleLeftPadding = 40.0f;
     
     NSInteger   page;
     
-    UIView *melodyB, *melodyC, *melodyD, *melodyE, *melodyF, *melodyG, *melodyA;
-    UILabel *sharpB, *sharpC, *sharpD, *sharpA;
+    UIImageView *melodyB, *melodyC, *melodyD, *melodyE, *melodyF, *melodyG, *melodyA;
+    UILabel     *sharpB, *sharpC, *sharpD, *sharpA;
     
-    NSArray *viewArray;
+    NSArray     *viewArray;
 }
 
 @end
@@ -62,9 +62,10 @@ static CGFloat const TriangleLeftPadding = 40.0f;
     triangleView.image = [UIImage imageNamed:@"HistoryTriangleIcon"];
     [scrollTitleView addSubview:triangleView];
     
-    melodyB = [[UIView alloc] initWithFrame:CGRectMake(- APPCONFIG_UI_VIEW_BETWEEN_PADDING - BallonHeight, BallonTopPadding, BallonHeight, BallonHeight)];
-    [melodyB setBackgroundColor:walkColor];
-    [[melodyB layer] setCornerRadius:BallonHalfHeight];
+    melodyB = [[UIImageView alloc] initWithFrame:CGRectMake(- APPCONFIG_UI_VIEW_BETWEEN_PADDING - BallonHeight, BallonTopPadding, BallonHeight, BallonHeight)];
+    //[melodyB setBackgroundColor:walkColor];
+    [melodyB setImage:[UIImage imageWithExerciseType:ExerciseTypeWalk]];
+    //[[melodyB layer] setCornerRadius:BallonHalfHeight];
     [scrollTitleView addSubview:melodyB];
     
     sharpB = [[UILabel alloc] initWithFrame:CGRectMake(BallonTitlePadding - APPCONFIG_UI_VIEW_BETWEEN_PADDING , BallonTopPadding, TitleWidth, BallonHeight)];
@@ -74,9 +75,10 @@ static CGFloat const TriangleLeftPadding = 40.0f;
     [sharpB setAlpha:0];
     [scrollTitleView addSubview:sharpB];
     
-    melodyC = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, BallonTopPadding, BallonHeight, BallonHeight)];
-    [melodyC setBackgroundColor:sitUpColor];
-    [[melodyC layer] setCornerRadius:BallonHalfHeight];
+    melodyC = [[UIImageView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, BallonTopPadding, BallonHeight, BallonHeight)];
+    //[melodyC setBackgroundColor:[UIColor clearColor]];
+    [melodyC setImage:[UIImage imageWithExerciseType:ExerciseTypeSitUp]];
+    //[[melodyC layer] setCornerRadius:BallonHalfHeight];
     [scrollTitleView addSubview:melodyC];
     
     sharpC = [[UILabel alloc] initWithFrame:CGRectMake(BallonHeight + APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonTitlePadding, BallonTopPadding, TitleWidth, BallonHeight)];
@@ -86,9 +88,10 @@ static CGFloat const TriangleLeftPadding = 40.0f;
     [sharpC setAlpha:1];
     [scrollTitleView addSubview:sharpC];
     
-    melodyD = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 3, BallonTopPadding, BallonHeight, BallonHeight)];
-    [melodyD setBackgroundColor:pushUpColor];
-    [[melodyD layer] setCornerRadius:BallonHalfHeight];
+    melodyD = [[UIImageView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 3, BallonTopPadding, BallonHeight, BallonHeight)];
+    //[melodyD setBackgroundColor:pushUpColor];
+    [melodyD setImage:[UIImage imageWithExerciseType:ExerciseTypePushUp]];
+    //[[melodyD layer] setCornerRadius:BallonHalfHeight];
     [scrollTitleView addSubview:melodyD];
     
     sharpD = [[UILabel alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 2 - BallonTitlePadding, BallonTopPadding, TitleWidth, BallonHeight)];
@@ -98,19 +101,22 @@ static CGFloat const TriangleLeftPadding = 40.0f;
     [sharpD setAlpha:0];
     [scrollTitleView addSubview:sharpD];
     
-    melodyE = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 2, BallonTopPadding, BallonHeight, BallonHeight)];
-    [melodyE setBackgroundColor:squatColor];
-    [[melodyE layer] setCornerRadius:BallonHalfHeight];
+    melodyE = [[UIImageView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 2, BallonTopPadding, BallonHeight, BallonHeight)];
+    //[melodyE setBackgroundColor:squatColor];
+    [melodyE setImage:[UIImage imageWithExerciseType:ExerciseTypeSquat]];
+    //[[melodyE layer] setCornerRadius:BallonHalfHeight];
     [scrollTitleView addSubview:melodyE];
     
-    melodyF = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_BETWEEN_PADDING - BallonHeight, BallonTopPadding, BallonHeight, BallonHeight)];
-    [melodyF setBackgroundColor:walkColor];
-    [[melodyF layer] setCornerRadius:BallonHalfHeight];
+    melodyF = [[UIImageView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_BETWEEN_PADDING - BallonHeight, BallonTopPadding, BallonHeight, BallonHeight)];
+    //[melodyF setBackgroundColor:walkColor];
+    [melodyF setImage:[UIImage imageWithExerciseType:ExerciseTypeWalk]];
+    //[[melodyF layer] setCornerRadius:BallonHalfHeight];
     [scrollTitleView addSubview:melodyF];
     
-    melodyG = [[UIView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH + APPCONFIG_UI_VIEW_BETWEEN_PADDING, BallonTopPadding, BallonHeight, BallonHeight)];
-    [melodyG setBackgroundColor:sitUpColor];
-    [[melodyG layer] setCornerRadius:BallonHalfHeight];
+    melodyG = [[UIImageView alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH + APPCONFIG_UI_VIEW_BETWEEN_PADDING, BallonTopPadding, BallonHeight, BallonHeight)];
+    //[melodyG setBackgroundColor:sitUpColor];
+    [melodyG setImage:[UIImage imageWithExerciseType:ExerciseTypeSitUp]];
+    //[[melodyG layer] setCornerRadius:BallonHalfHeight];
     [scrollTitleView addSubview:melodyG];
     
     melodyA = nil;sharpA = nil;
@@ -279,8 +285,8 @@ static CGFloat const TriangleLeftPadding = 40.0f;
     melodyE = melodyF;
     melodyF = melodyG;
     melodyG = melodyA;
-    melodyG.backgroundColor = melodyC.backgroundColor;
-    melodyB.backgroundColor = melodyF.backgroundColor;
+    melodyG.image = melodyC.image;
+    melodyB.image = melodyF.image;
     melodyA = nil;
     
     sharpB.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - (APPCONFIG_UI_VIEW_BETWEEN_PADDING + BallonHeight )* 2 - BallonTitlePadding, BallonTopPadding, TitleWidth, BallonHeight);
@@ -301,8 +307,8 @@ static CGFloat const TriangleLeftPadding = 40.0f;
     melodyD = melodyC;
     melodyC = melodyB;
     melodyB = melodyA;
-    melodyG.backgroundColor = melodyC.backgroundColor;
-    melodyB.backgroundColor = melodyF.backgroundColor;
+    melodyG.image = melodyC.image;
+    melodyB.image = melodyF.image;
     melodyA = nil;
     
     sharpD.frame = CGRectMake(BallonTitlePadding - APPCONFIG_UI_VIEW_BETWEEN_PADDING, BallonTopPadding, TitleWidth, BallonHeight);

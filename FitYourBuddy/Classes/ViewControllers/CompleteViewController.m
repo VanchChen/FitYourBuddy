@@ -9,11 +9,15 @@
 #import "CompleteViewController.h"
 #import "WQProgressBar.h"
 
-static CGFloat const dataViewHeight = 100.0f;                   //数据框的高度
+static CGFloat const dataViewHeight = 90.0f;                    //数据框的高度
 static CGFloat const dataViewTopPadding = 28.0f;                //数据框的上边距
+static CGFloat const dataViewLeftPadding = 30.0f;               //数据框的左边距
+
 static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的大小
 static CGFloat const arrowLeftPadding = 110.0f;                 //箭头的左边距
 static CGFloat const arrowWidth = 20.0f;                        //箭头的宽度
+
+static CGFloat const shareImageWidth = 24.0f;                   //分享按钮宽度
 
 @interface CompleteViewController ()
 {
@@ -25,7 +29,9 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
 }
 
 @property(nonatomic, strong) UILabel        *titleLabel;        //标题文字
-@property(nonatomic, strong) UILabel        *textLabel;         //今日完成数目
+@property(nonatomic, strong) UIButton       *textLabel;         //今日完成数目
+@property(nonatomic, strong) UILabel        *textButtonLabel;   //完成按钮的标签框
+@property(nonatomic, strong) UIImageView    *textButtonImage;   //完成按钮的图标
 @property(nonatomic, strong) UILabel        *historyDayLabel;   //坚持天数
 @property(nonatomic, strong) UILabel        *coinLabel;         //金币框
 @property(nonatomic, strong) WQProgressBar  *levelProgressBar;  //经验框
@@ -48,17 +54,35 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
         _titleLabel = [CommonUtil createLabelWithText:@"目标完成！" andTextColor:[UIColor whiteColor] andFont:[UIFont boldSystemFontOfSize:20] andTextAlignment:NSTextAlignmentCenter];
         [navView addSubview:_titleLabel];
         
-        _textLabel = [CommonUtil createLabelWithText:@"今日共完成40个俯卧撑" andTextColor:themeDeepBlueColor andFont:[UIFont boldSystemFontOfSize:18] andTextAlignment:NSTextAlignmentCenter];
-        _textLabel.backgroundColor = RGB_A(255,255,255,0.8f);
+        _textLabel = [UIButton buttonWithType:UIButtonTypeCustom];
+        _textLabel.backgroundColor = [UIColor whiteColor];
         _textLabel.layer.cornerRadius = 15;
-        _textLabel.layer.masksToBounds = YES;
+        _textLabel.layer.shadowOffset = CGSizeMake(0, 4);
+        _textLabel.layer.shadowRadius = 0;
+        _textLabel.layer.shadowOpacity = 1;
+        _textLabel.layer.shadowColor = startTrainTargetGreyColor.CGColor;
         [navView addSubview:_textLabel];
         
-        _completeButton = [[UIButton alloc] init];
-        [_completeButton setBackgroundColor:themeBlueColor];
+        _textButtonLabel = [[UILabel alloc] init];
+        _textButtonLabel.textColor = themeDeepBlueColor;
+        _textButtonLabel.font = [UIFont boldSystemFontOfSize:16];
+        _textButtonLabel.textAlignment = NSTextAlignmentCenter;
+        [_textLabel addSubview:_textButtonLabel];
+        
+        _textButtonImage = [[UIImageView alloc] init];
+        _textButtonImage.image = [UIImage imageNamed:@"ShareBlueIcon"];
+        [_textLabel addSubview:_textButtonImage];
+        
+        _completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_completeButton setBackgroundColor:themePureBlueColor];
         [_completeButton addTarget:self action:@selector(tappedCompleteButton) forControlEvents:UIControlEventTouchUpInside];
         [_completeButton setTitle:@"完成锻炼" forState:UIControlStateNormal];
         [_completeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _completeButton.layer.cornerRadius = 15;
+        _completeButton.layer.shadowOffset = CGSizeMake(0, 4);
+        _completeButton.layer.shadowRadius = 0;
+        _completeButton.layer.shadowOpacity = 1;
+        _completeButton.layer.shadowColor = shadowBlueColor.CGColor;
         [self.view addSubview:_completeButton];
         
         //放置数据块
@@ -84,26 +108,30 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
         [levelView addSubview:tipTitleLabel];
         
         UIImageView *leftCalendarImage = [[UIImageView alloc] init];
-        leftCalendarImage.frame = CGRectMake(150, 25, 100, 50);
+        leftCalendarImage.frame = CGRectMake(120, (dataViewHeight - LevelIconWidth) / 2.0, LevelIconWidth, LevelIconWidth);
         leftCalendarImage.image = [UIImage imageNamed:@"CalendarIcon"];
-        leftCalendarImage.contentMode = UIViewContentModeScaleAspectFill;
         [dayView addSubview:leftCalendarImage];
         
-        _historyDayLabel = [CommonUtil createLabelWithText:@"10天" andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:30] andTextAlignment:NSTextAlignmentCenter];
-        _historyDayLabel.frame = CGRectMake(0, APPCONFIG_UI_VIEW_BETWEEN_PADDING + 5, leftCalendarImage.width, leftCalendarImage.height - APPCONFIG_UI_VIEW_BETWEEN_PADDING - 5);
-        [leftCalendarImage addSubview:_historyDayLabel];
+        _historyDayLabel = [CommonUtil createLabelWithText:@"10" andTextColor:themeRedColor andFont:[UIFont boldSystemFontOfSize:24]];
+        _historyDayLabel.frame = CGRectMake(0, 0, 60, 50);
+        _historyDayLabel.textAlignment = NSTextAlignmentCenter;
+        [_historyDayLabel rightOfView:leftCalendarImage withMargin:0 sameVertical:YES];
+        [dayView addSubview:_historyDayLabel];
         
         UIImageView *coinImage = [[UIImageView alloc] init];
         coinImage.image = [UIImage imageNamed:@"CoinIcon"];
-        coinImage.frame = CGRectMake(150, 28, 44, 44);
+        coinImage.frame = CGRectMake(120, (dataViewHeight - LevelIconWidth) / 2.0, LevelIconWidth, LevelIconWidth);
         [coinView addSubview:coinImage];
         
-        _coinLabel = [CommonUtil createLabelWithText:@"55" andTextColor:themeDarkOrangeColor andFont:[UIFont boldSystemFontOfSize:28]];
-        _coinLabel.frame = CGRectMake(0, 0, 80, 50);
-        [_coinLabel rightOfView:coinImage withMargin:10 sameVertical:YES];
+        _coinLabel = [CommonUtil createLabelWithText:@"55" andTextColor:themeDarkOrangeColor andFont:[UIFont boldSystemFontOfSize:24]];
+        _coinLabel.frame = CGRectMake(0, 0, 60, 50);
+        _coinLabel.textAlignment = NSTextAlignmentCenter;
+        [_coinLabel rightOfView:coinImage withMargin:0 sameVertical:YES];
         [coinView addSubview:_coinLabel];
         
-        _levelProgressBar = [[WQProgressBar alloc] initWithFrame:CGRectMake(130, 25, 130, 50)];
+        _levelProgressBar = [[WQProgressBar alloc] initWithFrame:CGRectMake(120, (dataViewHeight - LevelIconWidth) / 2.0, 130, LevelIconWidth)];
+        [_levelProgressBar simpleVersion];
+        [_levelProgressBar loadLevelAndExp];
         [levelView addSubview:_levelProgressBar];
     }
     return self;
@@ -118,14 +146,16 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
     _titleLabel.frame = CGRectMake(0, APPCONFIG_UI_STATUSBAR_HEIGHT, APPCONFIG_UI_SCREEN_FWIDTH, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
     
     _textLabel.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, APPCONFIG_UI_STATUSBAR_HEIGHT + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT, APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
+    _textButtonLabel.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, 0, _textLabel.width - shareImageWidth - APPCONFIG_UI_VIEW_PADDING * 2, _textLabel.height);
+    _textButtonImage.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING + _textButtonLabel.width, (_textLabel.height - shareImageWidth) / 2.0f, shareImageWidth, shareImageWidth);
     
-    _completeButton.frame = CGRectMake(0, APPCONFIG_UI_SCREEN_FHEIGHT - APPCONFIG_UI_NAVIGATIONBAR_HEIGHT, APPCONFIG_UI_SCREEN_FWIDTH, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
+    _completeButton.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, APPCONFIG_UI_SCREEN_FHEIGHT - APPCONFIG_UI_NAVIGATIONBAR_HEIGHT - APPCONFIG_UI_VIEW_PADDING, APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
     
-    dayView.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, 0, APPCONFIG_UI_VIEW_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2, dataViewHeight);
+    dayView.frame = CGRectMake(dataViewLeftPadding, 0, APPCONFIG_UI_VIEW_FWIDTH - dataViewLeftPadding * 2, dataViewHeight);
     [dayView bottomOfView:navView withMargin:dataViewTopPadding];
-    coinView.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, 0, APPCONFIG_UI_VIEW_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2, dataViewHeight);
+    coinView.frame = CGRectMake(dataViewLeftPadding, 0, APPCONFIG_UI_VIEW_FWIDTH - dataViewLeftPadding * 2, dataViewHeight);
     [coinView bottomOfView:dayView withMargin:APPCONFIG_UI_VIEW_PADDING];
-    levelView.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, 0, APPCONFIG_UI_VIEW_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2, dataViewHeight);
+    levelView.frame = CGRectMake(dataViewLeftPadding, 0, APPCONFIG_UI_VIEW_FWIDTH - dataViewLeftPadding * 2, dataViewHeight);
     [levelView bottomOfView:coinView withMargin:APPCONFIG_UI_VIEW_PADDING];
 }
 
@@ -212,21 +242,17 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
             [AccountCoreDataHelper setDataByName:@"count" andData:[NSString stringFromInteger:afterTotalNum] withError:&error];
             [AccountCoreDataHelper setDataByName:@"coin" andData:[NSString stringFromInteger:afterCoinNum] withError:&error];
             [AccountCoreDataHelper setDataByName:@"date" andData:[NSString today] withError:&error];
-            
-            //放置箭头
-            [dayView addSubview:[self createArrowView]];
-            [coinView addSubview:[self createArrowView]];
         }
     } else {
         exerciseCompleteString = @"再接再厉";
     }
     
     //取锻炼天数
-    exerciseDayString = [NSString stringWithFormat:@"%ld天", (long)afterTotalNum];
+    exerciseDayString = [NSString stringWithFormat:@"%ld", (long)afterTotalNum];
     
     //赋标签框
     _titleLabel.text = exerciseCompleteString;
-    _textLabel.text = exerciseTypeString;
+    _textButtonLabel.text = exerciseTypeString;
     _historyDayLabel.text = exerciseDayString;
     _coinLabel.text = [NSString stringFromInteger:afterCoinNum];
 
@@ -237,11 +263,6 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
 
     afterExp = beforeExp + (todayNum - beforeNum) * expRatio;
     levelExp = [CommonUtil getExpFromLevel:dict[@"level"]];
-
-    if (afterExp > beforeExp) {
-        //放置箭头
-        [levelView addSubview:[self createArrowView]];
-    }
 
     if (afterExp >= levelExp) {
         //升级啦
@@ -261,13 +282,6 @@ static CGFloat const arrowWidth = 20.0f;                        //箭头的宽�
 - (void)tappedCompleteButton {
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"CompleteTapNote" object:nil];
-}
-
-- (UIImageView *)createArrowView {
-    UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, arrowWidth, arrowWidth)];
-    arrowView.image = [UIImage imageNamed:@"ArrowIcon"];
-    arrowView.center = CGPointMake(arrowLeftPadding + arrowWidth / 2.0f, dataViewHeight / 2.0f);
-    return arrowView;
 }
 
 - (NSUInteger)supportedInterfaceOrientations {

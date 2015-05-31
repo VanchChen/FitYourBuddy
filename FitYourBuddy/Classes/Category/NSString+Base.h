@@ -37,4 +37,11 @@
 /** 从标准的日期字符串去除时分秒 yyyy-MM-dd */
 - (NSString *)formatDate;
 
+#pragma mark - 判断是否是数字
+/** 字符串是否是整形 */
+- (BOOL)isPureInt;
+
+/** 字符串是否是浮点型 */
+- (BOOL)isPureFloat;
+
 @end

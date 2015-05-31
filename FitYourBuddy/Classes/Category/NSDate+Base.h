@@ -62,6 +62,10 @@
 - (NSDate *)firstDayOfTheMonth;
 /** 当月最后一天 */
 - (NSDate *)lastDayOfTheMonth;
+/** 当天的前一个月 */
+- (NSDate *)associateDayOfThePreviousMonth;
+/** 当天的后一个月 */
+- (NSDate *)associateDayOfTheFollowingMonth;
 
 #pragma mark - 周相关
 /** 当周共有几天 */

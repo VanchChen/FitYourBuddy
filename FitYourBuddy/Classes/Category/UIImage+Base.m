@@ -59,4 +59,29 @@
     return img;
 }
 
+/** 根据健身类型拿图标 */
++(UIImage *)imageWithExerciseType:(ExerciseType)type {
+    switch (type) {
+        case ExerciseTypeSitUp: {
+            return [UIImage imageNamed:@"SitUpIcon"];
+            break;
+        }
+        case ExerciseTypePushUp: {
+            return [UIImage imageNamed:@"PushUpIcon"];
+            break;
+        }
+        case ExerciseTypeSquat: {
+            return [UIImage imageNamed:@"SquatIcon"];
+            break;
+        }
+        case ExerciseTypeWalk: {
+            return [UIImage imageNamed:@"WalkIcon"];
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+}
+
 @end

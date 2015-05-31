@@ -386,13 +386,14 @@ static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
     
     UIButton *backgroundButton = [UIButton buttonWithType:UIButtonTypeCustom];
     backgroundButton.frame = self.view.window.bounds;
-    backgroundButton.backgroundColor = transparentWhiteColor;
+    backgroundButton.backgroundColor = popBackgroundColor;
     [backgroundButton addTarget:self action:@selector(tappedCoverBackgroundButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view.window addSubview:backgroundButton];
     
     UIView *popView = [CommonUtil createView];
     popView.frame = CGRectMake((backgroundButton.width - popViewInset.right) / 2.0f, (backgroundButton.height - popViewInset.bottom) / 2.0f, popViewInset.right, popViewInset.bottom);
     popView.layer.borderColor = themeDeepBlueColor.CGColor;
+    popView.layer.borderWidth = 2.0f;
     [backgroundButton addSubview:popView];
     
     UILabel *popTipLabel = [CommonUtil createLabelWithText:@"解锁该装扮需要" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:20] andTextAlignment:NSTextAlignmentCenter];

@@ -8,25 +8,19 @@
 
 #import "WalkViewController.h"
 #import "WQCircleProgressBar.h"
-//#import "SoundTool.h"
 #import "EBStepManager.h"
 
 #import "CompleteViewController.h"
 
 @interface WalkViewController ()
 {
-    UILabel                 *progressLabel;
-    WQCircleProgressBar     *closedIndicator;
-    
-    
-    NSInteger               targetNum;
     NSInteger               maxExerciseNum;
     UILabel                 *recordLabel;
-    
-    //UIButton                *soundButton;
-    //NSArray                 *soundArray;
-    //NSUInteger              soundIndex;
 }
+
+@property (nonatomic, assign) NSInteger             count;
+@property (nonatomic, assign) NSInteger             targetNum;
+@property (nonatomic, strong) WQCircleProgressBar   *closedIndicator;
 
 @end
 
@@ -41,8 +35,8 @@
     NSError *error;
     maxExerciseNum = [ExerciseCoreDataHelper getBestNumByType:ExerciseTypeWalk withError:&error];
     NSString *maxNumString = [NSString stringFromInteger:maxExerciseNum];
-    targetNum = [CommonUtil getTargetNumFromType:ExerciseTypeWalk andLevel:[[AccountCoreDataHelper getDataByName:@"walkLevel" withError:&error] integerValue]];
-    NSString *targetNumString = [NSString stringFromInteger:targetNum];
+    _targetNum = [CommonUtil getTargetNumFromType:ExerciseTypeWalk andLevel:[[AccountCoreDataHelper getDataByName:@"walkLevel" withError:&error] integerValue]];
+    NSString *targetNumString = [NSString stringFromInteger:_targetNum];
     
     //navigation bar
     UIView *navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPCONFIG_UI_VIEW_FWIDTH, APPCONFIG_UI_STATUSBAR_HEIGHT + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT)];
@@ -53,17 +47,9 @@
     titleLabel.frame = CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - 100.f) / 2.f, APPCONFIG_UI_STATUSBAR_HEIGHT, 100, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
     [self.view addSubview:titleLabel];
     
-    //声音图标
-//    soundButton = [[UIButton alloc] init];
-//    soundButton.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_BETWEEN_PADDING - 30, 25, 30, 30);
-//    [soundButton setImage:[UIImage imageNamed:@"SoundEnabledIcon"] forState:UIControlStateNormal];
-//    [soundButton setImage:nil forState:UIControlStateHighlighted];
-//    [soundButton setImage:[UIImage imageNamed:@"SoundDisenabledIcon"] forState:UIControlStateSelected];
-//    [soundButton addTarget:self action:@selector(tappedSoundBtn:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:soundButton];
-    
     //今日目标
     UIView *todayTargetView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, APPCONFIG_UI_VIEW_BETWEEN_PADDING + APPCONFIG_UI_STATUSBAR_HEIGHT + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT, 120, 30) andHasBorder:NO];
+    todayTargetView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:todayTargetView];
     
     UILabel* textLabel = [CommonUtil createLabelWithText:@"今日目标" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:14]];
@@ -76,6 +62,7 @@
     
     //个人记录
     UIView *maxRecordView = [CommonUtil createViewWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - 120 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, APPCONFIG_UI_SCREEN_FHEIGHT - APPCONFIG_UI_TABBAR_HEIGHT - APPCONFIG_UI_STATUSBAR_HEIGHT - 30 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, 120, 30) andHasBorder:NO];
+    maxRecordView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:maxRecordView];
     
     textLabel = [CommonUtil createLabelWithText:@"个人记录" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:16]];
@@ -102,49 +89,24 @@
         progressWidth = 240;
     }
     
-    closedIndicator = [[WQCircleProgressBar alloc]initWithFrame:CGRectMake((self.view.bounds.size.width - progressWidth)/2, progressOriginY, progressWidth, progressWidth) type:ClosedIndicator];
-    [closedIndicator setBackgroundColor:[UIColor clearColor]];
-    [closedIndicator setFillColor:themeRedColor];
-    [closedIndicator setStrokeColor:themeRedColor];
-    [self.view addSubview:closedIndicator];
-    [closedIndicator loadIndicator];
-    
-    progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-    [progressLabel setTextColor:tipTitleLabelColor];
-    [progressLabel setFont:[UIFont boldSystemFontOfSize:80]];
-    [progressLabel setTextAlignment:NSTextAlignmentCenter];
-    [progressLabel setText:@"0"];
-    [progressLabel setCenter:closedIndicator.center];
-    [self.view addSubview:progressLabel];
-    
-    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(progressLabel.frame.origin.x, progressLabel.frame.origin.y - 30, 100, 30)];
-    [textLabel setText:@"已完成"];
-    [textLabel setTextColor:tipTitleLabelColor];
-    [textLabel setFont:[UIFont boldSystemFontOfSize:20]];
-    [textLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:textLabel];
-    
-    //soundArray = [[NSArray alloc] initWithObjects:@"c4",@"d4",@"e4",@"g4",@"a4",@"c5",@"a4",@"g4",@"e4",@"d4", nil];
-    //soundIndex = 0;
-    
-    //开启运动检测
-    [[EBStepManager sharedManager] startStepCounting:^(NSInteger numberOfSteps,
-                                                       NSDate *timestamp,
-                                                       NSError *error) {
-        if (error) {
-            NSLog(@"error: %@", error);
-        }else {
-            [progressLabel setText:[NSString stringWithFormat:@"%ld", (long)numberOfSteps]];
-            [closedIndicator updateWithTotalBytes:targetNum downloadedBytes:numberOfSteps];
-            
-            //播放声音
-//            if (!soundButton.selected) {
-//                [SoundTool playsound:[soundArray objectAtIndex:soundIndex]];
-//                soundIndex ++;
-//                if (soundIndex == [soundArray count]) soundIndex = 0;
-//            }
-        }
+    _closedIndicator = [[WQCircleProgressBar alloc]initWithFrame:CGRectMake((self.view.bounds.size.width - progressWidth)/2, progressOriginY, progressWidth, progressWidth)];
+    [self.view addSubview:_closedIndicator];
+    __weak typeof(self) weakSelf = self;
+    [_closedIndicator setProgressDidReadyBlock:^(WQCircleProgressBar *progressBar){
+        //开启运动检测
+        [[EBStepManager sharedManager] startStepCounting:^(NSInteger numberOfSteps,
+                                                           NSDate *timestamp,
+                                                           NSError *error) {
+            if (error) {
+                NSLog(@"error: %@", error);
+            }else {
+                _count = numberOfSteps;
+                [weakSelf.closedIndicator updateWithTotalBytes:weakSelf.targetNum downloadedBytes:numberOfSteps];
+            }
+        }];
     }];
+    
+    _count = 0;
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -156,18 +118,13 @@
     [[EBStepManager sharedManager]  stopStepCounting];
     
     CompleteViewController *completeVC = [[CompleteViewController alloc] init];
-    NSInteger count = (NSInteger)progressLabel.text;
-    if (count > 100000 || count < 0) {
-        count = 0;
+    if (_count > 100000 || _count < 0) {
+        _count = 0;
     }
-    completeVC.exerciseNum = count;
+    completeVC.exerciseNum = _count;
     completeVC.exerciseType = ExerciseTypeWalk;
     
     [self presentViewController:completeVC animated:NO completion:nil];
 }
-
-//- (void)tappedSoundBtn:(UIButton *)button {
-//    button.selected = !button.selected;
-//}
 
 @end

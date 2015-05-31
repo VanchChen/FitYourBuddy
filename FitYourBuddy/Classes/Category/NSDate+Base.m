@@ -146,6 +146,20 @@
     [[self componentsOfDay] setDay:[self numberOfDaysInMonth]];
     return [[NSCalendar currentCalendar] dateFromComponents:[self componentsOfDay]];
 }
+/** 当天的前一个月 */
+- (NSDate *)associateDayOfThePreviousMonth {
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    components.month = -1;
+    
+    return [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:self options:0];
+}
+/** 当天的后一个月 */
+- (NSDate *)associateDayOfTheFollowingMonth {
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    components.month = 1;
+    
+    return [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:self options:0];
+}
 
 #pragma mark - 周相关
 /** 当周共有几天 */

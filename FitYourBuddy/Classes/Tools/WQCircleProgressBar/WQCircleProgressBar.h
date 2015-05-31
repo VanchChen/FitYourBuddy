@@ -9,37 +9,26 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-typedef enum {
-    ClosedIndicator=0,
-    FilledIndicator,
-    MixedIndictor,
-}IndicatorType;
-
 @interface WQCircleProgressBar : UIView
 
-// this value should be 0 to 0.5 (default: (kRMFilledIndicator = 0.5), (kRMMixedIndictor = 0.4))
-@property(nonatomic, assign)CGFloat radiusPercent;
+/** 笔触颜色 */
+@property (nonatomic, strong) UIColor *strokeColor;
+/** 进度条背景色 */
+@property (nonatomic, strong) UIColor *closedIndicatorBackgroundStrokeColor;
 
-// used to fill the downloaded percent slice (default: (kRMFilledIndicator = white), (kRMMixedIndictor = white))
-@property(nonatomic, strong)UIColor *fillColor;
-
-// used to stroke the covering slice (default: (kRMClosedIndicator = white), (kRMMixedIndictor = white))
-@property(nonatomic, strong)UIColor *strokeColor;
-
-// used to stroke the background path the covering slice (default: (kRMClosedIndicator = gray))
-@property(nonatomic, strong)UIColor *closedIndicatorBackgroundStrokeColor;
-
-// init with frame and type
-// if() - (id)initWithFrame:(CGRect)frame is used the default type = kRMFilledIndicator
-- (id)initWithFrame:(CGRect)frame type:(IndicatorType)type;
-
-// prepare the download indicator
+/** 准备动画 */
 - (void)loadIndicator;
+/** 更新进度条 */
+- (void)updateWithTotalBytes:(CGFloat)bytes downloadedBytes:(CGFloat)downloadedBytes;
 
-// update the downloadIndicator
+/** 设置每次进度动画时间 */
 - (void)setIndicatorAnimationDuration:(CGFloat)duration;
 
-// update the downloadIndicator
-- (void)updateWithTotalBytes:(CGFloat)bytes downloadedBytes:(CGFloat)downloadedBytes;
+/** 是否允许播放音乐 */
+@property (nonatomic, assign) BOOL      allowSoundPlay;
+
+typedef void (^progressDidReady) (WQCircleProgressBar *progressBar);
+/** 进度条倒计时，0为准备完毕 */
+@property (nonatomic, copy)   progressDidReady progressDidReadyBlock;
 
 @end

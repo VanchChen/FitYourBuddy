@@ -31,7 +31,7 @@
 
 #pragma mark - UIButton
 
-#pragma mark - 规则
+#pragma mark - 规则，这里不应该有！！！应该与业务无关！！！
 /**根据经验得到等级*/
 + (float)getExpFromLevel:(NSString *)level;
 /**根据类型和等级得到目标数*/
