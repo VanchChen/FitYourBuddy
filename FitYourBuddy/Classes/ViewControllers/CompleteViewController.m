@@ -8,6 +8,7 @@
 
 #import "CompleteViewController.h"
 #import "WQProgressBar.h"
+#import "WQAnimateLabel.h"
 
 static CGFloat const dataViewHeight = 90.0f;                    //数据框的高度
 static CGFloat const dataViewTopPadding = 28.0f;                //数据框的上边距
@@ -32,8 +33,8 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
 @property(nonatomic, strong) UIButton       *textLabel;         //今日完成数目
 @property(nonatomic, strong) UILabel        *textButtonLabel;   //完成按钮的标签框
 @property(nonatomic, strong) UIImageView    *textButtonImage;   //完成按钮的图标
-@property(nonatomic, strong) UILabel        *historyDayLabel;   //坚持天数
-@property(nonatomic, strong) UILabel        *coinLabel;         //金币框
+@property(nonatomic, strong) WQAnimateLabel *historyDayLabel;   //坚持天数
+@property(nonatomic, strong) WQAnimateLabel *coinLabel;         //金币框
 @property(nonatomic, strong) WQProgressBar  *levelProgressBar;  //经验框
 
 @property(nonatomic, strong) UIButton       *completeButton;    //完成按钮
@@ -112,9 +113,12 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
         leftCalendarImage.image = [UIImage imageNamed:@"CalendarIcon"];
         [dayView addSubview:leftCalendarImage];
         
-        _historyDayLabel = [CommonUtil createLabelWithText:@"10" andTextColor:themeRedColor andFont:[UIFont boldSystemFontOfSize:24]];
-        _historyDayLabel.frame = CGRectMake(0, 0, 60, 50);
-        _historyDayLabel.textAlignment = NSTextAlignmentCenter;
+        _historyDayLabel = [[WQAnimateLabel alloc] init];
+        [_historyDayLabel setFrame:CGRectMake(0, 0, 60, 50)];
+        [_historyDayLabel setText:@"-"];
+        [_historyDayLabel setTextColor:themeRedColor];
+        [_historyDayLabel setFont:[UIFont boldSystemFontOfSize:24]];
+        [_historyDayLabel setTextAlignment:NSTextAlignmentCenter];
         [_historyDayLabel rightOfView:leftCalendarImage withMargin:0 sameVertical:YES];
         [dayView addSubview:_historyDayLabel];
         
@@ -123,9 +127,12 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
         coinImage.frame = CGRectMake(120, (dataViewHeight - LevelIconWidth) / 2.0, LevelIconWidth, LevelIconWidth);
         [coinView addSubview:coinImage];
         
-        _coinLabel = [CommonUtil createLabelWithText:@"55" andTextColor:themeDarkOrangeColor andFont:[UIFont boldSystemFontOfSize:24]];
-        _coinLabel.frame = CGRectMake(0, 0, 60, 50);
-        _coinLabel.textAlignment = NSTextAlignmentCenter;
+        _coinLabel = [[WQAnimateLabel alloc] init];
+        [_coinLabel setFrame:CGRectMake(0, 0, 60, 50)];
+        [_coinLabel setText:@"-"];
+        [_coinLabel setTextColor:themeDarkOrangeColor];
+        [_coinLabel setFont:[UIFont boldSystemFontOfSize:24]];
+        [_coinLabel setTextAlignment:NSTextAlignmentCenter];
         [_coinLabel rightOfView:coinImage withMargin:0 sameVertical:YES];
         [coinView addSubview:_coinLabel];
         
@@ -163,7 +170,7 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
     [super viewWillAppear:animated];
     
     //各种乱七八糟的计算
-    NSString *exerciseTypeString, *exerciseCompleteString, *exerciseDayString;
+    NSString *exerciseTypeString, *exerciseCompleteString;
     NSInteger maxNum ,targetNum, exerciseLevel, todayNum, beforeNum, beforeTotalNum, afterTotalNum, beforeCoinNum, afterCoinNum;
     float expRatio, beforeExp, afterExp, levelExp;
     BOOL needCover = NO;
@@ -238,23 +245,24 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
         }
         if (needCover) {
             afterTotalNum ++;
-            afterCoinNum += afterTotalNum;
             [AccountCoreDataHelper setDataByName:@"count" andData:[NSString stringFromInteger:afterTotalNum] withError:&error];
-            [AccountCoreDataHelper setDataByName:@"coin" andData:[NSString stringFromInteger:afterCoinNum] withError:&error];
             [AccountCoreDataHelper setDataByName:@"date" andData:[NSString today] withError:&error];
+        }
+        
+        if (beforeNum < targetNum) {
+            //上次没完成目标
+            afterCoinNum += exerciseLevel;
+            [AccountCoreDataHelper setDataByName:@"coin" andData:[NSString stringFromInteger:afterCoinNum] withError:&error];
         }
     } else {
         exerciseCompleteString = @"再接再厉";
     }
     
-    //取锻炼天数
-    exerciseDayString = [NSString stringWithFormat:@"%ld", (long)afterTotalNum];
-    
     //赋标签框
     _titleLabel.text = exerciseCompleteString;
     _textButtonLabel.text = exerciseTypeString;
-    _historyDayLabel.text = exerciseDayString;
-    _coinLabel.text = [NSString stringFromInteger:afterCoinNum];
+    [_historyDayLabel changeLabelFromNum1:beforeTotalNum toNum2:afterTotalNum];
+    [_coinLabel changeLabelFromNum1:beforeCoinNum toNum2:afterCoinNum];
 
     //计算经验
     beforeExp = [dict[@"exp"] floatValue];

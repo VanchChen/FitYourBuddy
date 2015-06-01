@@ -81,6 +81,7 @@
 		D6F53B8D1AC6663B00289E6C /* coin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6F53B8B1AC6663B00289E6C /* coin.mp3 */; };
 		D6F53B8E1AC6663B00289E6C /* exercise.wav in Resources */ = {isa = PBXBuildFile; fileRef = D6F53B8C1AC6663B00289E6C /* exercise.wav */; };
 		D6F8D9721ACE5A2B001B8772 /* NSDate+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D6F8D9711ACE5A2B001B8772 /* NSDate+Base.m */; };
+		D6FC51D71B1BEEB10023B898 /* WQAnimateLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC51D61B1BEEB10023B898 /* WQAnimateLabel.m */; };
 		D6FFCDDA1AD0EB9100EB8305 /* StoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FFCDD91AD0EB9100EB8305 /* StoreViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -214,6 +215,8 @@
 		D6F53B8C1AC6663B00289E6C /* exercise.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = exercise.wav; path = Classes/Sounds/exercise.wav; sourceTree = "<group>"; };
 		D6F8D9701ACE5A2B001B8772 /* NSDate+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Base.h"; sourceTree = "<group>"; };
 		D6F8D9711ACE5A2B001B8772 /* NSDate+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Base.m"; sourceTree = "<group>"; };
+		D6FC51D51B1BEEB10023B898 /* WQAnimateLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQAnimateLabel.h; path = Classes/Tools/WQAnimateLabel/WQAnimateLabel.h; sourceTree = "<group>"; };
+		D6FC51D61B1BEEB10023B898 /* WQAnimateLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WQAnimateLabel.m; path = Classes/Tools/WQAnimateLabel/WQAnimateLabel.m; sourceTree = "<group>"; };
 		D6FFCDD81AD0EB9100EB8305 /* StoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreViewController.h; path = Classes/ViewControllers/StoreViewController.h; sourceTree = "<group>"; };
 		D6FFCDD91AD0EB9100EB8305 /* StoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreViewController.m; path = Classes/ViewControllers/StoreViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -327,10 +330,11 @@
 		D639C44F1A90DCA500715BA9 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				D66C06FD1B00AB1800A405DF /* MJRefresh */,
 				D696FD4D1AFF6B4B0023FD1F /* FXBlurView */,
+				D66C06FD1B00AB1800A405DF /* MJRefresh */,
 				D676E4211AA1AE10003BF293 /* SoundTool */,
 				D676E4281AA21A4A003BF293 /* StepCounter */,
+				D6FC51D31B1BEE580023B898 /* WQAnimateLabel */,
 				D61A101F1A972E1500B2C64C /* WQCalendar */,
 				D669BE6C1A9D997000DE6FA6 /* WQCircleProgressBar */,
 				D61A101B1A971FD400B2C64C /* WQProgressBar */,
@@ -620,6 +624,15 @@
 			name = Exercise;
 			sourceTree = "<group>";
 		};
+		D6FC51D31B1BEE580023B898 /* WQAnimateLabel */ = {
+			isa = PBXGroup;
+			children = (
+				D6FC51D51B1BEEB10023B898 /* WQAnimateLabel.h */,
+				D6FC51D61B1BEEB10023B898 /* WQAnimateLabel.m */,
+			);
+			name = WQAnimateLabel;
+			sourceTree = "<group>";
+		};
 		D6FFCDD71AD0EB5400EB8305 /* Store */ = {
 			isa = PBXGroup;
 			children = (
@@ -732,6 +745,7 @@
 				D65467B11AACA86300FE38E3 /* AccountCoreDataHelper.m in Sources */,
 				D676E4361AA21A4A003BF293 /* EBMotionManager.m in Sources */,
 				D66C07111B00AB1800A405DF /* UIScrollView+MJExtension.m in Sources */,
+				D6FC51D71B1BEEB10023B898 /* WQAnimateLabel.m in Sources */,
 				D639C4271A90DA2800715BA9 /* main.m in Sources */,
 				D65467B41AACA8C600FE38E3 /* ExerciseCoreDataHelper.m in Sources */,
 				D63FCF3E1A96293A00582386 /* FriendsViewController.m in Sources */,
