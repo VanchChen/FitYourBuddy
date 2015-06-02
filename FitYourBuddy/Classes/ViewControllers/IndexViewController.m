@@ -234,7 +234,7 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
     
     _isPull = YES;
     
-    NSDate* today = [[NSDate date] associateDayOfThePreviousMonth];
+    NSDate* today = [NSDate date];
     
     UILabel* calendarDate = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 200, 20)];
     [calendarDate setTextColor:tipTitleLabelColor];

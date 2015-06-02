@@ -107,7 +107,7 @@
     _animatingLayer.lineWidth = _coverWidth;
     self.lastSourceAngle = degreeToRadian(270);
     
-    _timer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(fireReadyTimer) userInfo:nil repeats:YES];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(fireReadyTimer) userInfo:nil repeats:YES];
     _readyLabel = [[UILabel alloc] initWithFrame:self.bounds];
     _readyLabel.text = @"准备";
     _readyLabel.textColor = [UIColor blackColor];
