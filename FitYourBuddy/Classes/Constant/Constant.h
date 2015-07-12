@@ -10,6 +10,9 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+//基础类
+#import "BaseViewController.h"
+
 //数据库小帮手
 #import "AccountCoreDataHelper.h"
 #import "ExerciseCoreDataHelper.h"
@@ -19,9 +22,11 @@
 #import "CommonUtil.h"
 #import "NSString+Base.h"
 #import "NSDate+Base.h"
-
 #import "UIView+Base.h"
 #import "UIImage+Base.h"
+
+//友盟
+#import "MobClick.h"
 
 /** 色值 RGBA **/
 #define RGB_A(r, g, b, a) [UIColor colorWithRed:(CGFloat)(r)/255.0f green:(CGFloat)(g)/255.0f blue:(CGFloat)(b)/255.0f alpha:(CGFloat)(a)]
@@ -59,6 +64,8 @@
 #define levelPurpleColor            RGB_A(132, 110, 255, 1)
 #define startTrainTargetGreyColor   RGB_A(218, 218, 218, 1)
 #define circleGreyColor             RGB_A(205, 205, 205, 1)
+
+#define settingBorderColor          RGB_A(81, 167, 249, 1)
 
 //字体颜色
 #define tipTitleLabelColor          RGB_A(66, 66, 66, 1)

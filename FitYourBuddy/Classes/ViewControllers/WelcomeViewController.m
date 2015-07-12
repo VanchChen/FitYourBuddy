@@ -42,6 +42,16 @@ static CGFloat const GenderExplainLabelHeight = 20.0f;
 
 @implementation WelcomeViewController
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"初始化页面"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"初始化页面"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

@@ -30,6 +30,16 @@ static CGFloat const IconHeight = 30.0f;
 
 #pragma mark Life Circle
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"载入页面"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"载入页面"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //底部栏

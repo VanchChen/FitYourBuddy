@@ -27,6 +27,41 @@ static CGFloat const popTipLabelHeight = 30.0f;         //弹出框提示的高�
 static CGFloat const buyButtonWidth = 150.0f;           //购买按钮的宽度
 static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
 
+static CGFloat  const IPhone4sRatio = 217.0f / 305.0f;
+
+@interface StoreImageView : UIImageView
+
+@end
+
+@implementation StoreImageView
+
+- (void)setImage:(UIImage *)image {
+    [super setImage:image];
+    
+    CGRect frame = self.frame;
+    CGFloat centerX = 0.0, centerY = 0.0;
+    if (frame.origin.x > 0) {
+        centerX = frame.origin.x + frame.size.width / 2.0f;
+        centerY = frame.origin.y + frame.size.height / 2.0f;
+    }
+    
+    if (APPCONFIG_DEVICE_OVER_IPHONE5) {
+        frame.size = image.size;
+    } else {
+        frame.size.width = image.size.width * IPhone4sRatio;
+        frame.size.height = image.size.height * IPhone4sRatio;
+    }
+    
+    if (frame.origin.x > 0) {
+        frame.origin.x = centerX - frame.size.width / 2.0f;
+        frame.origin.y = centerY - frame.size.height / 2.0f;
+    }
+    
+    self.frame = frame;
+}
+
+@end
+
 @interface StoreViewController () <UIScrollViewDelegate>
 
 @property(nonatomic, assign) StoreType storeType;               //选择的类型
@@ -37,8 +72,8 @@ static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
 @property(nonatomic, strong) UILabel *coinLabel;                //金币框
 
 @property(nonatomic, strong) UIImageView *hairImage;            //图片框
-@property(nonatomic, strong) UIImageView *eyeImage;
-@property(nonatomic, strong) UIImageView *mouthImage;
+@property(nonatomic, strong) StoreImageView *eyeImage;
+@property(nonatomic, strong) StoreImageView *mouthImage;
 @property(nonatomic, strong) UIImageView *clothesImage;
 
 @property(nonatomic, assign) NSInteger  hairChoice;             //选择的序号
@@ -55,6 +90,17 @@ static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
 
 @implementation StoreViewController
 #pragma mark - 生命周期
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"商店"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"商店"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -129,35 +175,37 @@ static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
     _mouthChoice = [_dict[@"mouth"] integerValue];
     _clothesChoice = [_dict[@"clothes"] integerValue];
     
+    UIImage *bodyImagePict = [UIImage imageNamed:[NSString stringWithFormat:@"body_%@_%@",_dict[@"gender"], _dict[@"level"]]];
+    UIImage *eyeImagePict = [UIImage imageNamed:[NSString stringWithFormat:@"eye_tn_%@_%@",_dict[@"gender"], _dict[@"eye"]]];
+    UIImage *mouthImagePict = [UIImage imageNamed:[NSString stringWithFormat:@"mouth_tn_%@_%@",_dict[@"gender"], _dict[@"mouth"]]];
+    CGFloat eyeGap, mouthGap;
+    if (!APPCONFIG_DEVICE_OVER_IPHONE5) {
+        eyeGap = 43;
+        mouthGap = 61;
+    } else {
+        eyeGap = 60;
+        mouthGap = 85;
+    }
+    
     //体型
-    NSString *bodyImageUrl = [NSString stringWithFormat:@"body_%@_%@",_dict[@"gender"], _dict[@"level"]];
-    UIImageView *bodyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:bodyImageUrl]];
+    StoreImageView *bodyImage = [[StoreImageView alloc] init];
+    [bodyImage setImage:bodyImagePict];
     [bodyImage setCenter:CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f)];
     [fatGuyFrameView addSubview:bodyImage];
     
-    //发型
-    NSString *hairImageUrl = [NSString stringWithFormat:@"hair_%@", _dict[@"hair"]];
-    _hairImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:hairImageUrl]];
-    _hairImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f);
-    [fatGuyFrameView addSubview:_hairImage];
-    
     //眼睛
-    NSString *eyeImageUrl = [NSString stringWithFormat:@"eye_%@", _dict[@"eye"]];
-    _eyeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:eyeImageUrl]];
-    _eyeImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f);
+    _eyeImage = [[StoreImageView alloc] init];
+    [_eyeImage setImage:eyeImagePict];
+    _eyeImage.center = CGPointMake(fatGuyFrameView.width / 2.0f - 1.0f, eyeGap);
+    //_eyeImage.contentMode = UIViewContentModeCenter;
     [fatGuyFrameView addSubview:_eyeImage];
     
     //嘴巴
-    NSString *mouthImageUrl = [NSString stringWithFormat:@"mouth_%@", _dict[@"mouth"]];
-    _mouthImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:mouthImageUrl]];
-    _mouthImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f);
+    _mouthImage = [[StoreImageView alloc] init];
+    [_mouthImage setImage:mouthImagePict];
+    _mouthImage.center = CGPointMake(fatGuyFrameView.width / 2.0f - 1.0f, mouthGap);
+    //_mouthImage.contentMode = UIViewContentModeCenter;
     [fatGuyFrameView addSubview:_mouthImage];
-    
-    //衣服
-    NSString *clothesImageUrl = [NSString stringWithFormat:@"clothes_%@_%@", _dict[@"clothes"], _dict[@"level"]];
-    _clothesImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:clothesImageUrl]];
-    _clothesImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f);
-    [fatGuyFrameView addSubview:_clothesImage];
 }
 
 - (void)initScrollView {
@@ -171,36 +219,36 @@ static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
     [self.view addSubview:_partTypeScrollView];
     
     CGFloat partTypeBtnWidth = APPCONFIG_UI_SCREEN_FWIDTH / 4.0f;
-    UIButton *hairTypeBtn = [self createPartTypeButton];
-    hairTypeBtn.frame = CGRectMake(0, 0, partTypeBtnWidth, _partTypeScrollView.height);
-    [hairTypeBtn setTitle:@"发型" forState:UIControlStateNormal];
-    [hairTypeBtn setTag:(StorePartTypeTag + StoreTypeHair)];
-    [_partTypeScrollView addSubview:hairTypeBtn];
+//    UIButton *hairTypeBtn = [self createPartTypeButton];
+//    hairTypeBtn.frame = CGRectMake(0, 0, partTypeBtnWidth, _partTypeScrollView.height);
+//    [hairTypeBtn setTitle:@"发型" forState:UIControlStateNormal];
+//    [hairTypeBtn setTag:(StorePartTypeTag + StoreTypeHair)];
+//    [_partTypeScrollView addSubview:hairTypeBtn];
     
     UIButton *eyeTypeBtn = [self createPartTypeButton];
-    eyeTypeBtn.frame = CGRectMake(partTypeBtnWidth, 0, partTypeBtnWidth, _partTypeScrollView.height);
+    eyeTypeBtn.frame = CGRectMake(0, 0, partTypeBtnWidth, _partTypeScrollView.height);
     [eyeTypeBtn setTitle:@"眼睛" forState:UIControlStateNormal];
     [eyeTypeBtn setTag:(StorePartTypeTag + StoreTypeEye)];
     [_partTypeScrollView addSubview:eyeTypeBtn];
     
     UIButton *mouthTypeBtn = [self createPartTypeButton];
-    mouthTypeBtn.frame = CGRectMake(partTypeBtnWidth * 2, 0, partTypeBtnWidth, _partTypeScrollView.height);
+    mouthTypeBtn.frame = CGRectMake(partTypeBtnWidth, 0, partTypeBtnWidth, _partTypeScrollView.height);
     [mouthTypeBtn setTitle:@"嘴巴" forState:UIControlStateNormal];
     [mouthTypeBtn setTag:(StorePartTypeTag + StoreTypeMouth)];
     [_partTypeScrollView addSubview:mouthTypeBtn];
     
-    UIButton *clothesTypeBtn = [self createPartTypeButton];
-    clothesTypeBtn.frame = CGRectMake(partTypeBtnWidth * 3, 0, partTypeBtnWidth, _partTypeScrollView.height);
-    [clothesTypeBtn setTitle:@"衣服" forState:UIControlStateNormal];
-    [clothesTypeBtn setTag:(StorePartTypeTag + StoreTypeClothes)];
-    [_partTypeScrollView addSubview:clothesTypeBtn];
+//    UIButton *clothesTypeBtn = [self createPartTypeButton];
+//    clothesTypeBtn.frame = CGRectMake(partTypeBtnWidth * 3, 0, partTypeBtnWidth, _partTypeScrollView.height);
+//    [clothesTypeBtn setTitle:@"衣服" forState:UIControlStateNormal];
+//    [clothesTypeBtn setTag:(StorePartTypeTag + StoreTypeClothes)];
+//    [_partTypeScrollView addSubview:clothesTypeBtn];
     
     //部件滑动框
     _partPictScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, APPCONFIG_UI_SCREEN_FWIDTH, pictureScrollViewHeight)];
     _partPictScrollView.tag = 1000;             //为了区分内部按钮的tag
     _partPictScrollView.delegate = self;
     _partPictScrollView.backgroundColor = indexBackgroundColor;
-    _partPictScrollView.contentSize = CGSizeMake(APPCONFIG_UI_SCREEN_FWIDTH * 4, pictureScrollViewHeight);
+    _partPictScrollView.contentSize = CGSizeMake(APPCONFIG_UI_SCREEN_FWIDTH * 2, pictureScrollViewHeight);
     _partPictScrollView.showsVerticalScrollIndicator = NO;
     _partPictScrollView.showsHorizontalScrollIndicator = NO;
     _partPictScrollView.pagingEnabled = YES;
@@ -208,14 +256,14 @@ static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
     [self.view addSubview:_partPictScrollView];
     
     //加载滑动框内容
-    [self createPartPictButtonByStoreType:StoreTypeHair andPage:0];
-    [self createPartPictButtonByStoreType:StoreTypeEye andPage:1];
-    [self createPartPictButtonByStoreType:StoreTypeMouth andPage:2];
-    [self createPartPictButtonByStoreType:StoreTypeClothes andPage:3];
+    //[self createPartPictButtonByStoreType:StoreTypeHair andPage:0];
+    [self createPartPictButtonByStoreType:StoreTypeEye andPage:0];
+    [self createPartPictButtonByStoreType:StoreTypeMouth andPage:1];
+    //[self createPartPictButtonByStoreType:StoreTypeClothes andPage:3];
     
     //点选第一个
-    self.storeType = StoreTypeHair;
-    hairTypeBtn.selected = YES;
+    self.storeType = StoreTypeEye;
+    eyeTypeBtn.selected = YES;
 }
 
 #pragma mark - 附加方法
@@ -275,9 +323,9 @@ static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
             pictButton.layer.borderColor = themeGreyColor.CGColor;
         }
         if (type == StoreTypeClothes) {
-            pictUrl = [NSString stringWithFormat:@"%@_tn_%ld_%@", typeString, (long)index, _dict[@"level"]];
+            pictUrl = [NSString stringWithFormat:@"%@_tn_%@_%ld_%@", typeString, _dict[@"gender"], (long)index, _dict[@"level"]];
         } else {
-            pictUrl = [NSString stringWithFormat:@"%@_tn_%ld", typeString, (long)index];
+            pictUrl = [NSString stringWithFormat:@"%@_tn_%@_%ld", typeString, _dict[@"gender"], (long)index];
         }
         [pictButton setImage:[UIImage imageNamed:pictUrl] forState:UIControlStateNormal];
         //[pictButton setContentMode:UIViewContentModeScaleToFill];
@@ -330,8 +378,12 @@ static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
     self.storeType = button.tag - StorePartTypeTag;
     button.selected = !button.selected;
     
-    //滚动页面  注意，这里为了方便，直接取storeType当作page了
-    [_partPictScrollView setContentOffset:CGPointMake(_partTypeScrollView.width * self.storeType, 0) animated:YES];
+    //滚动页面
+    NSInteger page = 0;
+    if (self.storeType == StoreTypeMouth) {
+        page = 1;
+    }
+    [_partPictScrollView setContentOffset:CGPointMake(_partTypeScrollView.width * page, 0) animated:YES];
 }
 
 - (void)tappedPictButton:(UIButton *)button {
@@ -342,22 +394,22 @@ static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
         case StoreTypeHair:
             index = _hairChoice + pictureButtonTag * self.storeType;
             _hairChoice = newIndex;
-            _hairImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"hair_%ld", (long)newIndex]];
+            _hairImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"hair_%@_%ld", _dict[@"gender"], (long)newIndex]];
             break;
         case StoreTypeEye:
             index = _eyeChoice + pictureButtonTag * self.storeType;
             _eyeChoice = newIndex;
-            _eyeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"eye_%ld", (long)newIndex]];
+            _eyeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"eye_tn_%@_%ld", _dict[@"gender"], (long)newIndex]];
             break;
         case StoreTypeMouth:
             index = _mouthChoice + pictureButtonTag * self.storeType;
             _mouthChoice = newIndex;
-            _mouthImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"mouth_%ld", (long)newIndex]];
+            _mouthImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"mouth_tn_%@_%ld", _dict[@"gender"], (long)newIndex]];
             break;
         case StoreTypeClothes:
             index = _clothesChoice + pictureButtonTag * self.storeType;
             _clothesChoice = newIndex;
-            _clothesImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"clothes_%ld_%@", (long)newIndex, _dict[@"level"]]];
+            _clothesImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"clothes_%@_%ld_%@", _dict[@"gender"], (long)newIndex, _dict[@"level"]]];
             break;
         default:
             break;
@@ -451,22 +503,22 @@ static CGFloat const buyButtonHeight = 40.0f;           //购买按钮的高度
         case StoreTypeHair:
             index = _hairChoice + pictureButtonTag * self.storeType;
             _hairChoice = newIndex;
-            _hairImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"hair_%ld", (long)newIndex]];
+            _hairImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"hair_%@_%ld", _dict[@"gender"], (long)newIndex]];
             break;
         case StoreTypeEye:
             index = _eyeChoice + pictureButtonTag * self.storeType;
             _eyeChoice = newIndex;
-            _eyeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"eye_%ld", (long)newIndex]];
+            _eyeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"eye_tn_%@_%ld", _dict[@"gender"], (long)newIndex]];
             break;
         case StoreTypeMouth:
             index = _mouthChoice + pictureButtonTag * self.storeType;
             _mouthChoice = newIndex;
-            _mouthImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"mouth_%ld", (long)newIndex]];
+            _mouthImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"mouth_tn_%@_%ld", _dict[@"gender"], (long)newIndex]];
             break;
         case StoreTypeClothes:
             index = _clothesChoice + pictureButtonTag * self.storeType;
             _clothesChoice = newIndex;
-            _clothesImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"clothes_%ld_%@", (long)newIndex, _dict[@"level"]]];
+            _clothesImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"clothes_%@_%ld_%@", _dict[@"gender"], (long)newIndex, _dict[@"level"]]];
             break;
         default:
             break;

@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 xpz. All rights reserved.
 //
 
-@interface PushUpViewController : UIViewController
+#import "WorkOutViewController.h"
+@interface PushUpViewController : WorkOutViewController
 
 @end

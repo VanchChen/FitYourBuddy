@@ -6,6 +6,6 @@
 //  Copyright (c) 2015年 xpz. All rights reserved.
 //
 
-@interface IndexViewController : UIViewController
+@interface IndexViewController : BaseViewController
 
 @end

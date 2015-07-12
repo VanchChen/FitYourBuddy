@@ -127,6 +127,30 @@
     }
 }
 
+#pragma mark - 日相关
+/** 当天时间区域 凌晨 上午 中午 下午 晚上 */
+- (NSString *)timeZone {
+    if (self.hour >= 0 && self.hour <= 4) {
+        return @"凌晨";
+    }
+    if (self.hour >= 5 && self.hour <= 8) {
+        return @"早上";
+    }
+    if (self.hour >= 9 && self.hour <= 11) {
+        return @"上午";
+    }
+    if (self.hour == 12) {
+        return @"中午";
+    }
+    if (self.hour >= 13 && self.hour <= 17) {
+        return @"下午";
+    }
+    if (self.hour >= 18 && self.hour <= 23) {
+        return @"晚上";
+    }
+    return @"早上";
+}
+
 #pragma mark - 月相关
 /** 当月共有几天 */
 - (NSInteger)numberOfDaysInMonth {

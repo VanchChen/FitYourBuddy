@@ -66,7 +66,7 @@ const CGFloat  LevelViewHeight  = 40.0f;
     float exp = [accountDict[@"exp"] floatValue];
     exp = exp / fullExp;
     
-    _levelLabel.text = [NSString stringWithFormat:@"Lv.%@ 男神", level];
+    _levelLabel.text = [NSString stringWithFormat:@"Lv.%@", level];
     UIView *progressInsideView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, _progressView.height)];
     progressInsideView.backgroundColor = themePureBlueColor;
     progressInsideView.layer.cornerRadius = 2;

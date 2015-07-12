@@ -44,7 +44,7 @@ static CGFloat const TriangleLeftPadding = 40.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"统计";
+    self.navigationItem.title = @"统计";
     
     //各种系数
     fadeRatio = (BallonHeight + APPCONFIG_UI_VIEW_BETWEEN_PADDING * 2) / (APPCONFIG_UI_SCREEN_FWIDTH);
@@ -149,7 +149,15 @@ static CGFloat const TriangleLeftPadding = 40.0f;
     viewArray = @[walkView, sitUpView, pushUpView, squatView, walkView2];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"统计"];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"统计"];
+    
     //每次进入都要重载一下数据
     for (HistoryExerciseView *view in viewArray) {
         [view reloadData];

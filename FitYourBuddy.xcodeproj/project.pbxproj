@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D614F5211B4832C80099929A /* DataItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = D614F5201B4832C80099929A /* DataItemDetail.m */; };
+		D614F5241B4832EA0099929A /* DataItemResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D614F5231B4832EA0099929A /* DataItemResult.m */; };
 		D61A10251A972F3100B2C64C /* WQProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D61A10231A972F3100B2C64C /* WQProgressBar.m */; };
 		D61A102A1A972F4100B2C64C /* WQCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = D61A10271A972F4100B2C64C /* WQCalendar.m */; };
 		D61A102E1A97302F00B2C64C /* WQCalendarTile.m in Sources */ = {isa = PBXBuildFile; fileRef = D61A102D1A97302F00B2C64C /* WQCalendarTile.m */; };
+		D6259A2D1B52BDEC00F99CF6 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6259A2C1B52BDEC00F99CF6 /* BaseViewController.m */; };
 		D639C4271A90DA2800715BA9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D639C4261A90DA2800715BA9 /* main.m */; };
 		D639C42A1A90DA2800715BA9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D639C4291A90DA2800715BA9 /* AppDelegate.m */; };
 		D639C42D1A90DA2800715BA9 /* FitYourBuddy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D639C42B1A90DA2800715BA9 /* FitYourBuddy.xcdatamodeld */; };
@@ -21,6 +24,7 @@
 		D63FCF411A962EA100582386 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63FCF401A962EA100582386 /* HistoryViewController.m */; };
 		D649E6821B079065007DB4BB /* FriendsStrengthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D649E6811B079065007DB4BB /* FriendsStrengthCell.m */; };
 		D649E6851B0790FB007DB4BB /* FriendsStaminaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D649E6841B0790FB007DB4BB /* FriendsStaminaCell.m */; };
+		D65352CC1B48DF52007CD311 /* WorkOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D65352CB1B48DF52007CD311 /* WorkOutViewController.m */; };
 		D65467B11AACA86300FE38E3 /* AccountCoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D65467B01AACA86300FE38E3 /* AccountCoreDataHelper.m */; };
 		D65467B41AACA8C600FE38E3 /* ExerciseCoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D65467B31AACA8C600FE38E3 /* ExerciseCoreDataHelper.m */; };
 		D65467B81AACADF300FE38E3 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D65467B71AACADF300FE38E3 /* WelcomeViewController.m */; };
@@ -63,6 +67,8 @@
 		D696FD4C1AFF6B470023FD1F /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = D696FD4B1AFF6B470023FD1F /* FXBlurView.m */; };
 		D6A69ECF1A9C58CD0061603F /* PushUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A69ECE1A9C58CD0061603F /* PushUpViewController.m */; };
 		D6A8CB531ABD7FEB003F7650 /* UIView+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A8CB521ABD7FEB003F7650 /* UIView+Base.m */; };
+		D6AF0B3F1B4ACD4500578CE9 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6AF0B3D1B4ACD4500578CE9 /* libMobClickLibrary.a */; };
+		D6AF0B411B4ACFBE00578CE9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6AF0B401B4ACFBE00578CE9 /* libz.dylib */; };
 		D6AFCAEE1AC5A62400400358 /* UIImage+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AFCAED1AC5A62400400358 /* UIImage+Base.m */; };
 		D6AFCAF21AC5AA8A00400358 /* CommonUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AFCAF11AC5AA8A00400358 /* CommonUtil.m */; };
 		D6B5D59C1AB51D4700B6BA01 /* CompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B5D59B1AB51D4700B6BA01 /* CompleteViewController.m */; };
@@ -73,6 +79,7 @@
 		D6C5FAEB1A9DCC4E00BABA36 /* SquatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAEA1A9DCC4E00BABA36 /* SquatViewController.m */; };
 		D6C5FAEE1A9DCC6500BABA36 /* WalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAED1A9DCC6500BABA36 /* WalkViewController.m */; };
 		D6C5FAF21A9DD1A600BABA36 /* TarBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAF11A9DD1A600BABA36 /* TarBarViewController.m */; };
+		D6D6163F1B4846D9001AB663 /* SettingsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D6163E1B4846D9001AB663 /* SettingsDetailViewController.m */; };
 		D6DC62D41A9B355700E03ED6 /* ExerciseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DC62D31A9B355700E03ED6 /* ExerciseViewController.m */; };
 		D6DFAB391AD6158D00C5D37C /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DFAB381AD6158D00C5D37C /* Store.m */; };
 		D6DFAB3C1AD615CD00C5D37C /* StoreCoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DFAB3B1AD615CD00C5D37C /* StoreCoreDataHelper.m */; };
@@ -86,12 +93,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D614F51F1B4832C80099929A /* DataItemDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataItemDetail.h; path = Classes/Entities/DataItemDetail.h; sourceTree = "<group>"; };
+		D614F5201B4832C80099929A /* DataItemDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataItemDetail.m; path = Classes/Entities/DataItemDetail.m; sourceTree = "<group>"; };
+		D614F5221B4832EA0099929A /* DataItemResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataItemResult.h; path = Classes/Entities/DataItemResult.h; sourceTree = "<group>"; };
+		D614F5231B4832EA0099929A /* DataItemResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataItemResult.m; path = Classes/Entities/DataItemResult.m; sourceTree = "<group>"; };
 		D61A10231A972F3100B2C64C /* WQProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WQProgressBar.m; path = Classes/Tools/WQProgressBar/WQProgressBar.m; sourceTree = "<group>"; };
 		D61A10241A972F3100B2C64C /* WQProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQProgressBar.h; path = Classes/Tools/WQProgressBar/WQProgressBar.h; sourceTree = "<group>"; };
 		D61A10261A972F4100B2C64C /* WQCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQCalendar.h; path = Classes/Tools/WQCalendar/WQCalendar.h; sourceTree = "<group>"; };
 		D61A10271A972F4100B2C64C /* WQCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WQCalendar.m; path = Classes/Tools/WQCalendar/WQCalendar.m; sourceTree = "<group>"; };
 		D61A102C1A97302F00B2C64C /* WQCalendarTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQCalendarTile.h; path = Classes/Tools/WQCalendar/WQCalendarTile.h; sourceTree = "<group>"; };
 		D61A102D1A97302F00B2C64C /* WQCalendarTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WQCalendarTile.m; path = Classes/Tools/WQCalendar/WQCalendarTile.m; sourceTree = "<group>"; };
+		D6259A2B1B52BDEC00F99CF6 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = Classes/ViewControllers/BaseViewController.h; sourceTree = "<group>"; };
+		D6259A2C1B52BDEC00F99CF6 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseViewController.m; path = Classes/ViewControllers/BaseViewController.m; sourceTree = "<group>"; };
 		D639C4211A90DA2800715BA9 /* FitYourBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitYourBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D639C4251A90DA2800715BA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D639C4261A90DA2800715BA9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -113,6 +126,8 @@
 		D649E6811B079065007DB4BB /* FriendsStrengthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsStrengthCell.m; path = Classes/Views/FriendsStrengthCell.m; sourceTree = "<group>"; };
 		D649E6831B0790FB007DB4BB /* FriendsStaminaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsStaminaCell.h; path = Classes/Views/FriendsStaminaCell.h; sourceTree = "<group>"; };
 		D649E6841B0790FB007DB4BB /* FriendsStaminaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsStaminaCell.m; path = Classes/Views/FriendsStaminaCell.m; sourceTree = "<group>"; };
+		D65352CA1B48DF52007CD311 /* WorkOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorkOutViewController.h; path = Classes/ViewControllers/WorkOutViewController.h; sourceTree = "<group>"; };
+		D65352CB1B48DF52007CD311 /* WorkOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WorkOutViewController.m; path = Classes/ViewControllers/WorkOutViewController.m; sourceTree = "<group>"; };
 		D65467AF1AACA86300FE38E3 /* AccountCoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountCoreDataHelper.h; path = Classes/CoreDataHelpers/AccountCoreDataHelper.h; sourceTree = "<group>"; };
 		D65467B01AACA86300FE38E3 /* AccountCoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountCoreDataHelper.m; path = Classes/CoreDataHelpers/AccountCoreDataHelper.m; sourceTree = "<group>"; };
 		D65467B21AACA8C600FE38E3 /* ExerciseCoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExerciseCoreDataHelper.h; path = Classes/CoreDataHelpers/ExerciseCoreDataHelper.h; sourceTree = "<group>"; };
@@ -183,6 +198,9 @@
 		D6A8CB501ABD6F93003F7650 /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		D6A8CB511ABD7FEB003F7650 /* UIView+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Base.h"; sourceTree = "<group>"; };
 		D6A8CB521ABD7FEB003F7650 /* UIView+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Base.m"; sourceTree = "<group>"; };
+		D6AF0B3D1B4ACD4500578CE9 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = Classes/Tools/Umeng/MobClick/libMobClickLibrary.a; sourceTree = "<group>"; };
+		D6AF0B3E1B4ACD4500578CE9 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = Classes/Tools/Umeng/MobClick/MobClick.h; sourceTree = "<group>"; };
+		D6AF0B401B4ACFBE00578CE9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D6AFCAEC1AC5A62400400358 /* UIImage+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Base.h"; sourceTree = "<group>"; };
 		D6AFCAED1AC5A62400400358 /* UIImage+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Base.m"; sourceTree = "<group>"; };
 		D6AFCAF01AC5AA8A00400358 /* CommonUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonUtil.h; path = Classes/Util/CommonUtil.h; sourceTree = "<group>"; };
@@ -203,6 +221,8 @@
 		D6C5FAED1A9DCC6500BABA36 /* WalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WalkViewController.m; path = Classes/ViewControllers/WalkViewController.m; sourceTree = "<group>"; };
 		D6C5FAF01A9DD1A600BABA36 /* TarBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TarBarViewController.h; path = Classes/ViewControllers/TarBarViewController.h; sourceTree = "<group>"; };
 		D6C5FAF11A9DD1A600BABA36 /* TarBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TarBarViewController.m; path = Classes/ViewControllers/TarBarViewController.m; sourceTree = "<group>"; };
+		D6D6163D1B4846D9001AB663 /* SettingsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsDetailViewController.h; path = Classes/ViewControllers/SettingsDetailViewController.h; sourceTree = "<group>"; };
+		D6D6163E1B4846D9001AB663 /* SettingsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsDetailViewController.m; path = Classes/ViewControllers/SettingsDetailViewController.m; sourceTree = "<group>"; };
 		D6DC62D21A9B355700E03ED6 /* ExerciseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExerciseViewController.h; path = Classes/ViewControllers/ExerciseViewController.h; sourceTree = "<group>"; };
 		D6DC62D31A9B355700E03ED6 /* ExerciseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExerciseViewController.m; path = Classes/ViewControllers/ExerciseViewController.m; sourceTree = "<group>"; };
 		D6DFAB371AD6158D00C5D37C /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Store.h; path = Classes/Entities/Store.h; sourceTree = "<group>"; };
@@ -226,15 +246,41 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6AF0B411B4ACFBE00578CE9 /* libz.dylib in Frameworks */,
 				D676E43C1AA21CB3003BF293 /* CoreGraphics.framework in Frameworks */,
 				D676E43A1AA21CA5003BF293 /* CoreMotion.framework in Frameworks */,
 				D676E4201AA1AC35003BF293 /* AudioToolbox.framework in Frameworks */,
+				D6AF0B3F1B4ACD4500578CE9 /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D614F51D1B48311D0099929A /* CoreDataEntities */ = {
+			isa = PBXGroup;
+			children = (
+				D6DFAB371AD6158D00C5D37C /* Store.h */,
+				D6DFAB381AD6158D00C5D37C /* Store.m */,
+				D6B6B7B81ACFFFDD00264C5D /* Account.h */,
+				D6B6B7B91ACFFFDD00264C5D /* Account.m */,
+				D6B6B7B51ACFFFDC00264C5D /* Exercise.h */,
+				D6B6B7B61ACFFFDC00264C5D /* Exercise.m */,
+			);
+			name = CoreDataEntities;
+			sourceTree = "<group>";
+		};
+		D614F51E1B48313D0099929A /* HttpDataEntities */ = {
+			isa = PBXGroup;
+			children = (
+				D614F51F1B4832C80099929A /* DataItemDetail.h */,
+				D614F5201B4832C80099929A /* DataItemDetail.m */,
+				D614F5221B4832EA0099929A /* DataItemResult.h */,
+				D614F5231B4832EA0099929A /* DataItemResult.m */,
+			);
+			name = HttpDataEntities;
+			sourceTree = "<group>";
+		};
 		D61A101B1A971FD400B2C64C /* WQProgressBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -317,12 +363,8 @@
 		D639C44E1A90DC9B00715BA9 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				D6DFAB371AD6158D00C5D37C /* Store.h */,
-				D6DFAB381AD6158D00C5D37C /* Store.m */,
-				D6B6B7B81ACFFFDD00264C5D /* Account.h */,
-				D6B6B7B91ACFFFDD00264C5D /* Account.m */,
-				D6B6B7B51ACFFFDC00264C5D /* Exercise.h */,
-				D6B6B7B61ACFFFDC00264C5D /* Exercise.m */,
+				D614F51E1B48313D0099929A /* HttpDataEntities */,
+				D614F51D1B48311D0099929A /* CoreDataEntities */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -330,6 +372,7 @@
 		D639C44F1A90DCA500715BA9 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				D6AF0B3B1B4ACB5200578CE9 /* Umeng */,
 				D696FD4D1AFF6B4B0023FD1F /* FXBlurView */,
 				D66C06FD1B00AB1800A405DF /* MJRefresh */,
 				D676E4211AA1AE10003BF293 /* SoundTool */,
@@ -355,6 +398,8 @@
 				D63FCF3A1A96290D00582386 /* Friends */,
 				D63FCF391A96290400582386 /* Settings */,
 				D63FCF381A9628F400582386 /* Index */,
+				D6259A2B1B52BDEC00F99CF6 /* BaseViewController.h */,
+				D6259A2C1B52BDEC00F99CF6 /* BaseViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -373,6 +418,8 @@
 			children = (
 				D63FCF351A9628EE00582386 /* SettingsViewController.h */,
 				D63FCF361A9628EE00582386 /* SettingsViewController.m */,
+				D6D6163D1B4846D9001AB663 /* SettingsDetailViewController.h */,
+				D6D6163E1B4846D9001AB663 /* SettingsDetailViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -515,6 +562,7 @@
 		D676E4381AA21C3A003BF293 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6AF0B401B4ACFBE00578CE9 /* libz.dylib */,
 				D676E43B1AA21CB3003BF293 /* CoreGraphics.framework */,
 				D676E4391AA21CA5003BF293 /* CoreMotion.framework */,
 				D676E41F1AA1AC35003BF293 /* AudioToolbox.framework */,
@@ -585,6 +633,23 @@
 			path = Classes/Constant;
 			sourceTree = "<group>";
 		};
+		D6AF0B3B1B4ACB5200578CE9 /* Umeng */ = {
+			isa = PBXGroup;
+			children = (
+				D6AF0B3C1B4ACB5D00578CE9 /* MobClick */,
+			);
+			name = Umeng;
+			sourceTree = "<group>";
+		};
+		D6AF0B3C1B4ACB5D00578CE9 /* MobClick */ = {
+			isa = PBXGroup;
+			children = (
+				D6AF0B3D1B4ACD4500578CE9 /* libMobClickLibrary.a */,
+				D6AF0B3E1B4ACD4500578CE9 /* MobClick.h */,
+			);
+			name = MobClick;
+			sourceTree = "<group>";
+		};
 		D6AFCAEF1AC5A9FA00400358 /* Util */ = {
 			isa = PBXGroup;
 			children = (
@@ -620,6 +685,8 @@
 				D6C5FAED1A9DCC6500BABA36 /* WalkViewController.m */,
 				D6B5D59A1AB51D4700B6BA01 /* CompleteViewController.h */,
 				D6B5D59B1AB51D4700B6BA01 /* CompleteViewController.m */,
+				D65352CA1B48DF52007CD311 /* WorkOutViewController.h */,
+				D65352CB1B48DF52007CD311 /* WorkOutViewController.m */,
 			);
 			name = Exercise;
 			sourceTree = "<group>";
@@ -735,6 +802,7 @@
 				D6AFCAF21AC5AA8A00400358 /* CommonUtil.m in Sources */,
 				D6DC62D41A9B355700E03ED6 /* ExerciseViewController.m in Sources */,
 				D66C07121B00AB1800A405DF /* UIScrollView+MJRefresh.m in Sources */,
+				D6259A2D1B52BDEC00F99CF6 /* BaseViewController.m in Sources */,
 				D67786791ADE429D009DCC7C /* WQTableViewCell.m in Sources */,
 				D67786761ADE092D009DCC7C /* WQTableView.m in Sources */,
 				D649E6851B0790FB007DB4BB /* FriendsStaminaCell.m in Sources */,
@@ -743,9 +811,11 @@
 				D639C42A1A90DA2800715BA9 /* AppDelegate.m in Sources */,
 				D6B6B7B71ACFFFDC00264C5D /* Exercise.m in Sources */,
 				D65467B11AACA86300FE38E3 /* AccountCoreDataHelper.m in Sources */,
+				D614F5211B4832C80099929A /* DataItemDetail.m in Sources */,
 				D676E4361AA21A4A003BF293 /* EBMotionManager.m in Sources */,
 				D66C07111B00AB1800A405DF /* UIScrollView+MJExtension.m in Sources */,
 				D6FC51D71B1BEEB10023B898 /* WQAnimateLabel.m in Sources */,
+				D614F5241B4832EA0099929A /* DataItemResult.m in Sources */,
 				D639C4271A90DA2800715BA9 /* main.m in Sources */,
 				D65467B41AACA8C600FE38E3 /* ExerciseCoreDataHelper.m in Sources */,
 				D63FCF3E1A96293A00582386 /* FriendsViewController.m in Sources */,
@@ -767,6 +837,7 @@
 				D6C5FAEB1A9DCC4E00BABA36 /* SquatViewController.m in Sources */,
 				D63E2DB31AD3B63A00D86030 /* TimerManager.m in Sources */,
 				D6AFCAEE1AC5A62400400358 /* UIImage+Base.m in Sources */,
+				D65352CC1B48DF52007CD311 /* WorkOutViewController.m in Sources */,
 				D66C070F1B00AB1800A405DF /* MJRefreshFooterView.m in Sources */,
 				D669BE6F1A9D9A7B00DE6FA6 /* WQCircleProgressBar.m in Sources */,
 				D67F689E1AFB3CD600E2B97D /* LoadingViewController.m in Sources */,
@@ -780,6 +851,7 @@
 				D639C4561A90DE8400715BA9 /* IndexViewController.m in Sources */,
 				D6DFAB3C1AD615CD00C5D37C /* StoreCoreDataHelper.m in Sources */,
 				D6A8CB531ABD7FEB003F7650 /* UIView+Base.m in Sources */,
+				D6D6163F1B4846D9001AB663 /* SettingsDetailViewController.m in Sources */,
 				D61A102E1A97302F00B2C64C /* WQCalendarTile.m in Sources */,
 				D649E6821B079065007DB4BB /* FriendsStrengthCell.m in Sources */,
 				D67786711ADDF5B6009DCC7C /* DebugViewController.m in Sources */,
@@ -878,6 +950,10 @@
 				INFOPLIST_FILE = FitYourBuddy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FitYourBuddy/Classes/Tools/Umeng/MobClick",
+				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -897,6 +973,10 @@
 				INFOPLIST_FILE = FitYourBuddy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FitYourBuddy/Classes/Tools/Umeng/MobClick",
+				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

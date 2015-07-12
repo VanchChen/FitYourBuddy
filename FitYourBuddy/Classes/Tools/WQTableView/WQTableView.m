@@ -144,11 +144,17 @@
 
 //返回表格端的数量
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.numberForSection) {
+        return self.numberForSection(self);
+    }
     return 1;
 }
 
 //一个单元中有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.numberForRowInSection) {
+        return self.numberForRowInSection(self, section);
+    }
     return 10;
 }
 
@@ -187,7 +193,7 @@
         return [self cellWithClass:modifiRowClass indexPath:indexPath];
     }
     
-    return nil;
+    return [[UITableViewCell alloc] init];
 }
 
 @end

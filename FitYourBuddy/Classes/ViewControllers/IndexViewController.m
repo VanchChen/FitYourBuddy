@@ -15,6 +15,7 @@
 
 static CGFloat  const TitleLabelWidth   = 40.0f;
 static CGFloat  const FatGuyHeightRatio = 0.8f;
+static CGFloat  const IPhone4sRatio = 217.0f / 305.0f;
 static CGFloat  const CalendarViewHeight = 320.0f;
 static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买框，分别为（上，左，高，宽）
 
@@ -48,8 +49,9 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
     [self initCalendar]; //日历加载
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     //先删光
     [fatGuyFrameView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
@@ -57,38 +59,71 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
     NSError *error;
     NSDictionary *_dict = [AccountCoreDataHelper getAccountDictionaryWithError:&error];
     
+    UIImage *bodyImagePict = [UIImage imageNamed:[NSString stringWithFormat:@"body_%@_%@",_dict[@"gender"], _dict[@"level"]]];
+    UIImage *eyeImagePict = [UIImage imageNamed:[NSString stringWithFormat:@"eye_tn_%@_%@",_dict[@"gender"], _dict[@"eye"]]];
+    UIImage *mouthImagePict = [UIImage imageNamed:[NSString stringWithFormat:@"mouth_tn_%@_%@",_dict[@"gender"], _dict[@"mouth"]]];
+    CGRect bodyRect, eyeRect, mouthRect;
+    CGFloat eyeGap, mouthGap;
+    if (!APPCONFIG_DEVICE_OVER_IPHONE5) {
+        CGSize size = bodyImagePict.size;
+        size.width *= IPhone4sRatio;
+        size.height *= IPhone4sRatio;
+        bodyRect = CGRectMake(0, 0, size.width, size.height);
+        
+        size = eyeImagePict.size;
+        size.width *= IPhone4sRatio;
+        size.height *= IPhone4sRatio;
+        eyeRect = CGRectMake(0, 0, size.width, size.height);
+        
+        size = mouthImagePict.size;
+        size.width *= IPhone4sRatio;
+        size.height *= IPhone4sRatio;
+        mouthRect = CGRectMake(0, 0, size.width, size.height);
+        
+        eyeGap = 43;
+        mouthGap = 61;
+    } else {
+        bodyRect = CGRectMake(0, 0, bodyImagePict.size.width, bodyImagePict.size.height);
+        eyeRect = CGRectMake(0, 0, eyeImagePict.size.width, eyeImagePict.size.height);
+        mouthRect = CGRectMake(0, 0, mouthImagePict.size.width, mouthImagePict.size.height);
+        
+        eyeGap = 60;
+        mouthGap = 85;
+    }
+    
     //体型
-    NSString *bodyImageUrl = [NSString stringWithFormat:@"body_%@_%@",_dict[@"gender"], _dict[@"level"]];
-    UIImageView *bodyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:bodyImageUrl]];
-    [bodyImage setCenter:CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f - 10)];
+    UIImageView *bodyImage = [[UIImageView alloc] initWithFrame:bodyRect];
+    [bodyImage setImage:bodyImagePict];
+    [bodyImage setCenter:CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f)];
     [fatGuyFrameView addSubview:bodyImage];
     
-    //发型
-    NSString *hairImageUrl = [NSString stringWithFormat:@"hair_%@", _dict[@"hair"]];
-    UIImageView *_hairImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:hairImageUrl]];
-    _hairImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f - 10);//fatGuyFrameView.width / 2.0f + 3.0f, 38.0f
-    [fatGuyFrameView addSubview:_hairImage];
-    
+
+//        //发型
+//        NSString *hairImageUrl = [NSString stringWithFormat:@"hair_%@_%@",_dict[@"gender"], _dict[@"hair"]];
+//        UIImageView *_hairImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:hairImageUrl]];
+//        _hairImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f);//fatGuyFrameView.width / 2.0f + 3.0f, 38.0f
+//        [fatGuyFrameView addSubview:_hairImage];
+//        
     //眼睛
-    NSString *eyeImageUrl = [NSString stringWithFormat:@"eye_%@", _dict[@"eye"]];
-    UIImageView *_eyeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:eyeImageUrl]];
-    _eyeImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f - 10);//fatGuyFrameView.width / 2.0f - 1.0f, 54.0f
+    UIImageView *_eyeImage = [[UIImageView alloc] initWithFrame:eyeRect];
+    [_eyeImage setImage:eyeImagePict];
+    _eyeImage.center = CGPointMake(fatGuyFrameView.width / 2.0f - 1.0f, eyeGap);//fatGuyFrameView.width / 2.0f - 1.0f, 54.0f
     [fatGuyFrameView addSubview:_eyeImage];
     
     //嘴巴
-    NSString *mouthImageUrl = [NSString stringWithFormat:@"mouth_%@", _dict[@"mouth"]];
-    UIImageView *_mouthImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:mouthImageUrl]];
-    _mouthImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f - 10);//fatGuyFrameView.width / 2.0f - 1.0f, 80.0f
+    UIImageView *_mouthImage = [[UIImageView alloc] initWithFrame:mouthRect];
+    [_mouthImage setImage:mouthImagePict];
+    _mouthImage.center = CGPointMake(fatGuyFrameView.width / 2.0f - 1.0f, mouthGap);//fatGuyFrameView.width / 2.0f - 1.0f, 80.0f
     [fatGuyFrameView addSubview:_mouthImage];
-    
-    //衣服
-    NSString *clothesImageUrl = [NSString stringWithFormat:@"clothes_%@_%@", _dict[@"clothes"], _dict[@"level"]];
-    UIImageView *_clothesImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:clothesImageUrl]];
-    _clothesImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f - 10);
-    [fatGuyFrameView addSubview:_clothesImage];
+        
+//        //衣服
+//        NSString *clothesImageUrl = [NSString stringWithFormat:@"clothes_%@_%@_%@",_dict[@"gender"], _dict[@"clothes"], _dict[@"level"]];
+//        UIImageView *_clothesImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:clothesImageUrl]];
+//        _clothesImage.center = CGPointMake(fatGuyFrameView.width / 2.0f, fatGuyFrameView.height / 2.0f);
+//        [fatGuyFrameView addSubview:_clothesImage];
     
     //获取姓名和性别
-    fatGuyNameLabel.text = [NSString stringWithFormat:@"早上好，%@", _dict[@"name"]];
+    fatGuyNameLabel.text = [NSString stringWithFormat:@"%@好，%@",[[NSDate date] timeZone], _dict[@"name"]];
     leftHistoryDayLabel.text = [NSString stringWithFormat:@"%@天", _dict[@"count"]];
     
     //经验
@@ -99,14 +134,14 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
 }
 
 - (void)initNav {
-    self.title = @"小胖砸";
-    self.view.backgroundColor = indexBackgroundColor;
+    self.navigationItem.title = @"天天趣健身";
     
     //来个分享按钮
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.frame = CGRectMake(0, 0, 24, 24);
     [shareBtn setBackgroundImage:[UIImage imageNamed:@"ShareWhiteIcon"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(tappedShareBtn) forControlEvents:UIControlEventTouchUpInside];
+    [shareBtn setHidden:YES];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
     
     //统一返回键

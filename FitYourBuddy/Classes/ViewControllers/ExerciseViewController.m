@@ -58,7 +58,6 @@ static CGFloat const ExerciseBtnBetweenPadding = 30.0f;             //新界面�
         self.layer.shadowOpacity = 1;
         self.layer.shadowColor = startTrainTargetGreyColor.CGColor;
         
-        
         self.exerciseType = exerciseType;
         
         _tintLabel = [CommonUtil createLabelWithText:@"" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:16.0f] andTextAlignment:NSTextAlignmentCenter];
@@ -66,6 +65,10 @@ static CGFloat const ExerciseBtnBetweenPadding = 30.0f;             //新界面�
         [self addSubview:_tintLabel];
         
         CGFloat btnImageWidth = frame.size.width - APPCONFIG_UI_VIEW_PADDING * 2;
+        if (!APPCONFIG_DEVICE_OVER_IPHONE5) {
+            btnImageWidth -= APPCONFIG_UI_VIEW_PADDING * 2;
+        }
+        
         _btnImageView = [[UIImageView alloc] init];
         _btnImageView.frame = CGRectMake(0, 0, btnImageWidth, btnImageWidth);
         _btnImageView.center = CGPointMake(self.width / 2.0f, self.height / 2.0f);
@@ -172,6 +175,11 @@ static CGFloat const ExerciseBtnBetweenPadding = 30.0f;             //新界面�
 
 @implementation ExerciseViewController
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"开始锻炼"];
+}
+
 - (void)dealloc {
     //销毁提醒
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CompleteTapNote" object:nil];
@@ -190,7 +198,6 @@ static CGFloat const ExerciseBtnBetweenPadding = 30.0f;             //新界面�
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(completeVCDidTappedButon) name:@"CompleteTapNote" object:nil];
     
     self.title = @"开始锻炼";
-    self.view.backgroundColor = indexBackgroundColor;
     
     //暗门入口
     self.debugCount = 0;
@@ -223,6 +230,9 @@ static CGFloat const ExerciseBtnBetweenPadding = 30.0f;             //新界面�
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"开始锻炼"];
+    
     //重置暗门阀值
     self.debugCount = 0;
     //读取训练等级

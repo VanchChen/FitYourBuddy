@@ -20,18 +20,28 @@ static CGFloat      const popIconLeftPadding = 40.0f;
 
 @property (nonatomic, strong) UIButton          *staminaBtn;
 @property (nonatomic, strong) UIButton          *strengthBtn;
-@property (nonatomic, strong) WQTableView       *tabelView;
+@property (nonatomic, strong) WQTableView       *tableView;
 
 @end
 
 @implementation FriendsViewController
 
 #pragma mark - 生命循环
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"萌胖圈"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"萌胖圈"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"萌胖圈";
-    self.view.backgroundColor = indexBackgroundColor;
+    self.navigationItem.title = @"萌胖圈";
     
     [self initSegment];
     
@@ -50,8 +60,8 @@ static CGFloat      const popIconLeftPadding = 40.0f;
             _staminaBtn.selected = NO;
             _strengthBtn.selected = YES;
         }
-        [self.tabelView setContentOffset:CGPointMake(0, 0) animated:NO];
-        [self.tabelView reloadData];
+        [self.tableView setContentOffset:CGPointMake(0, 0) animated:NO];
+        [self.tableView reloadData];
     }
 }
 - (void)initSegment {
@@ -63,7 +73,7 @@ static CGFloat      const popIconLeftPadding = 40.0f;
     [self.view addSubview:segmentView];
     
     UIImage *blueImage = [UIImage imageWithUIColor:themePureBlueColor andCGSize:CGSizeMake(segmentView.width / 2.0f, segmentView.height)];
-    UIImage *blueBlurImage = [UIImage imageWithUIColor:themeBlueColor andCGSize:CGSizeMake(segmentView.width / 2.0f, segmentView.height)];
+    UIImage *blueBlurImage = [UIImage imageWithUIColor:RGB_A(160, 209, 253, 1) andCGSize:CGSizeMake(segmentView.width / 2.0f, segmentView.height)];
     UIImage *whiteImage = [UIImage imageWithUIColor:[UIColor whiteColor] andCGSize:CGSizeMake(segmentView.width / 2.0f, segmentView.height)];
     
     _staminaBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -99,30 +109,31 @@ static CGFloat      const popIconLeftPadding = 40.0f;
 }
 
 - (void)initTable {
-    self.tabelView = [[WQTableView alloc] initWithStyle:YES];
-    self.tabelView.frame = CGRectMake(20, 50, self.view.width - 40, APPCONFIG_UI_SCREEN_VHEIGHT - 60);
-    self.tabelView.backgroundColor = [UIColor whiteColor];
-    self.tabelView.layer.cornerRadius = 10;
-    self.tabelView.layer.masksToBounds = YES;
-    self.tabelView.layer.borderWidth = 1.0f;
-    self.tabelView.layer.borderColor = themePureBlueColor.CGColor;
-    self.tabelView.ctrl = self;
-    [self.view addSubview:self.tabelView];
+    self.tableView = [[WQTableView alloc] initWithStyle:YES];
+    self.tableView.frame = CGRectMake(20, 50, self.view.width - 40, APPCONFIG_UI_SCREEN_VHEIGHT - 60);
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.layer.cornerRadius = 10;
+    self.tableView.layer.masksToBounds = YES;
+    self.tableView.layer.borderWidth = 1.0f;
+    self.tableView.layer.borderColor = themePureBlueColor.CGColor;
+    //self.tableView.ctrl = self;
+    self.tableView.isRefreshType = YES;
+    [self.view addSubview:self.tableView];
     
     __weak typeof(self) __weakMe = self;
     
     //计算单元格的高度
-    self.tabelView.heightForRow = ^CGFloat(WQTableView *tableView, NSIndexPath *indexPath) {
+    self.tableView.heightForRow = ^CGFloat(WQTableView *tableView, NSIndexPath *indexPath) {
         return 50.0f;
     };
     
     //单元格点击事件
-    self.tabelView.didSelectRow = ^(WQTableView *table, NSIndexPath *indexPath) {
+    self.tableView.didSelectRow = ^(WQTableView *table, NSIndexPath *indexPath) {
         [__weakMe didSelectedCell:table indexPath:indexPath];
     };
     
     //单元格样式
-    self.tabelView.modifiRowClass = ^(WQTableView *table, Class originClass, NSIndexPath *indexPath) {
+    self.tableView.modifiRowClass = ^Class(WQTableView *table, Class originClass, NSIndexPath *indexPath) {
         if (__weakMe.staminaBtn.selected) {
             if (indexPath.row == 5) {
                 return [FriendsMyStaminaCell class];
@@ -136,7 +147,7 @@ static CGFloat      const popIconLeftPadding = 40.0f;
         }
     };
     //一定要在modifiRowClass后取消分割线
-    self.tabelView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 #pragma mark - WQTableView Method

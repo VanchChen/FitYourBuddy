@@ -17,6 +17,10 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //友盟统计
+    [MobClick startWithAppkey:@"559a90d667e58eb311006634" reportPolicy:BATCH channelId:nil];
+    //FIXME: 友盟检查更新[MobClick checkUpdate];
+    
     //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
     //[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
@@ -26,9 +30,11 @@
     [self.window makeKeyAndVisible];
     
     //设置导航条全局统一样式
-    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+    //[[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     //[[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"NavShadowImage"]];
-    [[UINavigationBar appearance] setTranslucent:NO];
+    if(APPCONFIG_VERSION_OVER_8 && [UINavigationBar conformsToProtocol:@protocol(UIAppearanceContainer)]) {
+        [[UINavigationBar appearance] setTranslucent:NO];
+    }
     [[UINavigationBar appearance] setBarTintColor:tarBarColor];//themePureBlueColor
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:20]}];

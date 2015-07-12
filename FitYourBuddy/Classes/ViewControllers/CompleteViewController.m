@@ -10,13 +10,11 @@
 #import "WQProgressBar.h"
 #import "WQAnimateLabel.h"
 
-static CGFloat const dataViewHeight = 90.0f;                    //数据框的高度
-static CGFloat const dataViewTopPadding = 28.0f;                //数据框的上边距
 static CGFloat const dataViewLeftPadding = 30.0f;               //数据框的左边距
 
 static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的大小
-static CGFloat const arrowLeftPadding = 110.0f;                 //箭头的左边距
-static CGFloat const arrowWidth = 20.0f;                        //箭头的宽度
+//static CGFloat const arrowLeftPadding = 110.0f;                 //箭头的左边距
+//static CGFloat const arrowWidth = 20.0f;                        //箭头的宽度
 
 static CGFloat const shareImageWidth = 24.0f;                   //分享按钮宽度
 
@@ -27,6 +25,9 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
     UIView *dayView;
     UIView *coinView;
     UIView *levelView;
+    
+    CGFloat dataViewHeight;                 //数据框的高度
+    CGFloat dataViewTopPadding;             //数据框的上边距
 }
 
 @property(nonatomic, strong) UILabel        *titleLabel;        //标题文字
@@ -46,11 +47,16 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
 - (id)init {
     self = [super init];
     if (self) {
-        self.view.backgroundColor = indexBackgroundColor;
-        
         navView = [[UIView alloc] init];
         navView.backgroundColor = themeBlueColor;
         [self.view addSubview:navView];
+        
+        dataViewHeight = 90;
+        dataViewTopPadding=28;
+        if (!APPCONFIG_DEVICE_OVER_IPHONE5) {
+            dataViewHeight = 70;
+            dataViewTopPadding = 20;
+        }
         
         _titleLabel = [CommonUtil createLabelWithText:@"目标完成！" andTextColor:[UIColor whiteColor] andFont:[UIFont boldSystemFontOfSize:20] andTextAlignment:NSTextAlignmentCenter];
         [navView addSubview:_titleLabel];
@@ -166,8 +172,15 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
     [levelView bottomOfView:coinView withMargin:APPCONFIG_UI_VIEW_PADDING];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"完成锻炼"];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [MobClick beginLogPageView:@"完成锻炼"];
     
     //各种乱七八糟的计算
     NSString *exerciseTypeString, *exerciseCompleteString;

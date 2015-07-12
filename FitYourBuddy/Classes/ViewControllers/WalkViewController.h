@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 xpz. All rights reserved.
 //
 
-@interface WalkViewController : UIViewController
+#import "WorkOutViewController.h"
+@interface WalkViewController : WorkOutViewController
 
 @end

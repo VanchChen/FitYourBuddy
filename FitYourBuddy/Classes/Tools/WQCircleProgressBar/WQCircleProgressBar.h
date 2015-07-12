@@ -18,6 +18,9 @@
 
 /** 准备动画 */
 - (void)loadIndicator;
+/** 改变大小 */
+- (void)changeFrame:(CGRect)frame;
+
 /** 更新进度条 */
 - (void)updateWithTotalBytes:(CGFloat)bytes downloadedBytes:(CGFloat)downloadedBytes;
 

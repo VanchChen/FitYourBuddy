@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger, DebugType) {
     DebugTypeCoin
 };
 
-@interface DebugDetailViewController : UIViewController <UITextFieldDelegate>
+@interface DebugDetailViewController : BaseViewController <UITextFieldDelegate>
 
 @property (nonatomic, assign) DebugType         debugType;
 @property (nonatomic, strong) UITextField       *textField;
@@ -27,7 +27,10 @@ typedef NS_ENUM(NSInteger, DebugType) {
 @implementation DebugDetailViewController
 
 #pragma mark - 生命周期
+
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
     NSError *error;
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:16]}];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -49,6 +52,13 @@ typedef NS_ENUM(NSInteger, DebugType) {
             _textField2.frame = CGRectMake(30, 100, APPCONFIG_UI_SCREEN_FWIDTH - 60, 40);
             _textField2.text = [AccountCoreDataHelper getDataByName:@"exp" withError:&error];
             [self.view addSubview:_textField2];
+            
+            _textField3 = [self createTextField];
+            _textField3.frame = CGRectMake(30, 150, APPCONFIG_UI_SCREEN_FWIDTH - 60, 40);
+            _textField3.text = [AccountCoreDataHelper getDataByName:@"gender" withError:&error];
+            [self.view addSubview:_textField3];
+            
+            
             
             break;
         }
@@ -119,6 +129,7 @@ typedef NS_ENUM(NSInteger, DebugType) {
             }
             [AccountCoreDataHelper setDataByName:@"level" andData:_textField.text withError:&error];
             [AccountCoreDataHelper setDataByName:@"exp" andData:_textField2.text withError:&error];
+            [AccountCoreDataHelper setDataByName:@"gender" andData:_textField3.text withError:&error];
             
             break;
         }
@@ -177,6 +188,16 @@ typedef NS_ENUM(NSInteger, DebugType) {
 @implementation DebugViewController
 
 #pragma mark - 生命周期
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"暗门"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"暗门"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

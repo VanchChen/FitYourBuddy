@@ -73,6 +73,8 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
 }
 
 - (void)customeInit {
+    self.backgroundColor = [UIColor whiteColor];
+    
     _numLabel = nil;//数字框，一开始不显示
     
     //个人记录框

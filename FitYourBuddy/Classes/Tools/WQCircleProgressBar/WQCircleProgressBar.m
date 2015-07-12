@@ -15,8 +15,7 @@
 @property (nonatomic, strong) NSMutableArray    *paths;
 
 // the shaper layers used for display
-@property (nonatomic, strong) CAShapeLayer      *indicateShapeLayer;
-@property (nonatomic, strong) CAShapeLayer      *coverLayer;
+@property (nonatomic, strong) CALayer           *largeCircleLayer;
 
 // this is the layer used for animation
 @property (nonatomic, strong) CAShapeLayer      *animatingLayer;
@@ -63,8 +62,7 @@
     _allowSoundPlay = YES;
     
     self.radiusPercent = 0.5;
-    _coverLayer = [CAShapeLayer layer];
-    _animatingLayer = _coverLayer;
+    _animatingLayer = [CAShapeLayer layer];
     
     // set the fill color
     _fillColor = [UIColor clearColor];
@@ -73,16 +71,15 @@
     _coverWidth = 12.0;
     
     // add two circle border layer
-    CALayer *largeCircleLayer = [CALayer layer];
-    largeCircleLayer.frame = CGRectMake(4.5f, 4.5f, self.frame.size.width - 9.0f, self.frame.size.height - 9.0f);
-    largeCircleLayer.backgroundColor = [UIColor whiteColor].CGColor;
-    largeCircleLayer.cornerRadius = largeCircleLayer.bounds.size.width / 2;
-    //largeCircleLayer.masksToBounds = YES;
-    largeCircleLayer.shadowColor = circleGreyColor.CGColor;
-    largeCircleLayer.shadowOffset = CGSizeMake(0, 4);
-    largeCircleLayer.shadowOpacity = 1;
-    largeCircleLayer.shadowRadius = 0;
-    [self.layer addSublayer:largeCircleLayer];
+    _largeCircleLayer = [CALayer layer];
+    _largeCircleLayer.frame = CGRectMake(4.5f, 4.5f, self.frame.size.width - 9.0f, self.frame.size.height - 9.0f);
+    _largeCircleLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    _largeCircleLayer.cornerRadius = _largeCircleLayer.bounds.size.width / 2;
+    _largeCircleLayer.shadowColor = circleGreyColor.CGColor;
+    _largeCircleLayer.shadowOffset = CGSizeMake(0, 4);
+    _largeCircleLayer.shadowOpacity = 1;
+    _largeCircleLayer.shadowRadius = 0;
+    [self.layer addSublayer:_largeCircleLayer];
     
     _animatingLayer.frame = self.bounds;
     [self.layer addSublayer:_animatingLayer];
@@ -121,6 +118,21 @@
     }
 }
 
+- (void)changeFrame:(CGRect)frame {
+    self.frame = frame;
+    _largeCircleLayer.frame = CGRectMake(4.5f, 4.5f, self.frame.size.width - 9.0f, self.frame.size.height - 9.0f);
+    _largeCircleLayer.cornerRadius = _largeCircleLayer.bounds.size.width / 2;
+    _animatingLayer.frame = self.bounds;
+    _readyLabel.frame = self.bounds;
+    // set the initial Path
+    CGPoint center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+    CGFloat radius = (MIN(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) * _radiusPercent) - self.coverWidth;
+    UIBezierPath *initialPath = [UIBezierPath bezierPath]; //empty path
+    [initialPath addArcWithCenter:center radius:radius startAngle:degreeToRadian(-90) endAngle:degreeToRadian(270) clockwise:YES]; //add the arc
+    _animatingLayer.path = initialPath.CGPath;
+    [self setNeedsDisplay];
+}
+
 #pragma mark Helper Methods
 - (NSArray *)keyframePathsWithDuration:(CGFloat)duration lastUpdatedAngle:(CGFloat)lastUpdatedAngle newAngle:(CGFloat)newAngle radius:(CGFloat)radius {
     NSUInteger frameCount = ceil(duration * 60);
@@ -156,6 +168,8 @@
 }
 
 - (void)drawRect:(CGRect)rect {
+    CGContextClearRect(UIGraphicsGetCurrentContext(), self.frame);
+    
     CGFloat radius = (MIN(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))/2) - self.coverWidth;
     
     CGPoint center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);

@@ -53,6 +53,10 @@
 /** 后几天 */
 - (NSDate *)followingDayWithNum:(NSInteger)num;
 
+#pragma mark - 日相关
+/** 当天时间区域 凌晨 上午 中午 下午 晚上 */
+- (NSString *)timeZone;
+
 #pragma mark - 月相关
 /** 当月共有几天 */
 - (NSInteger)numberOfDaysInMonth;
