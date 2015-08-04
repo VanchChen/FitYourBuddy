@@ -19,15 +19,7 @@ static NSInteger const ExerciseLevelLimit = 31;     //锻炼等级上限
 
 @implementation TimerManager
 
-+ (TimerManager *)sharedManager {
-    static TimerManager *_sharedManager = nil;
-    static dispatch_once_t onceToken;
-    
-    dispatch_once(&onceToken, ^{
-        _sharedManager = [[TimerManager alloc] init];
-    });
-    return _sharedManager;
-}
+SINGLETON_IMPLEMENT(TimerManager)
 
 //开始计时
 - (void)startTickTock {

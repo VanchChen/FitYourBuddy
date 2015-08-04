@@ -40,7 +40,7 @@
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:20]}];
     
     //开始计时器
-    [[TimerManager sharedManager] startTickTock];
+    [[TimerManager sharedTimerManager] startTickTock];
     
     //进入欢迎页面
     LoadingViewController *loadingVC = [[LoadingViewController alloc] init];

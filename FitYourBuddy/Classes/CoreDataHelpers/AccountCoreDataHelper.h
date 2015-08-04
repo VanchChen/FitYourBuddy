@@ -8,6 +8,8 @@
 
 @interface AccountCoreDataHelper : NSObject
 
++ (AccountCoreDataHelper *)sharedAccountCoreDataHelper;
+
 //初始化账号数据库，添加字段
 + (BOOL)initAccountWithName:(NSString *)name andGender:(NSString *)gender andError:(NSError **)error;
 

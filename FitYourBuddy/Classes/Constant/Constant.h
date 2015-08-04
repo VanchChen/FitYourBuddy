@@ -28,6 +28,24 @@
 //友盟
 #import "MobClick.h"
 
+/** 单例模式：声明 */
+#define SINGLETON_DEFINE(_class_name_)  \
++ (_class_name_ *)shared##_class_name_;          \
+
+/** 单例模式：实现 */
+#define SINGLETON_IMPLEMENT(_class_name) SINGLETON_BOILERPLATE(_class_name, shared##_class_name)
+
+#define SINGLETON_BOILERPLATE(_object_name_, _shared_obj_name_) \
+static _object_name_ *z##_shared_obj_name_ = nil;  \
++ (_object_name_ *)_shared_obj_name_ {             \
+static dispatch_once_t onceToken;              \
+dispatch_once(&onceToken, ^{                   \
+z##_shared_obj_name_ = [[self alloc] init];\
+});                                            \
+return z##_shared_obj_name_;                   \
+}
+
+
 /** 色值 RGBA **/
 #define RGB_A(r, g, b, a) [UIColor colorWithRed:(CGFloat)(r)/255.0f green:(CGFloat)(g)/255.0f blue:(CGFloat)(b)/255.0f alpha:(CGFloat)(a)]
 

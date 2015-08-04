@@ -8,7 +8,7 @@
 
 @interface TimerManager : NSObject
 // 计时器单例
-+ (TimerManager *)sharedManager;
+SINGLETON_DEFINE(TimerManager)
 
 //开始计时
 - (void)startTickTock;
