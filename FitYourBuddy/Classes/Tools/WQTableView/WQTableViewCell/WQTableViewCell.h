@@ -11,10 +11,10 @@
 @protocol WQTableViewCellDelegate <NSObject>
 
 /** 单元格的表格视图，当单元格显示时会被重新赋值 */
-@property (nonatomic,assign) WQTableView *table;
+@property (nonatomic,weak) WQTableView *table;
 
 /** 单元格在表格中的位置，当单元格显示时会被重新赋值 */
-@property (nonatomic,retain) NSIndexPath *indexPath;
+@property (nonatomic,copy) NSIndexPath *indexPath;
 
 /** 获取一个新的单元格 */
 + (id)createCell:(NSString *)reuseIdentifier;
@@ -27,10 +27,10 @@
 @interface WQTableViewCell : UITableViewCell <WQTableViewCellDelegate>
 
 /** 单元格的表格视图，当单元格显示时会被重新赋值 */
-@property (nonatomic,assign) WQTableView *table;
+@property (nonatomic,weak) WQTableView *table;
 
 /** 单元格在表格中的位置，当单元格显示时会被重新赋值 */
-@property (nonatomic,retain) NSIndexPath *indexPath;
+@property (nonatomic,copy) NSIndexPath *indexPath;
 
 /** 获取一个新的单元格 */
 + (id)createCell:(NSString *)reuseIdentifier;

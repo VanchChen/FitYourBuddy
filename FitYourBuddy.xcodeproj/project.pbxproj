@@ -80,6 +80,8 @@
 		D6C5FAEB1A9DCC4E00BABA36 /* SquatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAEA1A9DCC4E00BABA36 /* SquatViewController.m */; };
 		D6C5FAEE1A9DCC6500BABA36 /* WalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAED1A9DCC6500BABA36 /* WalkViewController.m */; };
 		D6C5FAF21A9DD1A600BABA36 /* TarBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C5FAF11A9DD1A600BABA36 /* TarBarViewController.m */; };
+		D6C93F5D1B71DC7D00AA0A2E /* WQTableData.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C93F5C1B71DC7D00AA0A2E /* WQTableData.m */; };
+		D6C93F601B71DF4B00AA0A2E /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C93F5F1B71DF4B00AA0A2E /* DataLoader.m */; };
 		D6D6163F1B4846D9001AB663 /* SettingsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D6163E1B4846D9001AB663 /* SettingsDetailViewController.m */; };
 		D6DC62D41A9B355700E03ED6 /* ExerciseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DC62D31A9B355700E03ED6 /* ExerciseViewController.m */; };
 		D6DFAB391AD6158D00C5D37C /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DFAB381AD6158D00C5D37C /* Store.m */; };
@@ -224,6 +226,11 @@
 		D6C5FAED1A9DCC6500BABA36 /* WalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WalkViewController.m; path = Classes/ViewControllers/WalkViewController.m; sourceTree = "<group>"; };
 		D6C5FAF01A9DD1A600BABA36 /* TarBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TarBarViewController.h; path = Classes/ViewControllers/TarBarViewController.h; sourceTree = "<group>"; };
 		D6C5FAF11A9DD1A600BABA36 /* TarBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TarBarViewController.m; path = Classes/ViewControllers/TarBarViewController.m; sourceTree = "<group>"; };
+		D6C93F591B71BAF300AA0A2E /* DefineHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineHelper.h; sourceTree = "<group>"; };
+		D6C93F5B1B71DC7D00AA0A2E /* WQTableData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQTableData.h; path = Classes/Tools/WQTableView/WQTableData/WQTableData.h; sourceTree = "<group>"; };
+		D6C93F5C1B71DC7D00AA0A2E /* WQTableData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WQTableData.m; path = Classes/Tools/WQTableView/WQTableData/WQTableData.m; sourceTree = "<group>"; };
+		D6C93F5E1B71DF4B00AA0A2E /* DataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataLoader.h; path = Classes/CoreDataHelpers/DataLoader.h; sourceTree = "<group>"; };
+		D6C93F5F1B71DF4B00AA0A2E /* DataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataLoader.m; path = Classes/CoreDataHelpers/DataLoader.m; sourceTree = "<group>"; };
 		D6D6163D1B4846D9001AB663 /* SettingsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsDetailViewController.h; path = Classes/ViewControllers/SettingsDetailViewController.h; sourceTree = "<group>"; };
 		D6D6163E1B4846D9001AB663 /* SettingsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsDetailViewController.m; path = Classes/ViewControllers/SettingsDetailViewController.m; sourceTree = "<group>"; };
 		D6DC62D21A9B355700E03ED6 /* ExerciseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExerciseViewController.h; path = Classes/ViewControllers/ExerciseViewController.h; sourceTree = "<group>"; };
@@ -343,7 +350,7 @@
 				D639C4501A90DCAB00715BA9 /* ViewControllers */,
 				D639C44F1A90DCA500715BA9 /* Tools */,
 				D639C44E1A90DC9B00715BA9 /* Entities */,
-				D639C44D1A90DC8F00715BA9 /* CoreDataHelpers */,
+				D639C44D1A90DC8F00715BA9 /* DataHelpers */,
 				D639C4281A90DA2800715BA9 /* AppDelegate.h */,
 				D639C4291A90DA2800715BA9 /* AppDelegate.m */,
 				D639C4341A90DA2800715BA9 /* Images.xcassets */,
@@ -362,7 +369,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		D639C44D1A90DC8F00715BA9 /* CoreDataHelpers */ = {
+		D639C44D1A90DC8F00715BA9 /* DataHelpers */ = {
 			isa = PBXGroup;
 			children = (
 				D65467AF1AACA86300FE38E3 /* AccountCoreDataHelper.h */,
@@ -371,8 +378,10 @@
 				D65467B31AACA8C600FE38E3 /* ExerciseCoreDataHelper.m */,
 				D6DFAB3A1AD615CD00C5D37C /* StoreCoreDataHelper.h */,
 				D6DFAB3B1AD615CD00C5D37C /* StoreCoreDataHelper.m */,
+				D6C93F5E1B71DF4B00AA0A2E /* DataLoader.h */,
+				D6C93F5F1B71DF4B00AA0A2E /* DataLoader.m */,
 			);
-			name = CoreDataHelpers;
+			name = DataHelpers;
 			sourceTree = "<group>";
 		};
 		D639C44E1A90DC9B00715BA9 /* Entities */ = {
@@ -598,6 +607,7 @@
 		D67786721ADE08A6009DCC7C /* WQTableView */ = {
 			isa = PBXGroup;
 			children = (
+				D6C93F5A1B71D92D00AA0A2E /* WQTableData */,
 				D67786731ADE08DB009DCC7C /* WQTableViewCell */,
 				D67786741ADE092D009DCC7C /* WQTableView.h */,
 				D67786751ADE092D009DCC7C /* WQTableView.m */,
@@ -644,6 +654,7 @@
 			children = (
 				D6A8CB4F1ABD6D83003F7650 /* PrefixHeader.pch */,
 				D6A8CB501ABD6F93003F7650 /* Constant.h */,
+				D6C93F591B71BAF300AA0A2E /* DefineHelper.h */,
 			);
 			name = Constant;
 			path = Classes/Constant;
@@ -684,6 +695,15 @@
 				D6C5FAF11A9DD1A600BABA36 /* TarBarViewController.m */,
 			);
 			name = TarBar;
+			sourceTree = "<group>";
+		};
+		D6C93F5A1B71D92D00AA0A2E /* WQTableData */ = {
+			isa = PBXGroup;
+			children = (
+				D6C93F5B1B71DC7D00AA0A2E /* WQTableData.h */,
+				D6C93F5C1B71DC7D00AA0A2E /* WQTableData.m */,
+			);
+			name = WQTableData;
 			sourceTree = "<group>";
 		};
 		D6DC62D11A9B34A800E03ED6 /* Exercise */ = {
@@ -855,6 +875,7 @@
 				D66C07121B00AB1800A405DF /* UIScrollView+MJRefresh.m in Sources */,
 				D6259A2D1B52BDEC00F99CF6 /* BaseViewController.m in Sources */,
 				D67786791ADE429D009DCC7C /* WQTableViewCell.m in Sources */,
+				D6C93F5D1B71DC7D00AA0A2E /* WQTableData.m in Sources */,
 				D67786761ADE092D009DCC7C /* WQTableView.m in Sources */,
 				D649E6851B0790FB007DB4BB /* FriendsStaminaCell.m in Sources */,
 				D65467B81AACADF300FE38E3 /* WelcomeViewController.m in Sources */,
@@ -891,6 +912,7 @@
 				D65352CC1B48DF52007CD311 /* WorkOutViewController.m in Sources */,
 				D66C070F1B00AB1800A405DF /* MJRefreshFooterView.m in Sources */,
 				D669BE6F1A9D9A7B00DE6FA6 /* WQCircleProgressBar.m in Sources */,
+				D6C93F601B71DF4B00AA0A2E /* DataLoader.m in Sources */,
 				D67F689E1AFB3CD600E2B97D /* LoadingViewController.m in Sources */,
 				D6F8D9721ACE5A2B001B8772 /* NSDate+Base.m in Sources */,
 				D61A10251A972F3100B2C64C /* WQProgressBar.m in Sources */,

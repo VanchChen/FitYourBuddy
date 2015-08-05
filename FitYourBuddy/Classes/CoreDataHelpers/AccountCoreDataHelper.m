@@ -11,16 +11,6 @@
 
 @implementation AccountCoreDataHelper
 
-static AccountCoreDataHelper *sharedAccountCoreDataHelper = nil;
-+ (AccountCoreDataHelper *)sharedAccountCoreDataHelper {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedAccountCoreDataHelper = [[self alloc] init];
-        
-    });
-    return sharedAccountCoreDataHelper;                   
-}
-
 + (BOOL)initAccountWithName:(NSString *)name andGender:(NSString *)gender andError:(NSError **)error
 {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];

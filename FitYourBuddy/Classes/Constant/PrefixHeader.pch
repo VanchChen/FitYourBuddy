@@ -6,9 +6,28 @@
 //  Copyright (c) 2015年 xpz. All rights reserved.
 //
 
-#ifndef FitYourBuddy_PrefixHeader_pch
-#define FitYourBuddy_PrefixHeader_pch
+//UI系统库
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
+//基础类
+#import "BaseViewController.h"
+
+//数据库小帮手
+#import "AccountCoreDataHelper.h"
+#import "ExerciseCoreDataHelper.h"
+#import "StoreCoreDataHelper.h"
+
+//扩展
+#import "CommonUtil.h"
+#import "NSString+Base.h"
+#import "NSDate+Base.h"
+#import "UIView+Base.h"
+#import "UIImage+Base.h"
+
+//友盟
+#import "MobClick.h"
+
+//常量
+#import "DefineHelper.h"
 #import "Constant.h"
-
-#endif
