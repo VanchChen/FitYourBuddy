@@ -7,6 +7,8 @@
 //
 //  一次性的请求类，一次只能一个请求，无论失败与否，一次作废
 
+#import <Foundation/Foundation.h>
+
 #define Method_GET      @"GET"
 #define Method_POST     @"POST"
 

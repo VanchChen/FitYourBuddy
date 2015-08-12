@@ -9,7 +9,7 @@
 #import "DataLoader.h"
 #import "DataItemResult.h"
 
-#import "AFNetworking.h"
+#import "HttpTask.h"
 
 @implementation DataLoader
 
@@ -23,13 +23,7 @@
         self.dataItemResult = [DataItemResult new];
         self.completeBlock = completeBlock;
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager GET:URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"JSON: %@", responseObject);
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
+        
     }
     
     return self;

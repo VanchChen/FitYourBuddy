@@ -66,6 +66,8 @@
 		D68CC35B1B1B5F2200B7F708 /* f3#.wav in Resources */ = {isa = PBXBuildFile; fileRef = D68CC3561B1B5F2200B7F708 /* f3#.wav */; };
 		D68CC35C1B1B5F2200B7F708 /* g3.wav in Resources */ = {isa = PBXBuildFile; fileRef = D68CC3571B1B5F2200B7F708 /* g3.wav */; };
 		D696FD4C1AFF6B470023FD1F /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = D696FD4B1AFF6B470023FD1F /* FXBlurView.m */; };
+		D6A4EAF11B7AEB4C00E4FAB7 /* HttpTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A4EAF01B7AEB4C00E4FAB7 /* HttpTask.m */; };
+		D6A4EAF81B7AF0DF00E4FAB7 /* NetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A4EAF71B7AF0DF00E4FAB7 /* NetworkReachability.m */; };
 		D6A69ECF1A9C58CD0061603F /* PushUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A69ECE1A9C58CD0061603F /* PushUpViewController.m */; };
 		D6A8CB531ABD7FEB003F7650 /* UIView+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A8CB521ABD7FEB003F7650 /* UIView+Base.m */; };
 		D6AF0B3F1B4ACD4500578CE9 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6AF0B3D1B4ACD4500578CE9 /* libMobClickLibrary.a */; };
@@ -197,6 +199,10 @@
 		D68CC3571B1B5F2200B7F708 /* g3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = g3.wav; path = Classes/Sounds/g3.wav; sourceTree = "<group>"; };
 		D696FD4A1AFF6B470023FD1F /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FXBlurView.h; path = Classes/Tools/FXBlurView/FXBlurView.h; sourceTree = "<group>"; };
 		D696FD4B1AFF6B470023FD1F /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FXBlurView.m; path = Classes/Tools/FXBlurView/FXBlurView.m; sourceTree = "<group>"; };
+		D6A4EAEF1B7AEB4C00E4FAB7 /* HttpTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpTask.h; path = Classes/CoreDataHelpers/DataHttp/HttpTask.h; sourceTree = "<group>"; };
+		D6A4EAF01B7AEB4C00E4FAB7 /* HttpTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HttpTask.m; path = Classes/CoreDataHelpers/DataHttp/HttpTask.m; sourceTree = "<group>"; };
+		D6A4EAF71B7AF0DF00E4FAB7 /* NetworkReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkReachability.m; path = Classes/CoreDataHelpers/DataHttp/NetworkReachability.m; sourceTree = "<group>"; };
+		D6A4EAF91B7AF0F600E4FAB7 /* NetworkReachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NetworkReachability.h; path = Classes/CoreDataHelpers/DataHttp/NetworkReachability.h; sourceTree = "<group>"; };
 		D6A69ECD1A9C58CD0061603F /* PushUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushUpViewController.h; path = Classes/ViewControllers/PushUpViewController.h; sourceTree = "<group>"; };
 		D6A69ECE1A9C58CD0061603F /* PushUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushUpViewController.m; path = Classes/ViewControllers/PushUpViewController.m; sourceTree = "<group>"; };
 		D6A8CB4F1ABD6D83003F7650 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -372,14 +378,13 @@
 		D639C44D1A90DC8F00715BA9 /* DataHelpers */ = {
 			isa = PBXGroup;
 			children = (
+				D6A4EAEE1B7AEAC200E4FAB7 /* DataHttp */,
 				D65467AF1AACA86300FE38E3 /* AccountCoreDataHelper.h */,
 				D65467B01AACA86300FE38E3 /* AccountCoreDataHelper.m */,
 				D65467B21AACA8C600FE38E3 /* ExerciseCoreDataHelper.h */,
 				D65467B31AACA8C600FE38E3 /* ExerciseCoreDataHelper.m */,
 				D6DFAB3A1AD615CD00C5D37C /* StoreCoreDataHelper.h */,
 				D6DFAB3B1AD615CD00C5D37C /* StoreCoreDataHelper.m */,
-				D6C93F5E1B71DF4B00AA0A2E /* DataLoader.h */,
-				D6C93F5F1B71DF4B00AA0A2E /* DataLoader.m */,
 			);
 			name = DataHelpers;
 			sourceTree = "<group>";
@@ -633,6 +638,19 @@
 			name = FXBlurView;
 			sourceTree = "<group>";
 		};
+		D6A4EAEE1B7AEAC200E4FAB7 /* DataHttp */ = {
+			isa = PBXGroup;
+			children = (
+				D6C93F5E1B71DF4B00AA0A2E /* DataLoader.h */,
+				D6C93F5F1B71DF4B00AA0A2E /* DataLoader.m */,
+				D6A4EAEF1B7AEB4C00E4FAB7 /* HttpTask.h */,
+				D6A4EAF01B7AEB4C00E4FAB7 /* HttpTask.m */,
+				D6A4EAF91B7AF0F600E4FAB7 /* NetworkReachability.h */,
+				D6A4EAF71B7AF0DF00E4FAB7 /* NetworkReachability.m */,
+			);
+			name = DataHttp;
+			sourceTree = "<group>";
+		};
 		D6A8CB4A1ABD6663003F7650 /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -874,6 +892,7 @@
 				D6DC62D41A9B355700E03ED6 /* ExerciseViewController.m in Sources */,
 				D66C07121B00AB1800A405DF /* UIScrollView+MJRefresh.m in Sources */,
 				D6259A2D1B52BDEC00F99CF6 /* BaseViewController.m in Sources */,
+				D6A4EAF11B7AEB4C00E4FAB7 /* HttpTask.m in Sources */,
 				D67786791ADE429D009DCC7C /* WQTableViewCell.m in Sources */,
 				D6C93F5D1B71DC7D00AA0A2E /* WQTableData.m in Sources */,
 				D67786761ADE092D009DCC7C /* WQTableView.m in Sources */,
@@ -896,6 +915,7 @@
 				D61A102A1A972F4100B2C64C /* WQCalendar.m in Sources */,
 				D676E4351AA21A4A003BF293 /* EBM7Manager.m in Sources */,
 				D676E4341AA21A4A003BF293 /* EBAccelerometerFilter.m in Sources */,
+				D6A4EAF81B7AF0DF00E4FAB7 /* NetworkReachability.m in Sources */,
 				D63FCF411A962EA100582386 /* HistoryViewController.m in Sources */,
 				D6BBD0821AC310B300B56935 /* NSString+Base.m in Sources */,
 				D639C42D1A90DA2800715BA9 /* FitYourBuddy.xcdatamodeld in Sources */,
