@@ -77,6 +77,9 @@ NetworkReachability GetAccurateNetworkReachability() {
             else
                 reachability = NetworkReachabilityMobile3G;
         } else {
+            SCNetworkReachabilityFlags flags;
+            SCNetworkReachabilityGetFlags(__reachability, &flags);
+            return ((flags & kSCNetworkReachabilityFlagsTransientConnection) == kSCNetworkReachabilityFlagsTransientConnection) ? NetworkReachabilityMobile2G : NetworkReachabilityMobile3G;
         }
     }
     return reachability;

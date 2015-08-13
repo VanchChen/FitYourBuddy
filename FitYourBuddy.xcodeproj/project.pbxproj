@@ -68,6 +68,8 @@
 		D696FD4C1AFF6B470023FD1F /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = D696FD4B1AFF6B470023FD1F /* FXBlurView.m */; };
 		D6A4EAF11B7AEB4C00E4FAB7 /* HttpTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A4EAF01B7AEB4C00E4FAB7 /* HttpTask.m */; };
 		D6A4EAF81B7AF0DF00E4FAB7 /* NetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A4EAF71B7AF0DF00E4FAB7 /* NetworkReachability.m */; };
+		D6A4EB2E1B7C7BB500E4FAB7 /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A4EB2D1B7C7BB500E4FAB7 /* HttpHelper.m */; };
+		D6A4EB311B7C843E00E4FAB7 /* AppCore.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A4EB301B7C843E00E4FAB7 /* AppCore.m */; };
 		D6A69ECF1A9C58CD0061603F /* PushUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A69ECE1A9C58CD0061603F /* PushUpViewController.m */; };
 		D6A8CB531ABD7FEB003F7650 /* UIView+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A8CB521ABD7FEB003F7650 /* UIView+Base.m */; };
 		D6AF0B3F1B4ACD4500578CE9 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6AF0B3D1B4ACD4500578CE9 /* libMobClickLibrary.a */; };
@@ -203,6 +205,10 @@
 		D6A4EAF01B7AEB4C00E4FAB7 /* HttpTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HttpTask.m; path = Classes/CoreDataHelpers/DataHttp/HttpTask.m; sourceTree = "<group>"; };
 		D6A4EAF71B7AF0DF00E4FAB7 /* NetworkReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkReachability.m; path = Classes/CoreDataHelpers/DataHttp/NetworkReachability.m; sourceTree = "<group>"; };
 		D6A4EAF91B7AF0F600E4FAB7 /* NetworkReachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NetworkReachability.h; path = Classes/CoreDataHelpers/DataHttp/NetworkReachability.h; sourceTree = "<group>"; };
+		D6A4EB2C1B7C7BB500E4FAB7 /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpHelper.h; path = Classes/CoreDataHelpers/DataHttp/HttpHelper.h; sourceTree = "<group>"; };
+		D6A4EB2D1B7C7BB500E4FAB7 /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HttpHelper.m; path = Classes/CoreDataHelpers/DataHttp/HttpHelper.m; sourceTree = "<group>"; };
+		D6A4EB2F1B7C843E00E4FAB7 /* AppCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppCore.h; path = Classes/Util/AppCore.h; sourceTree = "<group>"; };
+		D6A4EB301B7C843E00E4FAB7 /* AppCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppCore.m; path = Classes/Util/AppCore.m; sourceTree = "<group>"; };
 		D6A69ECD1A9C58CD0061603F /* PushUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushUpViewController.h; path = Classes/ViewControllers/PushUpViewController.h; sourceTree = "<group>"; };
 		D6A69ECE1A9C58CD0061603F /* PushUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushUpViewController.m; path = Classes/ViewControllers/PushUpViewController.m; sourceTree = "<group>"; };
 		D6A8CB4F1ABD6D83003F7650 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -647,6 +653,8 @@
 				D6A4EAF01B7AEB4C00E4FAB7 /* HttpTask.m */,
 				D6A4EAF91B7AF0F600E4FAB7 /* NetworkReachability.h */,
 				D6A4EAF71B7AF0DF00E4FAB7 /* NetworkReachability.m */,
+				D6A4EB2C1B7C7BB500E4FAB7 /* HttpHelper.h */,
+				D6A4EB2D1B7C7BB500E4FAB7 /* HttpHelper.m */,
 			);
 			name = DataHttp;
 			sourceTree = "<group>";
@@ -702,6 +710,8 @@
 				D6AFCAF11AC5AA8A00400358 /* CommonUtil.m */,
 				D63E2DB11AD3B63A00D86030 /* TimerManager.h */,
 				D63E2DB21AD3B63A00D86030 /* TimerManager.m */,
+				D6A4EB2F1B7C843E00E4FAB7 /* AppCore.h */,
+				D6A4EB301B7C843E00E4FAB7 /* AppCore.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -900,6 +910,7 @@
 				D65467B81AACADF300FE38E3 /* WelcomeViewController.m in Sources */,
 				D66C070D1B00AB1800A405DF /* MJRefreshBaseView.m in Sources */,
 				D639C42A1A90DA2800715BA9 /* AppDelegate.m in Sources */,
+				D6A4EB311B7C843E00E4FAB7 /* AppCore.m in Sources */,
 				D6B6B7B71ACFFFDC00264C5D /* Exercise.m in Sources */,
 				D65467B11AACA86300FE38E3 /* AccountCoreDataHelper.m in Sources */,
 				D614F5211B4832C80099929A /* DataItemDetail.m in Sources */,
@@ -926,6 +937,7 @@
 				D6DFAB391AD6158D00C5D37C /* Store.m in Sources */,
 				D67CE88A1ACC42C7005E8BB9 /* HistoryExerciseView.m in Sources */,
 				D6C5FAF21A9DD1A600BABA36 /* TarBarViewController.m in Sources */,
+				D6A4EB2E1B7C7BB500E4FAB7 /* HttpHelper.m in Sources */,
 				D6C5FAEB1A9DCC4E00BABA36 /* SquatViewController.m in Sources */,
 				D63E2DB31AD3B63A00D86030 /* TimerManager.m in Sources */,
 				D6AFCAEE1AC5A62400400358 /* UIImage+Base.m in Sources */,

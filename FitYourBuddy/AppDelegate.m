@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LoadingViewController.h"
 #import "TimerManager.h"
+#import "AppCore.h"
 
 @interface AppDelegate ()
 
@@ -38,6 +39,9 @@
     [[UINavigationBar appearance] setBarTintColor:tarBarColor];//themePureBlueColor
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:20]}];
+    
+    //初始化系统核心
+    [AppCore sharedAppCore];
     
     //开始计时器
     [[TimerManager sharedTimerManager] startTickTock];
