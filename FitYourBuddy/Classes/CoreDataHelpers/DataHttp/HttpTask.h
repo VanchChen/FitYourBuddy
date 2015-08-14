@@ -79,10 +79,4 @@ typedef void (^TaskOnReceived)(HttpTask *task, NSData *data);
 /** 终止数据加载 */
 - (void)stopLoading;
 
-/** 网络任务描述 */
-- (NSString *)sbHttpDescribe;
-
-//获取http请求过的数据
-+ (NSString *)getHttpRecord;
-
 @end

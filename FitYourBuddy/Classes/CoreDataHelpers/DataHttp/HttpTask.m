@@ -133,15 +133,15 @@
 }
 
 - (BOOL)isReady {
-    return (_sbHttpTaskState == HttpTaskStateReady && [super isReady]);
+    return (_httpTaskState == HttpTaskStateReady && [super isReady]);
 }
 
 - (BOOL)isFinished {
-    return (_sbHttpTaskState == HttpTaskStateFinished);
+    return (_httpTaskState == HttpTaskStateFinished);
 }
 
 - (BOOL)isExecuting {
-    return (_sbHttpTaskState == HttpTaskStateExecuting);
+    return (_httpTaskState == HttpTaskStateExecuting);
 }
 
 //设置状态
@@ -218,11 +218,103 @@
                 self.receivedBlock(self, self.recieveData);
             }
         }
+        
+        [self cancel];
     }
 }
 
 #pragma mark -
+#pragma mark 网络回调
+
+- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response {
+    return request;
+}
+
+//如果连接需要验证信息，则直接忽略
+- (void)connection:(NSURLConnection *)conn didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+    [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
+}
+
+//收到HTTP请求头后触发的回调函数
+- (void)connection:(NSURLConnection *)conn didReceiveResponse:(NSURLResponse *)response {
+    //用setLength 这是个方法，不是属性
+    [self.recieveData setLength:0];
+    
+    /** Get response code **/
+    self.statusCode = [(NSHTTPURLResponse *)response statusCode];
+    self.expectedContentLength = response.expectedContentLength;
+    
+    //>400都是错误码，在客户端中不需要对其有个别性的处理
+    if (self.statusCode >= 400) {
+        [self onHttpStatusCodeError:[response description]];
+    }
+}
+
+//接收到一个数据报后的回调函数
+- (void)connection:(NSURLConnection *)conn didReceiveData:(NSData *)data {
+    if(!self.recieveData){
+        return;
+    }
+    [self.recieveData appendData:data];
+}
+
+//当出现错误后的回调函数
+- (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error{
+    self.httpError = error;
+    if (nil != error) {
+        [self onFinished:error];
+    } else {
+        [self onHttpStatusCodeError:nil];
+    }
+    
+    self.httpTaskState = HttpTaskStateFinished;
+}
+
+//连接结束后的回调函数
+- (void)connectionDidFinishLoading:(NSURLConnection *)conn{
+    [self onFinished:nil];
+    
+    self.httpTaskState = HttpTaskStateFinished;
+}
+
+#pragma mark -
 #pragma mark 私有方法
+
+-(void) addFile:(NSString*) filePath forKey:(NSString*) key {
+    [self addFile:filePath forKey:key mimeType:@"application/octet-stream"];
+}
+
+-(void) addFile:(NSString*) filePath forKey:(NSString*) key mimeType:(NSString*) mimeType {
+    
+    if ([self.urlRequest.HTTPMethod isEqualToString:@"GET"]) {
+        [self.urlRequest setHTTPMethod:@"POST"];
+    }
+    
+    NSDictionary *dict = @{@"filepath": filePath,
+                           @"name": key,
+                           @"mimetype": mimeType};
+    
+    [self.filesToBePosted addObject:dict];
+}
+
+-(void) addData:(NSData*) data forKey:(NSString*) key {
+    
+    [self addData:data forKey:key mimeType:@"application/octet-stream" fileName:@"file"];
+}
+
+-(void) addData:(NSData*) data forKey:(NSString*) key mimeType:(NSString*) mimeType fileName:(NSString*) fileName {
+    
+    if ([self.urlRequest.HTTPMethod isEqualToString:@"GET"]) {
+        [self.urlRequest setHTTPMethod:@"POST"];
+    }
+    
+    NSDictionary *dict = @{@"data": data,
+                           @"name": key,
+                           @"mimetype": mimeType,
+                           @"filename": fileName};
+    
+    [self.dataToBePosted addObject:dict];
+}
 
 -(NSData*)bodyData {
     NSString *boundary = @"0xKhTmLbOuNdArY";
@@ -284,6 +376,18 @@
     [self.urlRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long) [body length]] forHTTPHeaderField:@"Content-Length"];
     //    }
     return body;
+}
+
+//设置 HTTP 请求头报错时的错误信息
+- (void)onHttpStatusCodeError:(NSString *)errorDomain {
+    if (errorDomain.length == 0) {
+        errorDomain = [HttpHelper httpStatusErrorStr:self.statusCode];
+    }
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithCapacity:0];
+    userInfo[APPCONFIG_CONN_ERROR_MSG_DOMAIN] = errorDomain;
+    
+    NSError *statusError = [NSError errorWithDomain:APPCONFIG_CONN_ERROR_MSG_DOMAIN code:self.statusCode userInfo:userInfo];
+    [self onFinished:statusError];
 }
 
 @end
