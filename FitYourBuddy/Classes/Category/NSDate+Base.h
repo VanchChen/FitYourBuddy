@@ -36,6 +36,8 @@
 - (NSInteger)minute;
 /** 秒 */
 - (NSInteger)second;
+/** 纳秒 */
+- (NSInteger)nanosecond;
 /** 是不是闰月 */
 - (BOOL)isLeapMonth;
 

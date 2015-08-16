@@ -37,6 +37,9 @@
 /** 从标准的日期字符串去除时分秒 yyyy-MM-dd */
 - (NSString *)formatDate;
 
+/** 获取标准的客户端id */
++ (NSString *)clientID;
+
 #pragma mark - 判断是否是数字
 /** 字符串是否是整形 */
 - (BOOL)isPureInt;

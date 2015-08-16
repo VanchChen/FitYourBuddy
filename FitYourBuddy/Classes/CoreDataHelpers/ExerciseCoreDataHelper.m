@@ -246,6 +246,35 @@
     }
 }
 
+/**得到某一个日期后的所有锻炼数据*/
++ (NSArray *)getExerciseByDate:(NSString *)date withError:(NSError **)error {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context = [appDelegate managedObjectContext];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Exercise" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    if (date.length > 0) {
+        //过滤
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"date >= %@", date];
+        [fetchRequest setPredicate:predicate];
+    }
+    
+    //按照日期正序排序
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    NSArray *objects = [context executeFetchRequest:fetchRequest error:error];
+    
+    if (objects == nil || [objects count] == 0) {
+        return nil;
+    } else {
+        return objects;
+    }
+}
+
 //根据类型存数据
 + (BOOL)addExerciseByType:(ExerciseType)type andNum:(NSInteger)num withError:(NSError **)error
 {

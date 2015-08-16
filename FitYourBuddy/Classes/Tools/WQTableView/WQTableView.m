@@ -7,7 +7,9 @@
 //
 
 #import "WQTableView.h"
-#import "MJRefresh.h"       //下拉表头
+#import "WQTableData.h"
+#import "DataItemResult.h"
+#import "DataItemDetail.h"
 
 @implementation WQTableView
 
@@ -67,6 +69,7 @@
 }
 
 - (void)refreshTableData {
+    
 }
 
 #pragma mark - UITableView UI回调
@@ -194,6 +197,128 @@
     }
     
     return [[UITableViewCell alloc] init];
+}
+
+#pragma mark -
+#pragma mark 数据方法
+/** 为表格添加一个表格段 */
+- (void)addSectionWithData:(WQTableData *)sectionData {
+    NSAssert(nil != sectionData.mDataCellClass, @"不允许加一个空的列表数据进来");
+    sectionData.tableView = self;
+    
+    //队列中添加数据
+    [self.arrTableData addObject:sectionData];
+}
+
+- (void)removeSection:(NSUInteger)section {
+    if (section < self.arrTableData.count) {
+        [self.arrTableData removeObjectAtIndex:section];
+    }
+}
+
+/** 获取指定表格段的数据 */
+- (WQTableData *)dataOfSection:(NSInteger)section {
+    if(section > -1 && section < [self.arrTableData count]){
+        return self.arrTableData[section];
+    }
+    
+    return nil;
+}
+
+/** 获取指定单元格的数据 */
+- (DataItemDetail *)dataOfIndexPath:(NSIndexPath *)indexPath {
+    assert(nil != indexPath);
+    
+    WQTableData *data = [self dataOfSection:indexPath.section];
+    
+    if (nil == data) {
+        return nil;
+    }
+    
+    assert(nil != data.tableDataResult);
+    
+    return [data.tableDataResult getItem:indexPath.row];
+}
+
+
+/** 获取指定单元格的数据 */
+- (DataItemDetail *)dataOfCellTag:(NSInteger)cellTag {
+    for (int i = 0 ; i<[self.arrTableData count]; i++) {
+        WQTableData *data = [self dataOfSection:i];
+        for (int j = 0; j<data.tableDataResult.count; j++) {
+            DataItemDetail *cellDetail = [self dataOfIndexPath:[NSIndexPath indexPathForRow:j inSection:i]];
+            if ([cellDetail tableCellTag] == cellTag) {
+                return cellDetail;
+            }
+        }
+    }
+    
+    return nil;
+}
+
+#pragma mark -
+#pragma mark 一些关于用户操作的方法
+// 自动检测和加载最后一个表格数据段的下一页数据
+- (void)autoCheckAndLoadNextPage:(UIScrollView *)scrollView {
+    if (nil == self.arrTableData || [self.arrTableData count] < 1) {
+        return;
+    }
+    
+    //判断是否加载到底部
+    if(!(scrollView.contentSize.height - (scrollView.contentOffset.y + scrollView.bounds.size.height) < 0.5f)){
+        return;
+    }
+    
+    //最底部的表段数据
+    WQTableData *lastSectionData = self.arrTableData[[self.arrTableData count] - 1];
+    
+    //加载中或者无后续数据不用去处理
+    if (lastSectionData.tableDataStatus == WQTableDataStatusLoading
+        || ![lastSectionData hasNextPage]
+        || [lastSectionData isLoadDataComplete]) {
+        return;
+    } else if(lastSectionData.tableDataStatus == WQTableDataStatusNotStart) {
+        //这里一般不会进入
+        [lastSectionData loadData];
+    } else if(lastSectionData.tableDataStatus == WQTableDataStatusFinished){
+        //加载完毕后判断状态
+        if ([lastSectionData hasNextPage]) {
+            [lastSectionData loadDataforNextPage];
+        } else {
+            [lastSectionData loadData];
+        }
+    }
+}
+
+/** view已经停止滚动 */
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    //加载下一页
+    [self autoCheckAndLoadNextPage:scrollView];
+}
+
+/** 有动画时调用 */
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self autoCheckAndLoadNextPage:scrollView];
+}
+
+/** 表格数据是否全加载成功（限使用网络数据时） */
+- (BOOL)hasLoadFinished {
+    assert(nil != self.arrTableData);
+    
+    for (WQTableData *sectionData in self.arrTableData) {
+        if (sectionData.tableDataStatus != WQTableDataStatusFinished || !sectionData.isLoadDataOK) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+- (void)clearTableData {
+    NSUInteger sectionCount = [self.arrTableData count];
+    for (int i=0; i<sectionCount; i++) {
+        [self removeSection:i];
+    }
 }
 
 @end

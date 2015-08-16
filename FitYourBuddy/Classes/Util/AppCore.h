@@ -10,6 +10,10 @@
 
 SINGLETON_DEFINE(AppCore)
 
+@property (nonatomic, assign) NSInteger appTablePageSize;
+@property (nonatomic, copy) NSString *appLaunchDate;
 @property (nonatomic, strong) NSOperationQueue *appCoreQueue;      //核心任务队列
+
+- (void)networkUpdateAccount;
 
 @end

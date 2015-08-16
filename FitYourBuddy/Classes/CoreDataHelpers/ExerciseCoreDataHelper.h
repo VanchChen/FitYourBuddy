@@ -37,6 +37,9 @@ typedef NS_ENUM(NSInteger, ExerciseType) {
 /**得到某一个月的锻炼情况*/
 + (NSArray *)getMonthExerciseDayByDate:(NSDate *)date withError:(NSError **)error;
 
+/**得到某一个日期后的所有锻炼数据*/
++ (NSArray *)getExerciseByDate:(NSString *)date withError:(NSError **)error;
+
 /**根据类型存数据*/
 + (BOOL)addExerciseByType:(ExerciseType)type andNum:(NSInteger)num withError:(NSError **)error;
 

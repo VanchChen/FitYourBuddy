@@ -67,6 +67,9 @@
     
     [HttpHelper showNetworkIndicator];
     
+    //开启网络
+    [self doStartRequest];
+    
     self.httpTaskState = HttpTaskStateExecuting;
 }
 

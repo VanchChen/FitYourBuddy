@@ -97,6 +97,14 @@
     return [self substringWithRange:NSMakeRange(0, 10)];
 }
 
+/** 获取标准的客户端id */
++ (NSString *)clientID {
+    NSDate *today = [NSDate date];
+    NSString *aString = [NSString stringWithFormat:@"%.2ld%.2ld%.2ld%.2ld%ld",(long)today.month,(long)today.day,(long)today.minute,(long)today.second,(long)today.nanosecond];
+    aString = [aString substringToIndex:10];
+    return aString;
+}
+
 #pragma mark - 判断是否是数字
 /** 字符串是否是整形 */
 - (BOOL)isPureInt {

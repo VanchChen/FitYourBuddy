@@ -59,6 +59,7 @@
 #define APPCONFIG_UI_TABLE_PADDING          10.0f                       // UITableView 的默认边距
 
 //请求相关
+#define APPCONFIG_CONN_HEAD             @"http://"
 #define APPCONFIG_CONN_SERVER           @"121.43.226.76"
 #define APPCONFIG_CONN_AGENT            @"/webservice/WebService.asmx"
 #define APPCONFIG_CONN_TIMEOUT          30                            // 连接超时时间

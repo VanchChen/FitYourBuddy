@@ -7,8 +7,24 @@
 //
 
 #import "WQTableViewCell.h"
+#import "MJRefresh.h"       //下拉表头
 
 @class WQTableView;
+@class WQTableData;
+@class DataLoader;
+@class DataItemResult;
+@class DataItemDetail;
+
+// 网络请求
+typedef void (^tableViewDataBlock)(WQTableData *tableViewData);
+// 网络请求
+typedef DataLoader *(^requestDataBlock)(WQTableData *tableViewData);
+// 网络加载数据完成时触发的事件
+typedef void (^receiveDataBlock)(WQTableView *tableView, WQTableData *tableViewData, DataItemResult *result);
+//加载完成时的回调
+typedef void (^cacheLoadBlock)(WQTableView *tableView, WQTableData *tableViewData, DataItemResult *result);
+// 处理网络载入错误
+typedef void (^errorHandleBlock)(WQTableView *tableView, WQTableData *section);
 
 // 表格段落数量
 typedef NSInteger (^numberForSectionBlock)(WQTableView *tableView);
@@ -31,6 +47,20 @@ typedef Class(^modifiRowClassBlock)(WQTableView *tableView, Class<WQTableViewCel
 /** 是否是下拉类型的列表 */
 @property (nonatomic, assign) BOOL isRefreshType;
 
+/** 网络请求列表 */
+@property (nonatomic, strong) NSMutableArray *arrTableData;                     //列表数据
+
+/** 将要发起网络请求 */
+@property (nonatomic, copy) tableViewDataBlock willRequestData;
+/** 发起网络请求 */
+@property (nonatomic, copy) requestDataBlock requestData;
+/** 接受网络数据 */
+@property (nonatomic, copy) receiveDataBlock receiveData;
+/** cache加载完成时的block */
+@property (nonatomic, copy) cacheLoadBlock cacheLoad;
+// 网络异常处理
+@property (nonatomic, copy) errorHandleBlock errorHandle;
+
 /** 表格段落数量, 默认是1 */
 @property (nonatomic, copy) numberForSectionBlock numberForSection;
 /** 段的头部视图 */
@@ -50,5 +80,28 @@ typedef Class(^modifiRowClassBlock)(WQTableView *tableView, Class<WQTableViewCel
 - (id)initWithStyle:(BOOL)isGrouped;
 /**  表格初始化，会在initWithStyle:时调用 */
 - (void)customInit;
+
+/** 为表格添加一个表格段 */
+- (void)addSectionWithData:(WQTableData *)sectionData;
+/** 删除一个表格段 */
+- (void)removeSection:(NSUInteger)section;
+
+/** 获取指定表格段的数据 */
+- (WQTableData *)dataOfSection:(NSInteger)section;
+
+/** 获取指定单元格的数据 */
+- (DataItemDetail *)dataOfIndexPath:(NSIndexPath *)indexPath;
+
+/** 获取指定单元格的数据 */
+- (DataItemDetail *)dataOfCellTag:(NSInteger)cellTag;
+
+/** 表格数据是否全加载成功（限使用网络数据时） */
+- (BOOL)hasLoadFinished;
+
+/** 自动检测和加载最后一个表格数据段的下一页数据 */
+- (void)autoCheckAndLoadNextPage:(UIScrollView *)scrollView;
+
+/** 清除所有表内容 */
+- (void)clearTableData;
 
 @end

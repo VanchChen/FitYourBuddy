@@ -7,11 +7,10 @@
 //
 //  一次性的请求类，一次只能一个请求，无论失败与否，一次作废
 
-#import <Foundation/Foundation.h>
-
 #define Method_GET      @"GET"
 #define Method_POST     @"POST"
 
+@class HttpTask;
 @class DataItemResult;
 
 typedef void (^CompleteBlock)(DataItemResult *result);
@@ -19,11 +18,14 @@ typedef void (^CompleteBlock)(DataItemResult *result);
 @interface DataLoader : NSObject
 
 @property (nonatomic, assign) BOOL           hasFinishedLoad;//标志位
+@property (nonatomic, strong) HttpTask       *httpTask;//网络加载
 @property (nonatomic, strong) DataItemResult *dataItemResult;//解析的数据放入数据容器中
 @property (nonatomic, copy  ) CompleteBlock  completeBlock;//完成回调
 
+@property (nonatomic, copy) NSString *identifier;
+
 /** 初始化GET方式请求的网络数据 */
-- (instancetype)initWithURL:(NSString *)URL complete:(CompleteBlock)completeBlock;
+- (instancetype)initWithURL:(NSString *)URL httpMethod:(NSString *)httpMethod complete:(CompleteBlock)completeBlock;
 
 /** 获取本地解析好的数据 */
 - (DataItemResult *)getDataItemResult;

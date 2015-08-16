@@ -16,14 +16,24 @@
 #pragma mark -
 #pragma mark 生命周期
 
-- (instancetype)initWithURL:(NSString *)URL complete:(CompleteBlock)completeBlock {
+- (instancetype)initWithURL:(NSString *)URL httpMethod:(NSString *)httpMethod complete:(CompleteBlock)completeBlock {
     self = [super init];
     
     if (self) {
         self.dataItemResult = [DataItemResult new];
         self.completeBlock = completeBlock;
         
-        
+        self.httpTask = [[HttpTask alloc] initWithURLString:URL httpMethod:httpMethod received:^(HttpTask *task, NSData *data) {
+            self.dataItemResult.rawData = data;
+            
+            //结束一次请求
+            [self onFinished];
+        } error:^(HttpTask *task, NSError *error) {
+            self.dataItemResult.hasError = YES;
+            self.dataItemResult.message = @"网络貌似不给力，请重新加载";
+            
+            [self onFinished];
+        }];
     }
     
     return self;
@@ -32,6 +42,10 @@
 //停止加载和解析数据，停止事件响应
 - (void)stopLoading {
     self.completeBlock = nil;
+    
+    if (nil != self.httpTask) {
+        [self.httpTask stopLoading];
+    }
     
     [self onFinished];
 }

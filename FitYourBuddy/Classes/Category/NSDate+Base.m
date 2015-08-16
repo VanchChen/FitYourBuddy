@@ -72,6 +72,10 @@
 - (NSInteger)second {
     return self.componentsOfDay.second;
 }
+/** 纳秒 */
+- (NSInteger)nanosecond {
+    return self.componentsOfDay.nanosecond;
+}
 /** 是不是闰月 */
 - (BOOL)isLeapMonth {
     return self.componentsOfDay.leapMonth;

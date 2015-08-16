@@ -25,6 +25,7 @@
     if (objects == nil || [objects count] == 0) {
         NSManagedObject *theLine = nil;
         NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           [NSString clientID],@"clientID",
                                            name,@"name",
                                            @"1",@"level",
                                            @"0",@"exp",
@@ -41,6 +42,7 @@
                                            @"0",@"mouth",
                                            @"0",@"clothes",
                                            @"",@"lastLaunchDate",
+                                           @"",@"lastUpdateDate",
                                            nil];
         for (NSString *key in dictionary)
         {

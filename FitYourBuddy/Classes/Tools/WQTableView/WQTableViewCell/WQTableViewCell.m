@@ -8,6 +8,45 @@
 
 #import "WQTableViewCell.h"
 
+@implementation DataItemDetail (DataTableCell)
+
+/** 设定单元格数据为空 */
+- (void)setEmptyTableCell {
+    [self setEmptyTableCell:YES];
+}
+
+/** 设定单元格数据为空/不为空 */
+- (void)setEmptyTableCell:(BOOL)isEmpty {
+    [self setBool:isEmpty forKey:__KEY_CELL_EMPTY];
+}
+
+/** 单元格数据是否为空 */
+- (BOOL)tableCellIsEmpty {
+    return [self getBool:__KEY_CELL_EMPTY];
+}
+
+/** 设定单元格选中/未选中状态 */
+- (void)setSelectedTableCell:(BOOL)isSelected {
+    [self setBool:isSelected forKey:__KEY_CELL_SELECTED];
+}
+
+/** 单元格是否被选中状态 */
+- (BOOL)tableCellIsSelected {
+    return [self getBool:__KEY_CELL_SELECTED];
+}
+
+/** 设定单元格标记 */
+- (void)setTableCellTag:(int)tag {
+    [self setInt:tag forKey:__KEY_CELL_TAG];
+}
+
+/** 获取单元格标记 */
+- (int)tableCellTag {
+    return [self getInt:__KEY_CELL_TAG];
+}
+
+@end
+
 @implementation WQTableViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
