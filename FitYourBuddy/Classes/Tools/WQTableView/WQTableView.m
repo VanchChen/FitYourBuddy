@@ -11,6 +11,8 @@
 #import "DataItemResult.h"
 #import "DataItemDetail.h"
 
+#import "WQErrorTableViewCell.h"
+
 @implementation WQTableView
 
 #pragma mark - 生命周期
@@ -46,8 +48,11 @@
         self.layoutMargins = UIEdgeInsetsZero;
     }
     
+    //列表数据
+    self.arrTableData = [NSMutableArray array];
+    
     self.backgroundColor = [UIColor clearColor];
-    self.tableFooterView = [[UIView alloc] init];
+    self.tableFooterView = [UIView new];
 }
 
 - (void)awakeFromNib {
@@ -69,13 +74,41 @@
 }
 
 - (void)refreshTableData {
-    
+    //0号位的段数据 重新请求数据
+    WQTableData *sectionData = [self dataOfSection:0];
+    [sectionData refreshData];
 }
 
 #pragma mark - UITableView UI回调
 //单元格高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(self.heightForRow){
+    WQTableData *sectionData = [self dataOfSection:indexPath.section];
+    NSUInteger rowCount = [sectionData.tableDataResult count];
+    
+    //没有数据，或者异常数据， 全文提示
+    if (rowCount == 0) {
+        //错误与空 只有第一页有效
+        if (sectionData.tableDataStatus != WQTableDataStatusLoading) {
+            //如果明确的给过高度
+            if (sectionData.emptyCellHeight >= 0) {
+                return sectionData.emptyCellHeight;
+            }
+            
+            CGFloat tableHeight = CGRectGetHeight(tableView.bounds);
+            CGFloat tableHeaderHeight = CGRectGetHeight(tableView.tableHeaderView.bounds);
+            if (tableHeight - tableHeaderHeight >= APPCONFIG_UI_TABLE_CELL_HEIGHT) {
+                //撑满屏幕
+                return tableHeight - tableHeaderHeight;
+            } else {
+                return tableHeight;
+            }
+        } else { //加载中
+            return APPCONFIG_UI_TABLE_CELL_HEIGHT;
+        }
+    } else if (indexPath.row >= rowCount) {
+        //加载与错误
+        return APPCONFIG_UI_TABLE_CELL_HEIGHT;
+    } else if (self.heightForRow){
         return self.heightForRow(self, indexPath);
     }
     return APPCONFIG_UI_TABLE_CELL_HEIGHT;
@@ -83,7 +116,9 @@
 
 //表头高
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (self.headerForSection) {
+    WQTableData *sectionData = self.arrTableData[section];
+    
+    if (self.headerForSection && sectionData.hasHeaderView) {
         UIView *_sectionHeaderView = self.headerForSection(self, section);
         if (nil == _sectionHeaderView) {
             return 0;
@@ -100,7 +135,9 @@
 
 //表格端的顶部视图
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (self.headerForSection) {
+    WQTableData *sectionData = [self dataOfSection:section];
+    
+    if (self.headerForSection && sectionData.hasHeaderView) {
         return self.headerForSection(self, section);
     }
     
@@ -109,8 +146,10 @@
 
 //表尾高
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    WQTableData *sectionData = self.arrTableData[section];
+    
     //有自定义界面
-    if (self.footerForSection) {
+    if (self.footerForSection && sectionData.hasFooterView) {
         UIView *sectionFooterView = self.footerForSection(self, section);
         if (nil == sectionFooterView) {
             return 0;
@@ -127,7 +166,9 @@
 
 //表格段的底部视图
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (self.footerForSection) {
+    WQTableData *sectionData = [self dataOfSection:section];
+    
+    if (self.footerForSection && sectionData.hasFooterView) {
         return self.footerForSection(self, section);
     }
     
@@ -136,29 +177,99 @@
 
 //选中某行
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.didSelectRow) {
+    WQTableData *sectionData = [self dataOfSection:indexPath.section];
+    
+    //异常情况 点击让用户重试
+    if (indexPath.row >= [sectionData.tableDataResult count]) {
+        //如果外部已经有处理错误代码了，这里就引到外面去，自己不做处理
+        if (self.errorHandle != NULL) {
+            self.errorHandle(self,sectionData);
+            return;
+        }
+        
+        //以下是默认的错误处理
+        if (WQTableDataStatusFinished == sectionData.tableDataStatus) {
+            //出错数据 数据为空
+            NSUInteger rowCount = [sectionData.tableDataResult count];
+            if (!sectionData.isLoadDataOK || rowCount == 0) {
+                if (sectionData.isEmptyCellEnableClick) {
+                    [sectionData loadData];
+                }
+            } else { //更多
+                if (![sectionData isLoadDataComplete]) {
+                    //更多数据
+                    [sectionData loadDataforNextPage];
+                }
+            }
+        }
+    } else if (self.didSelectRow) {
         self.didSelectRow(self, indexPath);
     }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - UITableView 数据回调
-//因为未绑定数据，所以不能实现块数行数,单元格,先写死
-
 //返回表格端的数量
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.numberForSection) {
-        return self.numberForSection(self);
-    }
-    return 1;
+    return [self.arrTableData count];
 }
 
 //一个单元中有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.numberForRowInSection) {
-        return self.numberForRowInSection(self, section);
+    WQTableData *sectionData = [self dataOfSection:section];
+    
+    assert(nil != sectionData);
+    
+    NSUInteger rowCount = [sectionData.tableDataResult count];
+    
+    //根据状态，决定显示的单元格个数
+    switch (sectionData.tableDataStatus) {
+        case WQTableDataStatusNotStart: {
+            //无加载情况，显示数等于数据个数 （多半是无网络请求的）
+            return rowCount;
+            break;
+        }
+        case WQTableDataStatusLoading: {
+            return rowCount + 1;
+            break;
+        }
+        case WQTableDataStatusFinished: {
+            //没有后续数据了
+            if ([sectionData isLoadDataComplete]) {
+                //无数据，加载完毕
+                if (rowCount == 0) {
+                    //空单元格
+                    return 1;
+                }
+                //有数据，加载完毕
+                else {
+                    //加载完毕
+                    if (sectionData.hasFinishCell) {
+                        return rowCount + 1;
+                    } else {
+                        //正常个数
+                        return rowCount;
+                    }
+                }
+            }
+            //更多
+            else {
+                //只有最后一个section才有更多
+                if (section == self.numberOfSections - 1) {
+                    //最底下是加载更多数据的单元格
+                    return rowCount + 1;
+                } else {
+                    return rowCount;
+                }
+            }
+            break;
+        }
+        default: {
+            return rowCount;
+            break;
+        }
     }
-    return 10;
 }
 
 //创建表格中的一个单元格
@@ -177,26 +288,63 @@
     
     assert(nil != cell);
     
-//    SBTableData *sectionData = [self dataOfSection:indexPath.section];
-//    cell.table = self;
-//    cell.tableData = sectionData;
-//    cell.indexPath = indexPath;
-//    cell.cellDetail = [sectionData.tableDataResult getItem:indexPath.row];
-//    
-//    //绑定数据
-//    [cell bindCellData];
+    WQTableData *sectionData = [self dataOfSection:indexPath.section];
+    cell.table = self;
+    cell.tableData = sectionData;
+    cell.indexPath = indexPath;
+    cell.cellDetail = [sectionData.tableDataResult getItem:indexPath.row];
+    
+    //绑定数据
+    [cell bindCellData];
     
     return cell;
 }
 
 // 创建指定单元格的 UITableViewCell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    WQTableData *sectionData = [self dataOfSection:indexPath.section];
+    
+    //这里是最后一行，一般是出错了，加载中的单元格样式
+    if (indexPath.row >= [sectionData.tableDataResult count]) {
+        //确保是加载完毕了
+        assert(WQTableDataStatusNotStart != sectionData.tableDataStatus);
+        
+        //加载状态，显示加载样式
+        if (WQTableDataStatusLoading == sectionData.tableDataStatus) {
+            return [self cellWithClass:sectionData.mLoadingCellClass indexPath:indexPath];
+        } else {
+            //异常
+            assert(WQTableDataStatusFinished == sectionData.tableDataStatus);
+            
+            //加载失败
+            if(!sectionData.isLoadDataOK) {
+                if (sectionData.pageAt == 1) {
+                    return [self cellWithClass:sectionData.mErrorCellClass indexPath:indexPath];
+                } else {
+                    return [self cellWithClass:[WQErrorTableViewCell class] indexPath:indexPath];
+                }
+            }
+            //空单元格
+            else if ([sectionData.tableDataResult count] == 0) {
+                return [self cellWithClass:sectionData.mEmptyCellClass indexPath:indexPath];
+            }
+            //加载完单元格
+            else if (sectionData.hasFinishCell && sectionData.isLoadDataComplete) {
+                return [self cellWithClass:sectionData.mFinishedCellClass indexPath:indexPath];
+            }
+            //更多单元格
+            else {
+                return [self cellWithClass:sectionData.mMoreCellClass indexPath:indexPath];
+            }
+        }
+    }
+    
     if (self.modifiRowClass) {
-        Class modifiRowClass = self.modifiRowClass(self, [WQTableViewCell class], indexPath);
+        Class modifiRowClass = self.modifiRowClass(self, sectionData.mDataCellClass, indexPath);
         return [self cellWithClass:modifiRowClass indexPath:indexPath];
     }
     
-    return [[UITableViewCell alloc] init];
+    return [self cellWithClass:sectionData.mDataCellClass indexPath:indexPath];
 }
 
 #pragma mark -

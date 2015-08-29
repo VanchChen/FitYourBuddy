@@ -15,9 +15,19 @@
 
 @implementation WalkViewController
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.exerciseType = ExerciseTypeWalk;
+    }
+    return self;
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"步行"];
+    
+    //[[EBStepManager sharedManager] stopStepCounting];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -54,7 +64,7 @@
 
 - (void)tappedSaveBtn
 {
-    [[EBStepManager sharedManager]  stopStepCounting];
+    [[EBStepManager sharedManager] stopStepCounting];
     
     CompleteViewController *completeVC = [[CompleteViewController alloc] init];
     if (self.count > 100000 || self.count < 0) {

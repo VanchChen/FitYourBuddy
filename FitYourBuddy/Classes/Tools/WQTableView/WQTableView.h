@@ -26,12 +26,8 @@ typedef void (^cacheLoadBlock)(WQTableView *tableView, WQTableData *tableViewDat
 // 处理网络载入错误
 typedef void (^errorHandleBlock)(WQTableView *tableView, WQTableData *section);
 
-// 表格段落数量
-typedef NSInteger (^numberForSectionBlock)(WQTableView *tableView);
 // 段落首尾界面
 typedef UIView *(^viewForSectionBlock)(WQTableView *tableView, NSInteger section);
-// 段落中表格的数量
-typedef NSInteger (^numberForRowInSectionBlock)(WQTableView *tableView, NSInteger section);
 // 单元格高度
 typedef CGFloat (^heightForRowBlock)(WQTableView *tableView, NSIndexPath *indexPath);
 // 处理单元格
@@ -61,14 +57,10 @@ typedef Class(^modifiRowClassBlock)(WQTableView *tableView, Class<WQTableViewCel
 // 网络异常处理
 @property (nonatomic, copy) errorHandleBlock errorHandle;
 
-/** 表格段落数量, 默认是1 */
-@property (nonatomic, copy) numberForSectionBlock numberForSection;
 /** 段的头部视图 */
 @property (nonatomic, copy) viewForSectionBlock headerForSection;
 /** 段的尾部视图 */
 @property (nonatomic, copy) viewForSectionBlock footerForSection;
-/** 段落中表格的数量, 默认10个 */
-@property (nonatomic, copy) numberForRowInSectionBlock numberForRowInSection;
 /** 单元格高度 */
 @property (nonatomic, copy) heightForRowBlock heightForRow;
 /** 临时修改单元格的显示样式 */

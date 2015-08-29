@@ -31,3 +31,4 @@
 //常量
 #import "DefineHelper.h"
 #import "Constant.h"
+#import "HttpConstant.h"

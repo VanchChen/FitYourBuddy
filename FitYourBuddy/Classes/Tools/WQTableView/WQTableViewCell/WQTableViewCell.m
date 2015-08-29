@@ -70,4 +70,7 @@
     return [NSString stringWithFormat:@"%@-%x",[self class],  (unsigned int)table];
 }
 
+- (void)bindCellData {
+}
+
 @end

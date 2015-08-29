@@ -232,9 +232,9 @@ CGFloat ave(CGFloat arr[], int n)
         }
     }
 
-//    NSLog(@"got final arr count : %d", arr_new.count );
-    
-    tempSteps = (arr_new.count/3)>6 ? 0 : arr_new.count/3;
+    //NSLog(@"got final arr count : %d", arr_new.count );
+    //WARNING:此处原来为3
+    tempSteps = (arr_new.count/2)>6 ? 0 : arr_new.count/2;
     
     [arr_new removeAllObjects];
     arr_new = nil;    

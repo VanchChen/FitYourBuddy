@@ -53,10 +53,19 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
         
         dataViewHeight = 90;
         dataViewTopPadding=28;
-        if (!APPCONFIG_DEVICE_OVER_IPHONE5) {
-            dataViewHeight = 70;
-            dataViewTopPadding = 20;
+        
+        if (self.view.height > self.view.width) {
+            if (!APPCONFIG_DEVICE_OVER_IPHONE5) {
+                dataViewHeight = 70;
+                dataViewTopPadding = 20;
+            }
+        } else {
+            if (APPCONFIG_UI_SCREEN_FWIDTH < 568.0f) {
+                dataViewHeight = 70;
+                dataViewTopPadding = 20;
+            }
         }
+        
         
         _titleLabel = [CommonUtil createLabelWithText:@"目标完成！" andTextColor:[UIColor whiteColor] andFont:[UIFont boldSystemFontOfSize:20] andTextAlignment:NSTextAlignmentCenter];
         [navView addSubview:_titleLabel];

@@ -113,18 +113,28 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    self.navBarView.frame = CGRectMake(0, 0, APPCONFIG_UI_VIEW_FWIDTH, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
+    //针对低版本宽高不分的处理
+    CGFloat realWidth, realHeight;
+    if (self.view.width > self.view.height) {
+        realWidth = APPCONFIG_UI_VIEW_FWIDTH;
+        realHeight = APPCONFIG_UI_SCREEN_FHEIGHT;
+    } else {
+        realWidth = APPCONFIG_UI_SCREEN_FHEIGHT;
+        realHeight = APPCONFIG_UI_VIEW_FWIDTH;
+    }
     
-    self.titleLabel.frame = CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - 100) / 2.0f, 0, 100, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
+    self.navBarView.frame = CGRectMake(0, 0, realWidth, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
     
-    self.soundButton.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_PADDING - 30, 7, 30, 30);
+    self.titleLabel.frame = CGRectMake((realWidth - 100) / 2.0f, 0, 100, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
+    
+    self.soundButton.frame = CGRectMake(realWidth - APPCONFIG_UI_VIEW_PADDING - 30, 7, 30, 30);
     
     self.todayTargetView.frame = CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, APPCONFIG_UI_VIEW_BETWEEN_PADDING + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT, 120, 30);
     
-    [self.closedIndicator changeFrame:CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - 220)/2, 50, 220, 220)];
+    [self.closedIndicator changeFrame:CGRectMake((realWidth - 220)/2, 50, 220, 220)];
     
-    self.maxRecordView.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - 120 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, APPCONFIG_UI_SCREEN_FHEIGHT - APPCONFIG_UI_TABBAR_HEIGHT - 30 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, 120, 30);
-    self.saveButton.frame = CGRectMake(0, APPCONFIG_UI_SCREEN_FHEIGHT - 39, APPCONFIG_UI_SCREEN_FWIDTH, 39);
+    self.maxRecordView.frame = CGRectMake(realWidth - 120 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, realHeight - APPCONFIG_UI_TABBAR_HEIGHT - 30 - APPCONFIG_UI_VIEW_BETWEEN_PADDING, 120, 30);
+    self.saveButton.frame = CGRectMake(0, realHeight - 39, realWidth, 39);
     self.coverView.frame = self.view.bounds;
 }
 

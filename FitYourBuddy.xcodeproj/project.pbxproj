@@ -10,6 +10,9 @@
 		2ED28DCBC8CD18A77D8158FC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EACD925073D99B1C16971AC3 /* libPods.a */; };
 		D614F5211B4832C80099929A /* DataItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = D614F5201B4832C80099929A /* DataItemDetail.m */; };
 		D614F5241B4832EA0099929A /* DataItemResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D614F5231B4832EA0099929A /* DataItemResult.m */; };
+		D6154C6C1B88430A000ACD01 /* WQErrorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6154C6B1B88430A000ACD01 /* WQErrorTableViewCell.m */; };
+		D6154C6F1B8847B2000ACD01 /* WQLoadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6154C6E1B8847B2000ACD01 /* WQLoadingTableViewCell.m */; };
+		D6154C721B884D59000ACD01 /* WQMoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6154C711B884D59000ACD01 /* WQMoreTableViewCell.m */; };
 		D61A10251A972F3100B2C64C /* WQProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D61A10231A972F3100B2C64C /* WQProgressBar.m */; };
 		D61A102A1A972F4100B2C64C /* WQCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = D61A10271A972F4100B2C64C /* WQCalendar.m */; };
 		D61A102E1A97302F00B2C64C /* WQCalendarTile.m in Sources */ = {isa = PBXBuildFile; fileRef = D61A102D1A97302F00B2C64C /* WQCalendarTile.m */; };
@@ -23,12 +26,11 @@
 		D63FCF371A9628EE00582386 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63FCF361A9628EE00582386 /* SettingsViewController.m */; };
 		D63FCF3E1A96293A00582386 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63FCF3D1A96293A00582386 /* FriendsViewController.m */; };
 		D63FCF411A962EA100582386 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63FCF401A962EA100582386 /* HistoryViewController.m */; };
-		D649E6821B079065007DB4BB /* FriendsStrengthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D649E6811B079065007DB4BB /* FriendsStrengthCell.m */; };
-		D649E6851B0790FB007DB4BB /* FriendsStaminaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D649E6841B0790FB007DB4BB /* FriendsStaminaCell.m */; };
 		D65352CC1B48DF52007CD311 /* WorkOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D65352CB1B48DF52007CD311 /* WorkOutViewController.m */; };
 		D65467B11AACA86300FE38E3 /* AccountCoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D65467B01AACA86300FE38E3 /* AccountCoreDataHelper.m */; };
 		D65467B41AACA8C600FE38E3 /* ExerciseCoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D65467B31AACA8C600FE38E3 /* ExerciseCoreDataHelper.m */; };
 		D65467B81AACADF300FE38E3 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D65467B71AACADF300FE38E3 /* WelcomeViewController.m */; };
+		D65AF0201B91F2A90023874C /* FriendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D65AF01F1B91F2A90023874C /* FriendsTableViewCell.m */; };
 		D669BE6F1A9D9A7B00DE6FA6 /* WQCircleProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D669BE6E1A9D9A7B00DE6FA6 /* WQCircleProgressBar.m */; };
 		D66C070D1B00AB1800A405DF /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = D66C07001B00AB1800A405DF /* MJRefreshBaseView.m */; };
 		D66C070E1B00AB1800A405DF /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = D66C07021B00AB1800A405DF /* MJRefreshConst.m */; };
@@ -106,6 +108,13 @@
 		D614F5201B4832C80099929A /* DataItemDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataItemDetail.m; path = Classes/Entities/DataItemDetail.m; sourceTree = "<group>"; };
 		D614F5221B4832EA0099929A /* DataItemResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataItemResult.h; path = Classes/Entities/DataItemResult.h; sourceTree = "<group>"; };
 		D614F5231B4832EA0099929A /* DataItemResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataItemResult.m; path = Classes/Entities/DataItemResult.m; sourceTree = "<group>"; };
+		D6154C6A1B88430A000ACD01 /* WQErrorTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQErrorTableViewCell.h; path = Classes/Tools/WQTableView/WQTableViewCell/WQErrorTableViewCell.h; sourceTree = "<group>"; };
+		D6154C6B1B88430A000ACD01 /* WQErrorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WQErrorTableViewCell.m; path = Classes/Tools/WQTableView/WQTableViewCell/WQErrorTableViewCell.m; sourceTree = "<group>"; };
+		D6154C6D1B8847B2000ACD01 /* WQLoadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQLoadingTableViewCell.h; path = Classes/Tools/WQTableView/WQTableViewCell/WQLoadingTableViewCell.h; sourceTree = "<group>"; };
+		D6154C6E1B8847B2000ACD01 /* WQLoadingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WQLoadingTableViewCell.m; path = Classes/Tools/WQTableView/WQTableViewCell/WQLoadingTableViewCell.m; sourceTree = "<group>"; };
+		D6154C701B884D59000ACD01 /* WQMoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQMoreTableViewCell.h; path = Classes/Tools/WQTableView/WQTableViewCell/WQMoreTableViewCell.h; sourceTree = "<group>"; };
+		D6154C711B884D59000ACD01 /* WQMoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WQMoreTableViewCell.m; path = Classes/Tools/WQTableView/WQTableViewCell/WQMoreTableViewCell.m; sourceTree = "<group>"; };
+		D6154C731B886748000ACD01 /* HttpConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpConstant.h; sourceTree = "<group>"; };
 		D61A10231A972F3100B2C64C /* WQProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WQProgressBar.m; path = Classes/Tools/WQProgressBar/WQProgressBar.m; sourceTree = "<group>"; };
 		D61A10241A972F3100B2C64C /* WQProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQProgressBar.h; path = Classes/Tools/WQProgressBar/WQProgressBar.h; sourceTree = "<group>"; };
 		D61A10261A972F4100B2C64C /* WQCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQCalendar.h; path = Classes/Tools/WQCalendar/WQCalendar.h; sourceTree = "<group>"; };
@@ -131,10 +140,6 @@
 		D63FCF3D1A96293A00582386 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsViewController.m; path = Classes/ViewControllers/FriendsViewController.m; sourceTree = "<group>"; };
 		D63FCF3F1A962EA100582386 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryViewController.h; path = Classes/ViewControllers/HistoryViewController.h; sourceTree = "<group>"; };
 		D63FCF401A962EA100582386 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryViewController.m; path = Classes/ViewControllers/HistoryViewController.m; sourceTree = "<group>"; };
-		D649E6801B079065007DB4BB /* FriendsStrengthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsStrengthCell.h; path = Classes/Views/FriendsStrengthCell.h; sourceTree = "<group>"; };
-		D649E6811B079065007DB4BB /* FriendsStrengthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsStrengthCell.m; path = Classes/Views/FriendsStrengthCell.m; sourceTree = "<group>"; };
-		D649E6831B0790FB007DB4BB /* FriendsStaminaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsStaminaCell.h; path = Classes/Views/FriendsStaminaCell.h; sourceTree = "<group>"; };
-		D649E6841B0790FB007DB4BB /* FriendsStaminaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsStaminaCell.m; path = Classes/Views/FriendsStaminaCell.m; sourceTree = "<group>"; };
 		D65352CA1B48DF52007CD311 /* WorkOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorkOutViewController.h; path = Classes/ViewControllers/WorkOutViewController.h; sourceTree = "<group>"; };
 		D65352CB1B48DF52007CD311 /* WorkOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WorkOutViewController.m; path = Classes/ViewControllers/WorkOutViewController.m; sourceTree = "<group>"; };
 		D65467AF1AACA86300FE38E3 /* AccountCoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountCoreDataHelper.h; path = Classes/CoreDataHelpers/AccountCoreDataHelper.h; sourceTree = "<group>"; };
@@ -143,6 +148,8 @@
 		D65467B31AACA8C600FE38E3 /* ExerciseCoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExerciseCoreDataHelper.m; path = Classes/CoreDataHelpers/ExerciseCoreDataHelper.m; sourceTree = "<group>"; };
 		D65467B61AACADF300FE38E3 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeViewController.h; path = Classes/ViewControllers/WelcomeViewController.h; sourceTree = "<group>"; };
 		D65467B71AACADF300FE38E3 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WelcomeViewController.m; path = Classes/ViewControllers/WelcomeViewController.m; sourceTree = "<group>"; };
+		D65AF01E1B91F2A90023874C /* FriendsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsTableViewCell.h; path = Classes/Views/FriendsTableViewCell.h; sourceTree = "<group>"; };
+		D65AF01F1B91F2A90023874C /* FriendsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsTableViewCell.m; path = Classes/Views/FriendsTableViewCell.m; sourceTree = "<group>"; };
 		D669BE6D1A9D9A7B00DE6FA6 /* WQCircleProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WQCircleProgressBar.h; path = Classes/Tools/WQCircleProgressBar/WQCircleProgressBar.h; sourceTree = "<group>"; };
 		D669BE6E1A9D9A7B00DE6FA6 /* WQCircleProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WQCircleProgressBar.m; path = Classes/Tools/WQCircleProgressBar/WQCircleProgressBar.m; sourceTree = "<group>"; };
 		D66C06FE1B00AB1800A405DF /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
@@ -464,10 +471,8 @@
 			children = (
 				D63FCF3C1A96293A00582386 /* FriendsViewController.h */,
 				D63FCF3D1A96293A00582386 /* FriendsViewController.m */,
-				D649E6801B079065007DB4BB /* FriendsStrengthCell.h */,
-				D649E6811B079065007DB4BB /* FriendsStrengthCell.m */,
-				D649E6831B0790FB007DB4BB /* FriendsStaminaCell.h */,
-				D649E6841B0790FB007DB4BB /* FriendsStaminaCell.m */,
+				D65AF01E1B91F2A90023874C /* FriendsTableViewCell.h */,
+				D65AF01F1B91F2A90023874C /* FriendsTableViewCell.m */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -631,6 +636,12 @@
 			children = (
 				D67786771ADE429D009DCC7C /* WQTableViewCell.h */,
 				D67786781ADE429D009DCC7C /* WQTableViewCell.m */,
+				D6154C6A1B88430A000ACD01 /* WQErrorTableViewCell.h */,
+				D6154C6B1B88430A000ACD01 /* WQErrorTableViewCell.m */,
+				D6154C6D1B8847B2000ACD01 /* WQLoadingTableViewCell.h */,
+				D6154C6E1B8847B2000ACD01 /* WQLoadingTableViewCell.m */,
+				D6154C701B884D59000ACD01 /* WQMoreTableViewCell.h */,
+				D6154C711B884D59000ACD01 /* WQMoreTableViewCell.m */,
 			);
 			name = WQTableViewCell;
 			sourceTree = "<group>";
@@ -681,6 +692,7 @@
 				D6A8CB4F1ABD6D83003F7650 /* PrefixHeader.pch */,
 				D6A8CB501ABD6F93003F7650 /* Constant.h */,
 				D6C93F591B71BAF300AA0A2E /* DefineHelper.h */,
+				D6154C731B886748000ACD01 /* HttpConstant.h */,
 			);
 			name = Constant;
 			path = Classes/Constant;
@@ -906,9 +918,9 @@
 				D67786791ADE429D009DCC7C /* WQTableViewCell.m in Sources */,
 				D6C93F5D1B71DC7D00AA0A2E /* WQTableData.m in Sources */,
 				D67786761ADE092D009DCC7C /* WQTableView.m in Sources */,
-				D649E6851B0790FB007DB4BB /* FriendsStaminaCell.m in Sources */,
 				D65467B81AACADF300FE38E3 /* WelcomeViewController.m in Sources */,
 				D66C070D1B00AB1800A405DF /* MJRefreshBaseView.m in Sources */,
+				D6154C6C1B88430A000ACD01 /* WQErrorTableViewCell.m in Sources */,
 				D639C42A1A90DA2800715BA9 /* AppDelegate.m in Sources */,
 				D6A4EB311B7C843E00E4FAB7 /* AppCore.m in Sources */,
 				D6B6B7B71ACFFFDC00264C5D /* Exercise.m in Sources */,
@@ -926,6 +938,7 @@
 				D61A102A1A972F4100B2C64C /* WQCalendar.m in Sources */,
 				D676E4351AA21A4A003BF293 /* EBM7Manager.m in Sources */,
 				D676E4341AA21A4A003BF293 /* EBAccelerometerFilter.m in Sources */,
+				D6154C721B884D59000ACD01 /* WQMoreTableViewCell.m in Sources */,
 				D6A4EAF81B7AF0DF00E4FAB7 /* NetworkReachability.m in Sources */,
 				D63FCF411A962EA100582386 /* HistoryViewController.m in Sources */,
 				D6BBD0821AC310B300B56935 /* NSString+Base.m in Sources */,
@@ -941,6 +954,7 @@
 				D6C5FAEB1A9DCC4E00BABA36 /* SquatViewController.m in Sources */,
 				D63E2DB31AD3B63A00D86030 /* TimerManager.m in Sources */,
 				D6AFCAEE1AC5A62400400358 /* UIImage+Base.m in Sources */,
+				D65AF0201B91F2A90023874C /* FriendsTableViewCell.m in Sources */,
 				D65352CC1B48DF52007CD311 /* WorkOutViewController.m in Sources */,
 				D66C070F1B00AB1800A405DF /* MJRefreshFooterView.m in Sources */,
 				D669BE6F1A9D9A7B00DE6FA6 /* WQCircleProgressBar.m in Sources */,
@@ -955,10 +969,10 @@
 				D6FFCDDA1AD0EB9100EB8305 /* StoreViewController.m in Sources */,
 				D639C4561A90DE8400715BA9 /* IndexViewController.m in Sources */,
 				D6DFAB3C1AD615CD00C5D37C /* StoreCoreDataHelper.m in Sources */,
+				D6154C6F1B8847B2000ACD01 /* WQLoadingTableViewCell.m in Sources */,
 				D6A8CB531ABD7FEB003F7650 /* UIView+Base.m in Sources */,
 				D6D6163F1B4846D9001AB663 /* SettingsDetailViewController.m in Sources */,
 				D61A102E1A97302F00B2C64C /* WQCalendarTile.m in Sources */,
-				D649E6821B079065007DB4BB /* FriendsStrengthCell.m in Sources */,
 				D67786711ADDF5B6009DCC7C /* DebugViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

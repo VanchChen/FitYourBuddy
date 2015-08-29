@@ -57,10 +57,3 @@
 #define APPCONFIG_UI_TABLE_CELL_HEIGHT      44.0f                       // UITableView 单元格默认高度
 #define APPCONFIG_UI_ERROR_CELL_HEIGHT      180.0f                      // UITableView 异常单元格默认高度
 #define APPCONFIG_UI_TABLE_PADDING          10.0f                       // UITableView 的默认边距
-
-//请求相关
-#define APPCONFIG_CONN_HEAD             @"http://"
-#define APPCONFIG_CONN_SERVER           @"121.43.226.76"
-#define APPCONFIG_CONN_AGENT            @"/webservice/WebService.asmx"
-#define APPCONFIG_CONN_TIMEOUT          30                            // 连接超时时间
-#define APPCONFIG_CONN_ERROR_MSG_DOMAIN @"HttpTaskError"              // 连接出错信息标志

@@ -21,6 +21,16 @@ typedef NS_ENUM(NSInteger, WQTableDataStatus) {
 
 /**  普通Cell的class，mDataCellInfo的简便方法 */
 @property (nonatomic, assign) Class<WQTableViewCellDelegate>   mDataCellClass;
+/**  空Cell的class，mEmptyCellInfo的简便方法 */
+@property (nonatomic, assign) Class<WQTableViewCellDelegate>   mEmptyCellClass;
+/**  错误信息Cell的class，mErrorCellInfo的简便方法 */
+@property (nonatomic, assign) Class<WQTableViewCellDelegate>   mErrorCellClass;
+/**  加载中Cell的class，mLoadingCellInfo的简便方法 */
+@property (nonatomic, assign) Class<WQTableViewCellDelegate>   mLoadingCellClass;
+/** 更多Cell的class，mMoreCellInfo的简便方法 */
+@property (nonatomic, assign) Class<WQTableViewCellDelegate>   mMoreCellClass;
+/** 列表都结束后，最后多出的一个单元格Cell的class，mFinishedCellInfo的简便方法 */
+@property (nonatomic, assign) Class<WQTableViewCellDelegate>   mFinishedCellClass;
 
 @property (nonatomic, weak) WQTableView *tableView;                 //列表数据对应的列表
 @property (nonatomic, assign) NSInteger tag;                        //一个tag，没事情别乱用

@@ -28,8 +28,7 @@
     [super viewDidLoad];
     
     //获取3个值 单次最大记录，目标数，今天的总数
-    NSError *error;
-    _maxExerciseNum = [ExerciseCoreDataHelper getBestNumByType:self.exerciseType withError:&error];
+    _maxExerciseNum = [ExerciseCoreDataHelper getBestNumByType:self.exerciseType withError:nil];
     NSString *maxNumString = [NSString stringFromInteger:_maxExerciseNum];
     
     //navigation bar
@@ -39,6 +38,7 @@
     _titleLabel = [CommonUtil createLabelWithText:@"俯卧撑" andTextColor:[UIColor whiteColor] andFont:[UIFont boldSystemFontOfSize:20] andTextAlignment:NSTextAlignmentCenter];
     _titleLabel.frame = CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - 100.f) / 2.f, APPCONFIG_UI_STATUSBAR_HEIGHT, 100, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
     [self.view addSubview:_titleLabel];
+    
     //声音图标
     _soundButton = [[UIButton alloc] init];
     _soundButton.frame = CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_BETWEEN_PADDING - 30, 25, 30, 30);
@@ -76,12 +76,20 @@
     [_maxRecordView addSubview:_recordLabel];
     
     _saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 63, self.view.bounds.size.width, 63)];
-    [_saveButton setTitle:@"保存并退出>" forState:UIControlStateNormal];
+    [_saveButton setTitle:@"滑动退出>>" forState:UIControlStateNormal];
     [_saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:_saveButton];
     
     float progressOriginY, progressWidth;
-    if (APPCONFIG_DEVICE_OVER_IPHONE5) {
+    if (self.view.width > self.view.height) {
+        if (APPCONFIG_UI_SCREEN_FWIDTH >= 568.0f) {
+            progressOriginY = 140;
+            progressWidth = 280;
+        } else {
+            progressOriginY = 120;
+            progressWidth = 240;
+        }
+    } else if (APPCONFIG_DEVICE_OVER_IPHONE5) {
         progressOriginY = 140;
         progressWidth = 280;
     } else {
@@ -98,7 +106,7 @@
             _navBarView.backgroundColor = sitUpColor;
             [_closedIndicator setStrokeColor:sitUpColor];
             [_saveButton setBackgroundColor:sitUpColor];
-            _targetNum = [CommonUtil getTargetNumFromType:self.exerciseType andLevel:[[AccountCoreDataHelper getDataByName:@"sitUpLevel" withError:&error] integerValue]];
+            _targetNum = [CommonUtil getTargetNumFromType:self.exerciseType andLevel:[[AccountCoreDataHelper getDataByName:@"sitUpLevel" withError:nil] integerValue]];
             break;
         }
         case ExerciseTypePushUp: {
@@ -106,7 +114,7 @@
             _navBarView.backgroundColor = pushUpColor;
             [_closedIndicator setStrokeColor:pushUpColor];
             [_saveButton setBackgroundColor:pushUpColor];
-            _targetNum = [CommonUtil getTargetNumFromType:self.exerciseType andLevel:[[AccountCoreDataHelper getDataByName:@"pushUpLevel" withError:&error] integerValue]];
+            _targetNum = [CommonUtil getTargetNumFromType:self.exerciseType andLevel:[[AccountCoreDataHelper getDataByName:@"pushUpLevel" withError:nil] integerValue]];
             break;
         }
         case ExerciseTypeSquat: {
@@ -114,7 +122,7 @@
             _navBarView.backgroundColor = squatColor;
             [_closedIndicator setStrokeColor:squatColor];
             [_saveButton setBackgroundColor:squatColor];
-            _targetNum = [CommonUtil getTargetNumFromType:self.exerciseType andLevel:[[AccountCoreDataHelper getDataByName:@"squatLevel" withError:&error] integerValue]];
+            _targetNum = [CommonUtil getTargetNumFromType:self.exerciseType andLevel:[[AccountCoreDataHelper getDataByName:@"squatLevel" withError:nil] integerValue]];
             break;
         }
         case ExerciseTypeWalk: {
@@ -122,7 +130,7 @@
             _navBarView.backgroundColor = walkColor;
             [_closedIndicator setStrokeColor:walkColor];
             [_saveButton setBackgroundColor:walkColor];
-            _targetNum = [CommonUtil getTargetNumFromType:self.exerciseType andLevel:[[AccountCoreDataHelper getDataByName:@"walkLevel" withError:&error] integerValue]];
+            _targetNum = [CommonUtil getTargetNumFromType:self.exerciseType andLevel:[[AccountCoreDataHelper getDataByName:@"walkLevel" withError:nil] integerValue]];
             break;
         }
         default: {
@@ -130,6 +138,14 @@
         }
     }
     targetLabel.text = [NSString stringFromInteger:_targetNum];
+    
+    //载入声音设置
+    BOOL sound = [[NSUserDefaults standardUserDefaults] boolForKey:@"SoundForWorkOut"];
+    if (sound) {
+        [_soundButton setSelected:YES];
+        _closedIndicator.allowSoundPlay = NO;
+    }
+    
     [_closedIndicator loadIndicator];
     
     _count = 0;//计数器清空
@@ -144,6 +160,8 @@
 - (void)tappedSoundBtn:(UIButton *)button {
     button.selected = !button.selected;
     _closedIndicator.allowSoundPlay = !button.selected;
+    [[NSUserDefaults standardUserDefaults] setBool:button.selected forKey:@"SoundForWorkOut"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)tappedSaveBtn {

@@ -9,6 +9,7 @@
 #import "WelcomeViewController.h"
 
 #import "TarBarViewController.h"
+#import "AppCore.h"
 
 //性别
 typedef NS_ENUM(NSInteger, GenderType) {
@@ -205,6 +206,9 @@ static CGFloat const GenderExplainLabelHeight = 20.0f;
         
         TarBarViewController* tabBarController = [[TarBarViewController alloc] init];
         [self presentViewController:tabBarController animated:NO completion:nil];
+        
+        //最后发送一次记录到服务器
+        [[AppCore sharedAppCore] networkUpdateAccount];
     }
 }
 

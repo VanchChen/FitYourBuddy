@@ -55,7 +55,7 @@
     
     self.navigationItem.title = @"设置";
     
-    [self initTable];
+    //[self initTable];
 }
 
 - (void)initTable {
@@ -70,14 +70,6 @@
     self.tableView.headerForSection = ^UIView *(WQTableView *tableView, NSInteger section) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.width, 30)];
         return view;
-    };
-    
-    self.tableView.numberForSection = ^NSInteger(WQTableView *tableView) {
-        return 1;
-    };
-    
-    self.tableView.numberForRowInSection = ^NSInteger(WQTableView *tableView, NSInteger section) {
-        return 3;
     };
     
     //计算单元格的高度

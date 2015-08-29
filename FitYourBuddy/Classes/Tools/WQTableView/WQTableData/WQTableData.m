@@ -9,10 +9,13 @@
 #import "WQTableData.h"
 
 #import "AppCore.h"
-
 #import "DataItemResult.h"
 #import "DataLoader.h"
 #import "WQTableView.h"
+
+#import "WQErrorTableViewCell.h"
+#import "WQLoadingTableViewCell.h"
+#import "WQMoreTableViewCell.h"
 
 @implementation WQTableData
 
@@ -34,6 +37,11 @@
         self.tag = 0;
         
         self.mDataCellClass = nil;
+        self.mEmptyCellClass = [WQEmptyTableViewCell class];
+        self.mErrorCellClass = [WQErrorTableViewCell class];
+        self.mLoadingCellClass = [WQLoadingTableViewCell class];
+        self.mMoreCellClass = [WQMoreTableViewCell class];
+        self.mFinishedCellClass = [WQFinishedTableViewCell class];
     }
     
     return self;

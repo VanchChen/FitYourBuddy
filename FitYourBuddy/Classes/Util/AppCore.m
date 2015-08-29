@@ -71,7 +71,7 @@ SINGLETON_IMPLEMENT(AppCore)
     NSArray *array = [ExerciseCoreDataHelper getExerciseByDate:account[@"lastUpdateDate"] withError:&error];
     NSMutableString *jsonString = [NSMutableString new];
     if (array && array.count > 0) {
-        [jsonString appendString:@"["];
+        [jsonString appendString:@"{\"Exercise\":["];
         for (Exercise *ex in array){
             [jsonString appendString:@"{"];
             [jsonString appendString:[NSString stringWithFormat:@"\"type\":\"%@\",", ex.type]];
@@ -80,7 +80,7 @@ SINGLETON_IMPLEMENT(AppCore)
             [jsonString appendString:@"},"];
         }
         jsonString = [[jsonString substringToIndex:jsonString.length-1] mutableCopy];
-        [jsonString appendString:@"]"];
+        [jsonString appendString:@"]}"];
     } else {
         [jsonString appendString:@"[]"];
     }
@@ -95,18 +95,9 @@ SINGLETON_IMPLEMENT(AppCore)
                                                         return;
                                                     }
                                                     
-                                                    NSData *data = result.rawData;
-                                                    id jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                                                    if (jsonDict == nil) {
-                                                        result.hasError = YES;
-                                                        result.message = @"JSON数据解析失败!";
-                                                    }
-                                                    
-                                                    //字典数据
-                                                    NSDictionary *dataDict = [NSDictionary dictionaryWithDictionary:(NSDictionary *)jsonDict];
-                                                    
-                                                    NSLog(@"%@", result.message);
+                                                    [AccountCoreDataHelper setDataByName:@"lastUpdateDate" andData:[NSString today] withError:nil];
                                                 }];
+    loader = nil;
 }
 
 @end
