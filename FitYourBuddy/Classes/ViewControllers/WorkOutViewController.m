@@ -7,6 +7,7 @@
 //
 
 #import "WorkOutViewController.h"
+#import "tutorialView.h"
 
 @interface WorkOutViewController () <UIGestureRecognizerDelegate>
 
@@ -146,6 +147,48 @@
         _closedIndicator.allowSoundPlay = NO;
     }
     
+    //检查教程
+    [self checkTutorial];
+}
+
+#pragma mark - tutorial method
+
+- (void)checkTutorial {
+    //------------------------教程相关------------------------
+    //查看特定锻炼是否已运行过
+    NSString *hasLaunchedOnce = [NSString string];
+    switch (self.exerciseType) {
+        case ExerciseTypePushUp:
+            hasLaunchedOnce = @"PushUpHasLaunchedOnce";
+            break;
+        case ExerciseTypeSitUp:
+            hasLaunchedOnce = @"SitUpHasLaunchedOnce";
+            break;
+        case ExerciseTypeSquat:
+            hasLaunchedOnce = @"SquatHasLaunchedOnce";
+            break;
+        case ExerciseTypeWalk:
+            [self startCount];
+            return;
+            break;
+        default:
+            break;
+    }
+    BOOL hasLaunch = [[NSUserDefaults standardUserDefaults] boolForKey:hasLaunchedOnce];
+    if (hasLaunch) {
+        //已运行过，正常启动
+        [self startCount];
+    } else {
+        //未运行过，看教程先
+        tutorialView *tutView = [[tutorialView alloc]initWithExerciseType:self.exerciseType complete:^(tutorialView *view){
+            [view removeFromSuperview];
+            [self startCount];
+        }];
+        [self.view addSubview:tutView];
+    }
+}
+
+- (void)startCount {
     [_closedIndicator loadIndicator];
     
     _count = 0;//计数器清空
