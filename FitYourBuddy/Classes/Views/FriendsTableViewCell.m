@@ -48,10 +48,10 @@ static const CGFloat scoreLabelWidth = 50.0f;//天数框宽度
         _personHeadIcon.layer.borderWidth = 1.0f;
         [_grayBackgroundView addSubview:_personHeadIcon];
         
-        _cellNameLabel = [CommonUtil createLabelWithText:@"小胖砸" andFont:[UIFont systemFontOfSize:15.0f]];
+        _cellNameLabel = [CommonUtil createLabelWithText:@"小胖砸" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:15.0f]];
         [_grayBackgroundView addSubview:_cellNameLabel];
         
-        _cellScoreLabel = [CommonUtil createLabelWithText:@"69天" andTextColor:[UIColor blackColor] andFont:[UIFont systemFontOfSize:15.0f] andTextAlignment:NSTextAlignmentRight];
+        _cellScoreLabel = [CommonUtil createLabelWithText:@"69天" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:15.0f] andTextAlignment:NSTextAlignmentRight];
         [_grayBackgroundView addSubview:_cellScoreLabel];
     }
     return self;

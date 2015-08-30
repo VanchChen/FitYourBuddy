@@ -278,7 +278,7 @@ static CGFloat      const popIconLeftPadding = 40.0f;
     popView.layer.borderWidth = 2.0f;
     [backgroundButton addSubview:popView];
     
-    UILabel *nameLabel = [CommonUtil createLabelWithText:name andFont:[UIFont systemFontOfSize:20.0f]];
+    UILabel *nameLabel = [CommonUtil createLabelWithText:name andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:20.0f]];
     nameLabel.textAlignment = NSTextAlignmentCenter;
     nameLabel.frame = CGRectMake(0, 10, popView.width, 30.0f);
     [popView addSubview:nameLabel];
@@ -302,12 +302,14 @@ static CGFloat      const popIconLeftPadding = 40.0f;
     }
     
     UILabel *calendarLabel = [CommonUtil createLabelWithText:fight];
+    calendarLabel.textColor = tipTitleLabelColor;
     calendarLabel.frame = CGRectMake(0, 0, 50, popIconWidth);
     [calendarLabel setTextAlignment:NSTextAlignmentCenter];
     [calendarLabel rightOfView:calendarImage withMargin:5.0f sameVertical:YES];
     [popView addSubview:calendarLabel];
     
     UILabel *outLineLabel = [CommonUtil createLabelWithText:[NSString stringWithFormat:@"Level%@",level]];
+    outLineLabel.textColor = tipTitleLabelColor;
     outLineLabel.frame = CGRectMake(popView.width - popIconLeftPadding - 50, CGRectGetMaxY(nameImage.frame) + 10.0f, 50, popIconWidth);
     [popView addSubview:outLineLabel];
     
