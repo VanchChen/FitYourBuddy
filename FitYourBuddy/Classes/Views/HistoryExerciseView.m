@@ -160,14 +160,44 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
     //更新柱状图
     _dataDict = [ExerciseCoreDataHelper getOneWeekNumByType:self.exerciseType withError:&error];
     if (_dataDict && _dataDict.count > 0) {
-        float maxNum = 0, tmpNum = 0, tmpHeight;
+        float maxNum = 0, tmpNum = 0, tmpHeight, totalNum = 0;
         CGRect tmpFrame;
         for (NSString *akey in [_dataDict allKeys]) {
             tmpNum = [[_dataDict objectForKey:akey] floatValue];
             if (tmpNum > maxNum) {
                 maxNum = tmpNum;
             }
+            totalNum += tmpNum;
         }
+        //更新卡路里
+        switch (self.exerciseType) {
+            case ExerciseTypeSitUp: {
+                totalNum = totalNum * 200;
+                break;
+            }
+            case ExerciseTypePushUp: {
+                totalNum = totalNum * 400;
+                break;
+            }
+            case ExerciseTypeSquat: {
+                totalNum = totalNum * 200;
+                break;
+            }
+            case ExerciseTypeWalk: {
+                totalNum = totalNum * 40;
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        
+        if (totalNum > 1000) {
+            _calorieLabel.text = [NSString stringWithFormat:@"最近七天共消耗卡路里%.f千卡", totalNum / 1000.0f];
+        } else {
+            _calorieLabel.text = [NSString stringWithFormat:@"最近七天共消耗卡路里%.f卡", totalNum];
+        }
+        
         if (maxNum > 0) {
             for (NSString *akey in [_dataDict allKeys]) {
                 UIView *view = [self findViewByTag:[akey integerValue]];
@@ -216,7 +246,7 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
         _numLabel = [CommonUtil createLabelWithText:@"" andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:20] andTextAlignment:NSTextAlignmentCenter];
         _numLabel.frame = CGRectMake(0, 0, histogramViewWidth, histogramViewWidth);
         _numLabel.layer.borderColor = [UIColor whiteColor].CGColor;
-        _numLabel.layer.borderWidth = 2.0f;
+        _numLabel.layer.borderWidth = 1.0f;
         _numLabel.layer.cornerRadius = 5.0f;
         [_dataView addSubview:_numLabel];
     }

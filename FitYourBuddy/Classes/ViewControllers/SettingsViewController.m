@@ -100,7 +100,7 @@
 
 - (void)rollToRate {
     NSString *str = [NSString stringWithFormat:@"%@",
-                     @"itms-apps://itunes.apple.com/cn/app/xin-ze-ling/id873925170?mt=8" ];
+                     @"itms-apps://itunes.apple.com/cn/app/tian-tian-qu-jian-shen-zui/id1035157441?mt=8" ];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 

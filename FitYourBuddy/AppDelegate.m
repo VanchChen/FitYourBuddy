@@ -20,7 +20,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //友盟统计
     [MobClick startWithAppkey:@"559a90d667e58eb311006634" reportPolicy:BATCH channelId:nil];
-    //FIXME: 友盟检查更新[MobClick checkUpdate];
+    //友盟检查更新
+    [MobClick checkUpdate];
     
     //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
     //[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];

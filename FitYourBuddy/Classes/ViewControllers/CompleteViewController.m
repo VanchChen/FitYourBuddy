@@ -18,7 +18,7 @@ static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的�
 //static CGFloat const arrowLeftPadding = 110.0f;                 //箭头的左边距
 //static CGFloat const arrowWidth = 20.0f;                        //箭头的宽度
 
-static CGFloat const shareImageWidth = 24.0f;                   //分享按钮宽度
+//static CGFloat const shareImageWidth = 24.0f;                   //分享按钮宽度
 
 @interface CompleteViewController ()
 {

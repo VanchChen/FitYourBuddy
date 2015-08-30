@@ -76,18 +76,21 @@
         
         //解析头部编码
         NSData *data = self.dataItemResult.rawData;
-        id jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        if (jsonDict == nil) {
-            self.dataItemResult.hasError = YES;
-            self.dataItemResult.message = @"JSON数据解析失败!";
-        } else {
-            NSDictionary *dataDict = [NSDictionary dictionaryWithDictionary:(NSDictionary *)jsonDict];
-            if ([dataDict[HTTP_PACKAGE_CODE] isEqualToString:@"0"]) {
-                //返回成功
-                self.dataItemResult.hasError = NO;
-            } else {
+        
+        if (data) {
+            id jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if (jsonDict == nil) {
                 self.dataItemResult.hasError = YES;
-                self.dataItemResult.message = dataDict[HTTP_PACKAGE_MESSAGE];
+                self.dataItemResult.message = @"JSON数据解析失败!";
+            } else {
+                NSDictionary *dataDict = [NSDictionary dictionaryWithDictionary:(NSDictionary *)jsonDict];
+                if ([dataDict[HTTP_PACKAGE_CODE] isEqualToString:@"0"]) {
+                    //返回成功
+                    self.dataItemResult.hasError = NO;
+                } else {
+                    self.dataItemResult.hasError = YES;
+                    self.dataItemResult.message = dataDict[HTTP_PACKAGE_MESSAGE];
+                }
             }
         }
         
