@@ -10,6 +10,8 @@
 #import "WQProgressBar.h"
 #import "WQAnimateLabel.h"
 
+#import "AppCore.h"
+
 static CGFloat const dataViewLeftPadding = 30.0f;               //数据框的左边距
 
 static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的大小
@@ -84,10 +86,10 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
         _textButtonLabel.font = [UIFont boldSystemFontOfSize:16];
         _textButtonLabel.textAlignment = NSTextAlignmentCenter;
         [_textLabel addSubview:_textButtonLabel];
-        
-        _textButtonImage = [[UIImageView alloc] init];
-        _textButtonImage.image = [UIImage imageNamed:@"ShareBlueIcon"];
-        [_textLabel addSubview:_textButtonImage];
+//        
+//        _textButtonImage = [[UIImageView alloc] init];
+//        _textButtonImage.image = [UIImage imageNamed:@"ShareBlueIcon"];
+//        [_textLabel addSubview:_textButtonImage];
         
         _completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_completeButton setBackgroundColor:themePureBlueColor];
@@ -168,8 +170,8 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
     _titleLabel.frame = CGRectMake(0, APPCONFIG_UI_STATUSBAR_HEIGHT, APPCONFIG_UI_SCREEN_FWIDTH, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
     
     _textLabel.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, APPCONFIG_UI_STATUSBAR_HEIGHT + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT, APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
-    _textButtonLabel.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, 0, _textLabel.width - shareImageWidth - APPCONFIG_UI_VIEW_PADDING * 2, _textLabel.height);
-    _textButtonImage.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING + _textButtonLabel.width, (_textLabel.height - shareImageWidth) / 2.0f, shareImageWidth, shareImageWidth);
+    _textButtonLabel.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, 0, _textLabel.width - APPCONFIG_UI_VIEW_PADDING * 2, _textLabel.height);//shareImageWidth
+    //_textButtonImage.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING + _textButtonLabel.width, (_textLabel.height - shareImageWidth) / 2.0f, shareImageWidth, shareImageWidth);
     
     _completeButton.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, APPCONFIG_UI_SCREEN_FHEIGHT - APPCONFIG_UI_NAVIGATIONBAR_HEIGHT - APPCONFIG_UI_VIEW_PADDING, APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
     
@@ -306,6 +308,9 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
     [AccountCoreDataHelper setDataByName:@"exp" andData:[NSString stringWithFormat:@"%f", afterExp] withError:&error];
     //重载经验条
     [_levelProgressBar loadLevelAndExp];
+    
+    //上传锻炼数据
+    [[AppCore sharedAppCore] networkUpdateAccount];
 }
 
 

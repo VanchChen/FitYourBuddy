@@ -47,7 +47,10 @@
         weakSelf.wqMotionManager = [[CMMotionManager alloc]init];
         if (weakSelf.wqMotionManager.deviceMotionAvailable) {
             weakSelf.wqMotionManager.deviceMotionUpdateInterval = 0.2;
+            
             __block BOOL isStart = false;
+            __block BOOL isEnd = false;
+            
             [weakSelf.wqMotionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) {
                 
                 //NSLog(@"%f %f %f", round(motion.gravity.x * 10) / 10, round(motion.gravity.y * 10 / 10), round(motion.gravity.z * 10) / 10);
@@ -77,16 +80,31 @@
                 //            if(fabs(motion.userAcceleration.z)>1.3f)
                 //                NSLog(@"z:%.2f" ,motion.userAcceleration.z);
                 
-                NSLog(@"%.2f", motion.userAcceleration.x);
+//                NSLog(@"%.2f", motion.userAcceleration.x);
+//                
+//                if (!isStart && motion.userAcceleration.x < - 0.3) { //
+//                    isStart = true;
+//                    weakSelf.count++;
+//                    [weakSelf.closedIndicator updateWithTotalBytes:weakSelf.targetNum downloadedBytes:weakSelf.count];
+//                }
+//                
+//                if (isStart && motion.userAcceleration.x > - 0.1) { //
+//                    isStart = false;
+//                }
                 
-                if (!isStart && motion.userAcceleration.x < -0.5) { //
+                if (!isStart && motion.userAcceleration.x > 0.1) { //
                     isStart = true;
-                    weakSelf.count++;
-                    [weakSelf.closedIndicator updateWithTotalBytes:weakSelf.targetNum downloadedBytes:weakSelf.count];
                 }
                 
-                if (isStart && motion.userAcceleration.x > 0) { //
+                if (motion.userAcceleration.x < -0.1 && !isEnd) { //
+                    isEnd = true;
+                }
+                
+                if (motion.userAcceleration.x > 0.1 && isEnd && isStart) { //
                     isStart = false;
+                    isEnd = false;
+                    weakSelf.count++;
+                    [weakSelf.closedIndicator updateWithTotalBytes:weakSelf.targetNum downloadedBytes:weakSelf.count];
                 }
                 
                 
@@ -139,7 +157,7 @@
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskLandscape;
+    return UIInterfaceOrientationMaskLandscapeRight;
 }
 
 - (void)tappedSaveBtn

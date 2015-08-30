@@ -20,8 +20,6 @@ static const CGFloat scoreLabelWidth = 50.0f;//天数框宽度
 @property (nonatomic, strong) UILabel     *cellNameLabel;
 @property (nonatomic, strong) UILabel     *cellScoreLabel;
 
-@property (nonatomic, assign) BOOL        isMe;
-
 @end
 
 @implementation FriendsTableViewCell
@@ -29,7 +27,6 @@ static const CGFloat scoreLabelWidth = 50.0f;//天数框宽度
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.isMe = false;
         self.selectionStyle = UITableViewCellSelectionStyleNone; //取消点击效果
         self.backgroundColor = [UIColor clearColor];
         
@@ -76,24 +73,18 @@ static const CGFloat scoreLabelWidth = 50.0f;//天数框宽度
     
     if ([self.cellDetail getBool:Friends_List_IsMe]) {
         self.cellNameLabel.text = @"我";
-        
-        if (!self.isMe) {
-            self.isMe = true;
-            
-            self.grayBackgroundView.backgroundColor = themePureBlueColor;
-            self.cellIndexLabel.textColor = [UIColor whiteColor];
-            self.cellNameLabel.textColor = [UIColor whiteColor];
-            self.cellScoreLabel.textColor = [UIColor whiteColor];
-        }
+    
+        self.grayBackgroundView.backgroundColor = themePureBlueColor;
+        self.cellIndexLabel.textColor = [UIColor whiteColor];
+        self.cellNameLabel.textColor = [UIColor whiteColor];
+        self.cellScoreLabel.textColor = [UIColor whiteColor];
     } else {
         self.cellNameLabel.text = [self.cellDetail getString:Friends_List_Name];
         
-        if (self.isMe) {
-            self.grayBackgroundView.backgroundColor = indexBackgroundColor;
-            self.cellIndexLabel.textColor = themePureBlueColor;
-            self.cellNameLabel.textColor = [UIColor blackColor];
-            self.cellScoreLabel.textColor = [UIColor blackColor];
-        }
+        self.grayBackgroundView.backgroundColor = indexBackgroundColor;
+        self.cellIndexLabel.textColor = themePureBlueColor;
+        self.cellNameLabel.textColor = [UIColor blackColor];
+        self.cellScoreLabel.textColor = [UIColor blackColor];
     }
     
     [self addFatGuyAvatarWithLevel:[self.cellDetail getString:Friends_List_Level]

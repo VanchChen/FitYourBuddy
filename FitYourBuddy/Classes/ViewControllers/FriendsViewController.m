@@ -37,18 +37,18 @@ static CGFloat      const popIconLeftPadding = 40.0f;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"萌胖圈"];
+    [MobClick endLogPageView:@"卷卷"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"萌胖圈"];
+    [MobClick beginLogPageView:@"卷卷"];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"萌胖圈";
+    self.navigationItem.title = @"卷卷";
     
     [self initSegment];
     
@@ -255,15 +255,15 @@ static CGFloat      const popIconLeftPadding = 40.0f;
     NSString *mouth = [detail getString:Friends_List_Mouth];
     NSString *fight = [detail getString:Friends_List_Fight];
     
-    if ([detail getBool:Friends_List_IsMe]) {
-        //如果是自己的话，则取本地数据
-        count = [AccountCoreDataHelper getDataByName:@"count" withError:nil];
-        level = [AccountCoreDataHelper getDataByName:@"level" withError:nil];
-        eye = [AccountCoreDataHelper getDataByName:@"eye" withError:nil];
-        mouth = [AccountCoreDataHelper getDataByName:@"mouth" withError:nil];
-        NSString *exp = [AccountCoreDataHelper getDataByName:@"exp" withError:nil];
-        fight = [NSString stringWithFormat:@"%.f",([exp floatValue] / [count floatValue]) * 100];
-    }
+//    if ([detail getBool:Friends_List_IsMe]) {
+//        //如果是自己的话，则取本地数据
+//        count = [AccountCoreDataHelper getDataByName:@"count" withError:nil];
+//        level = [AccountCoreDataHelper getDataByName:@"level" withError:nil];
+//        eye = [AccountCoreDataHelper getDataByName:@"eye" withError:nil];
+//        mouth = [AccountCoreDataHelper getDataByName:@"mouth" withError:nil];
+//        NSString *exp = [AccountCoreDataHelper getDataByName:@"exp" withError:nil];
+//        fight = [NSString stringWithFormat:@"%.f",([exp floatValue] / [count floatValue]) * 100];
+//    }
     
     UIButton *backgroundButton = [UIButton buttonWithType:UIButtonTypeCustom];
     backgroundButton.frame = self.view.window.bounds;
@@ -291,21 +291,23 @@ static CGFloat      const popIconLeftPadding = 40.0f;
     [popView addSubview:nameImage];
     
     UIImageView *calendarImage = [[UIImageView alloc] initWithFrame:CGRectMake(popIconLeftPadding, CGRectGetMaxY(nameImage.frame) + 10.0f, popIconWidth, popIconWidth)];
-    calendarImage.image = [UIImage imageNamed:@"CalendarIcon"];
     [popView addSubview:calendarImage];
     
     if (self.staminaBtn.selected) {
-        fight = [NSString stringWithFormat:@"%@天", count];
+        fight = [NSString stringWithFormat:@"%@", count];
+        calendarImage.image = [UIImage imageNamed:@"CalendarIcon"];
     } else {
-        fight = [NSString stringWithFormat:@"%@瓦", fight];
+        fight = [NSString stringWithFormat:@"%@", fight];
+        calendarImage.image = [UIImage imageNamed:@"WattIcon"];
     }
     
     UILabel *calendarLabel = [CommonUtil createLabelWithText:fight];
     calendarLabel.frame = CGRectMake(0, 0, 50, popIconWidth);
-    [calendarLabel rightOfView:calendarImage withMargin:APPCONFIG_UI_VIEW_BETWEEN_PADDING sameVertical:YES];
+    [calendarLabel setTextAlignment:NSTextAlignmentCenter];
+    [calendarLabel rightOfView:calendarImage withMargin:5.0f sameVertical:YES];
     [popView addSubview:calendarLabel];
     
-    UILabel *outLineLabel = [CommonUtil createLabelWithText:[NSString stringWithFormat:@"等级：%@",level]];
+    UILabel *outLineLabel = [CommonUtil createLabelWithText:[NSString stringWithFormat:@"Level%@",level]];
     outLineLabel.frame = CGRectMake(popView.width - popIconLeftPadding - 50, CGRectGetMaxY(nameImage.frame) + 10.0f, 50, popIconWidth);
     [popView addSubview:outLineLabel];
     

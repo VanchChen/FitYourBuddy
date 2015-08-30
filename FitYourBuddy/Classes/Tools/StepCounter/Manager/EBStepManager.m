@@ -47,16 +47,16 @@
 {
     _handler = handler;
     
-//    if ([self.m7 isAvailable]) {
-//        [self.m7 startWithHandler:^(NSInteger numberOfSteps, NSDate *timestamp, NSError *error) {
-//           
-//            steps = steps + numberOfSteps;
-//            
-//            if (_handler) {
-//                _handler(steps, timestamp, error);
-//            }
-//        }];
-//    }else {
+    if ([self.m7 isAvailable]) {
+        [self.m7 startWithHandler:^(NSInteger numberOfSteps, NSDate *timestamp, NSError *error) {
+           
+            steps = steps + numberOfSteps;
+            
+            if (_handler) {
+                _handler(steps, timestamp, error);
+            }
+        }];
+    }else {
         [self.motion startWithHandler:^(NSInteger numberOfSteps, NSDate *timestamp, NSError *error) {
             steps = steps + numberOfSteps;
             
@@ -64,7 +64,7 @@
                 _handler(steps, timestamp, error);
             }
         }];
-    //}
+    }
 }
 
 - (void)stopStepCounting

@@ -17,6 +17,18 @@
 
 #pragma mark - Life Circle
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -223,16 +235,16 @@
 - (void)handlePanGesture:(UIPanGestureRecognizer *)panGesture {
     CGFloat translatedX = [panGesture translationInView:self.view].x;
     if (panGesture.state == UIGestureRecognizerStateChanged) {
-        if (translatedX > 250) {
-            translatedX = 250;
+        if (translatedX > 100) {
+            translatedX = 100;
         }
         if (translatedX < 0) {
             translatedX = 0;
         }
-        _coverView.alpha = translatedX / 400.0f;
+        _coverView.alpha = translatedX / 200.0f;
     } else if (panGesture.state == UIGestureRecognizerStateEnded) {
         _coverView.alpha = 0;
-        if (translatedX >= 250) {
+        if (translatedX >= 100) {
             [self tappedSaveBtn];
         }
     }

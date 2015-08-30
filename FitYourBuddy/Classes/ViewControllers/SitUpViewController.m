@@ -47,7 +47,7 @@
         weakSelf.wqMotionManager = [[CMMotionManager alloc]init];
         if (weakSelf.wqMotionManager.deviceMotionAvailable) {
             weakSelf.wqMotionManager.deviceMotionUpdateInterval = 0.2;
-            __block BOOL isStart = false;
+            __block BOOL isStart = true;
             //__block CMAttitude *initialAttitude = wqMotionManager.deviceMotion.attitude;
             
             [weakSelf.wqMotionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) {
@@ -105,7 +105,7 @@
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskLandscape;
+    return UIInterfaceOrientationMaskLandscapeRight;
 }
 
 - (void)tappedSaveBtn
