@@ -18,7 +18,7 @@ static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的�
 //static CGFloat const arrowLeftPadding = 110.0f;                 //箭头的左边距
 //static CGFloat const arrowWidth = 20.0f;                        //箭头的宽度
 
-//static CGFloat const shareImageWidth = 24.0f;                   //分享按钮宽度
+static CGFloat const shareImageWidth = 24.0f;                   //分享按钮宽度
 
 @interface CompleteViewController ()
 {
@@ -79,6 +79,7 @@ static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的�
         _textLabel.layer.shadowRadius = 0;
         _textLabel.layer.shadowOpacity = 1;
         _textLabel.layer.shadowColor = startTrainTargetGreyColor.CGColor;
+        [_textLabel addTarget:self action:@selector(tappedShareButton) forControlEvents:UIControlEventTouchUpInside];
         [navView addSubview:_textLabel];
         
         _textButtonLabel = [[UILabel alloc] init];
@@ -86,10 +87,10 @@ static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的�
         _textButtonLabel.font = [UIFont boldSystemFontOfSize:16];
         _textButtonLabel.textAlignment = NSTextAlignmentCenter;
         [_textLabel addSubview:_textButtonLabel];
-//        
-//        _textButtonImage = [[UIImageView alloc] init];
-//        _textButtonImage.image = [UIImage imageNamed:@"ShareBlueIcon"];
-//        [_textLabel addSubview:_textButtonImage];
+        
+        _textButtonImage = [[UIImageView alloc] init];
+        _textButtonImage.image = [UIImage imageNamed:@"ShareBlueIcon"];
+        [_textLabel addSubview:_textButtonImage];
         
         _completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_completeButton setBackgroundColor:themePureBlueColor];
@@ -170,8 +171,8 @@ static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的�
     _titleLabel.frame = CGRectMake(0, APPCONFIG_UI_STATUSBAR_HEIGHT, APPCONFIG_UI_SCREEN_FWIDTH, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
     
     _textLabel.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, APPCONFIG_UI_STATUSBAR_HEIGHT + APPCONFIG_UI_NAVIGATIONBAR_HEIGHT, APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
-    _textButtonLabel.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, 0, _textLabel.width - APPCONFIG_UI_VIEW_PADDING * 2, _textLabel.height);//shareImageWidth
-    //_textButtonImage.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING + _textButtonLabel.width, (_textLabel.height - shareImageWidth) / 2.0f, shareImageWidth, shareImageWidth);
+    _textButtonLabel.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, 0, _textLabel.width - APPCONFIG_UI_VIEW_PADDING * 2 - shareImageWidth, _textLabel.height);
+    _textButtonImage.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING + _textButtonLabel.width, (_textLabel.height - shareImageWidth) / 2.0f, shareImageWidth, shareImageWidth);
     
     _completeButton.frame = CGRectMake(APPCONFIG_UI_VIEW_PADDING, APPCONFIG_UI_SCREEN_FHEIGHT - APPCONFIG_UI_NAVIGATIONBAR_HEIGHT - APPCONFIG_UI_VIEW_PADDING, APPCONFIG_UI_SCREEN_FWIDTH - APPCONFIG_UI_VIEW_PADDING * 2, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
     
@@ -317,6 +318,10 @@ static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的�
 - (void)tappedCompleteButton {
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"CompleteTapNote" object:nil];
+}
+
+- (void)tappedShareButton {
+    
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

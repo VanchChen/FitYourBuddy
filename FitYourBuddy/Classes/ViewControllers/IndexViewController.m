@@ -154,12 +154,11 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
     shareBtn.frame = CGRectMake(0, 0, 24, 24);
     [shareBtn setBackgroundImage:[UIImage imageNamed:@"ShareWhiteIcon"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(tappedShareBtn) forControlEvents:UIControlEventTouchUpInside];
-    [shareBtn setHidden:YES];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
     
     //统一返回键
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-    [backItem setBackButtonBackgroundImage:[[UIImage imageNamed:@"NavBackIcon"] resizableImageWithCapInsets:UIEdgeInsetsMake(0,15,0,0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [backItem setBackButtonBackgroundImage:[[UIImage imageNamed:@"NavBackIcon"] resizableImageWithCapInsets:UIEdgeInsetsMake(0,15,0,-15)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     backItem.title = @"";
     self.navigationItem.backBarButtonItem = backItem;
     
@@ -453,7 +452,7 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
 }
 
 - (void)tappedRightDayButton {
-    
+    [self.tabBarController setSelectedIndex:1];
 }
 
 #pragma mark - Gesture Delegate
