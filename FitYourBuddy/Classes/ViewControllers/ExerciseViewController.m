@@ -201,11 +201,11 @@ static CGFloat const ExerciseBtnBetweenPadding = 30.0f;             //新界面�
     
     //暗门入口
     self.debugCount = 0;
-    UIButton *debugButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    debugButton.frame = CGRectMake(0, 0, 30, 30);
-    debugButton.backgroundColor = [UIColor clearColor];
-    [debugButton addTarget:self action:@selector(tappedDebugButton) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:debugButton];
+//    UIButton *debugButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    debugButton.frame = CGRectMake(0, 0, 30, 30);
+//    debugButton.backgroundColor = [UIColor clearColor];
+//    [debugButton addTarget:self action:@selector(tappedDebugButton) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:debugButton];
 }
 
 - (void)initButton {

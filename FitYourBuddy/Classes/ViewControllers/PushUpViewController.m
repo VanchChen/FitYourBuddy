@@ -37,6 +37,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.tutBtn setMinY:APPCONFIG_UI_STATUSBAR_HEIGHT];
+    
     __weak typeof(self) weakSelf = self;
     [self.closedIndicator setProgressDidReadyBlock:^(WQCircleProgressBar *progressBar){
         [weakSelf addPanGesture];
@@ -47,7 +49,7 @@
     }];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 

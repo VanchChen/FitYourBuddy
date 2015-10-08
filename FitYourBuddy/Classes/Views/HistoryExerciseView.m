@@ -115,7 +115,7 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
     [_dataView bottomOfView:countView withMargin:APPCONFIG_UI_VIEW_PADDING];
     
     //卡路里框
-    _calorieLabel = [CommonUtil createLabelWithText:@"最近七天共消耗卡路里90千卡" andTextColor:[UIColor whiteColor] andFont:[UIFont boldSystemFontOfSize:16.0] andTextAlignment:NSTextAlignmentCenter];
+    _calorieLabel = [CommonUtil createLabelWithText:@"最近七天共消耗卡路里0千卡" andTextColor:[UIColor whiteColor] andFont:[UIFont boldSystemFontOfSize:16.0] andTextAlignment:NSTextAlignmentCenter];
     _calorieLabel.frame = CGRectMake(calorieLabelLeftPadding, calorieLabelTopPadding, _dataView.width - calorieLabelLeftPadding * 2, calorieLabelHeight);
     _calorieLabel.backgroundColor = [UIColor clearColor];
     //_calorieLabel.layer.cornerRadius = 12.0f;

@@ -550,10 +550,10 @@ static CGFloat  const IPhone4sRatio = 217.0f / 305.0f;
     NSInteger scrollPage = scrollView.contentOffset.x / scrollView.width;
     switch (scrollPage) {
         case 0:
-            self.storeType = StoreTypeHair;
+            self.storeType = StoreTypeEye;
             break;
         case 1:
-            self.storeType = StoreTypeEye;
+            self.storeType = StoreTypeMouth;
             break;
         case 2:
             self.storeType = StoreTypeMouth;

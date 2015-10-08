@@ -156,7 +156,7 @@
     self.coverView.frame = self.view.bounds;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskLandscapeRight;
 }
 

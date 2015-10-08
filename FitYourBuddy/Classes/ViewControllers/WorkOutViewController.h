@@ -18,6 +18,7 @@
 
 @property (nonatomic, strong) UIView                *navBarView;
 @property (nonatomic, strong) UILabel               *titleLabel;
+@property (nonatomic, strong) UIButton              *tutBtn;
 @property (nonatomic, strong) UIButton              *soundButton;
 @property (nonatomic, strong) UIView                *todayTargetView;
 @property (nonatomic, strong) UIView                *maxRecordView;

@@ -14,6 +14,7 @@
 #import "DataItemResult.h"
 
 #import "FriendsTableViewCell.h"
+#import "AppCore.h"
 
 static UIEdgeInsets const popViewInset       = (UIEdgeInsets){0,0,320,280};//弹出框，分别为（上，左，高，宽）
 static CGFloat      const popIconWidth       = 40.0f;
@@ -28,6 +29,8 @@ static CGFloat      const popIconLeftPadding = 40.0f;
 
 @property (nonatomic, strong) WQTableData       *staminaData;
 @property (nonatomic, strong) WQTableData       *strengthData;
+
+@property (nonatomic, strong) UIView            *uploadView;
 
 @end
 
@@ -52,7 +55,12 @@ static CGFloat      const popIconLeftPadding = 40.0f;
     
     [self initSegment];
     
-    [self initTable];
+    BOOL allowSendToServer = [[NSUserDefaults standardUserDefaults] boolForKey:@"AllowSendToServer"];
+    if (allowSendToServer) {
+        [self initTable];
+    } else {
+        [self initUploadView];
+    }
 }
 
 #pragma mark - Event Method
@@ -242,6 +250,91 @@ static CGFloat      const popIconLeftPadding = 40.0f;
     self.strengthData.mLoadingCellClass = [WQTableViewCell class];
 }
 
+- (void)initUploadView {
+    self.uploadView = [UIView new];
+    self.uploadView.frame = CGRectMake(20, 50, self.view.width - 40, APPCONFIG_UI_SCREEN_VHEIGHT - 60);
+    self.uploadView.backgroundColor = [UIColor whiteColor];
+    self.uploadView.layer.cornerRadius = 10;
+    self.uploadView.layer.masksToBounds = YES;
+    self.uploadView.layer.borderWidth = 1.0f;
+    self.uploadView.layer.borderColor = themePureBlueColor.CGColor;
+    [self.view addSubview:self.uploadView];
+    
+    UIButton *grayView = [UIButton buttonWithType:UIButtonTypeCustom];
+    grayView.frame = CGRectMake(20, 30, self.uploadView.width - 40, self.uploadView.height - 60);
+    grayView.backgroundColor = popContentColor;
+    grayView.layer.cornerRadius = 10;
+    grayView.layer.masksToBounds = YES;
+    [grayView addTarget:self action:@selector(addPopView) forControlEvents:UIControlEventTouchUpInside];
+    [self.uploadView addSubview:grayView];
+    
+    UIImageView *silhouetteImage = [UIImageView new];
+    silhouetteImage.frame = CGRectMake(0, (grayView.height - grayView.width) / 2.0f, grayView.width, grayView.width);
+    silhouetteImage.image = [UIImage imageNamed:@"SilhouetteIcon"];
+    [grayView addSubview:silhouetteImage];
+}
+
+#pragma mark - 弹窗相关
+- (void)addPopView {
+    //先来个背景返回
+    UIButton *popBackgroundButton = [[UIButton alloc] initWithFrame:self.view.bounds];
+    [popBackgroundButton setBackgroundColor:popBackgroundColor];
+    [self.view addSubview:popBackgroundButton];
+    
+    UIView *popView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width - 70, 200)];
+    popView.backgroundColor = popContentColor;
+    popView.center = CGPointMake(popBackgroundButton.center.x, popBackgroundButton.center.y - 30.0f);
+    popView.layer.cornerRadius = 16;
+    popView.layer.masksToBounds = YES;
+    popView.layer.borderColor = themeBlueColor.CGColor;
+    popView.layer.borderWidth = 2.0f;
+    [popBackgroundButton addSubview:popView];
+    
+    UILabel *popLable = [[UILabel alloc] initWithFrame:CGRectMake(30, 20, popView.width - 60, 100)];
+    [popLable setNumberOfLines:2];
+    [popLable setTextAlignment:NSTextAlignmentCenter];
+    [popLable setText:@"是否允许上传锻炼数据，查看自己的成绩排名？"];
+    [popLable setTextColor:tipTitleLabelColor];
+    [popView addSubview:popLable];
+    
+    UIButton *popViewCommitButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 113, popView.width - 100, 34)];
+    popViewCommitButton.backgroundColor = themeBlueColor;
+    popViewCommitButton.titleLabel.textColor = [UIColor whiteColor];
+    popViewCommitButton.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    popViewCommitButton.layer.cornerRadius = 10;
+    [popViewCommitButton setTitle:@"允许～" forState:UIControlStateNormal];
+    [popViewCommitButton addTarget:self action:@selector(tappedPopCommit:) forControlEvents:UIControlEventTouchUpInside];
+    [popView addSubview:popViewCommitButton];
+    
+    UIButton *popViewCancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    popViewCancelButton.frame = CGRectMake(50, 147, popView.width - 100, 34);
+    [popViewCancelButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    popViewCancelButton.titleLabel.font = [UIFont systemFontOfSize:12];
+    [popViewCancelButton setTitle:@"下次再说" forState:UIControlStateNormal];
+    [popViewCancelButton addTarget:self action:@selector(tappedPopViewCancel:) forControlEvents:UIControlEventTouchUpInside];
+    [popView addSubview:popViewCancelButton];
+    
+    UIView *popLine = [[UIView alloc] initWithFrame:CGRectMake(100, 170, popView.width - 200, 0.5f)];
+    [popLine setBackgroundColor:[UIColor lightGrayColor]];
+    [popView addSubview:popLine];
+}
+
+- (void)tappedPopViewCancel:(UIButton *)sender {
+    [[[sender superview] superview] removeFromSuperview];
+}
+
+- (void)tappedPopCommit:(UIButton *)sender {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AllowSendToServer"];
+    [[AppCore sharedAppCore] networkUpdateAccount];
+    
+    [[[sender superview] superview] removeFromSuperview];
+    
+    [self.uploadView removeFromSuperview];
+    self.uploadView = nil;
+    
+    [self initTable];
+}
+
 #pragma mark - WQTableView Method
 /** 点击单元格 */
 - (void)didSelectedCell:(WQTableView *)table indexPath:(NSIndexPath *)indexPath {
@@ -290,7 +383,7 @@ static CGFloat      const popIconLeftPadding = 40.0f;
                                               mouth:mouth];
     [popView addSubview:nameImage];
     
-    UIImageView *calendarImage = [[UIImageView alloc] initWithFrame:CGRectMake(popIconLeftPadding, CGRectGetMaxY(nameImage.frame) + 10.0f, popIconWidth, popIconWidth)];
+    UIImageView *calendarImage = [[UIImageView alloc] initWithFrame:CGRectMake(popIconLeftPadding, CGRectGetMaxY(nameImage.frame) + 15.0f, popIconWidth, popIconWidth)];
     [popView addSubview:calendarImage];
     
     if (self.staminaBtn.selected) {
@@ -310,7 +403,7 @@ static CGFloat      const popIconLeftPadding = 40.0f;
     
     UILabel *outLineLabel = [CommonUtil createLabelWithText:[NSString stringWithFormat:@"Level%@",level]];
     outLineLabel.textColor = tipTitleLabelColor;
-    outLineLabel.frame = CGRectMake(popView.width - popIconLeftPadding - 50, CGRectGetMaxY(nameImage.frame) + 10.0f, 50, popIconWidth);
+    outLineLabel.frame = CGRectMake(popView.width - popIconLeftPadding - 50, CGRectGetMaxY(nameImage.frame) + 15.0f, 50, popIconWidth);
     [popView addSubview:outLineLabel];
     
     UIImageView *outLineImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, popIconWidth, popIconWidth)];
@@ -335,8 +428,8 @@ static CGFloat      const popIconLeftPadding = 40.0f;
     CGRect bodyRect, eyeRect, mouthRect;
     CGFloat eyeGap, mouthGap;
     
-    eyeGap = 40;
-    mouthGap = 65;
+    eyeGap = 37;
+    mouthGap = 62;
     
     bodyRect = CGRectMake(0, 0, bodyImagePict.size.width, bodyImagePict.size.height);
     eyeRect = CGRectMake(0, 0, eyeImagePict.size.width, eyeImagePict.size.height);

@@ -11,15 +11,21 @@
 
 @interface WorkOutViewController () <UIGestureRecognizerDelegate>
 
+@property(nonatomic, strong)tutorialView *tutView;
+
 @end
 
-@implementation WorkOutViewController
+@implementation WorkOutViewController {
+    NSDate *longPressStartTime;
+    CGFloat timeInterval;
+}
 
 #pragma mark - Life Circle
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    //防止设备锁屏
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
@@ -51,6 +57,12 @@
     _titleLabel = [CommonUtil createLabelWithText:@"俯卧撑" andTextColor:[UIColor whiteColor] andFont:[UIFont boldSystemFontOfSize:20] andTextAlignment:NSTextAlignmentCenter];
     _titleLabel.frame = CGRectMake((APPCONFIG_UI_SCREEN_FWIDTH - 100.f) / 2.f, APPCONFIG_UI_STATUSBAR_HEIGHT, 100, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT);
     [self.view addSubview:_titleLabel];
+    
+    _tutBtn = [[UIButton alloc]initWithFrame:CGRectMake(APPCONFIG_UI_VIEW_BETWEEN_PADDING, 0, 50, APPCONFIG_UI_NAVIGATIONBAR_HEIGHT)];
+    [_tutBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_tutBtn setTitle:@"教程" forState:UIControlStateNormal];
+    [_tutBtn addTarget:self action:@selector(showTutorial) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_tutBtn];
     
     //声音图标
     _soundButton = [[UIButton alloc] init];
@@ -89,7 +101,7 @@
     [_maxRecordView addSubview:_recordLabel];
     
     _saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 63, self.view.bounds.size.width, 63)];
-    [_saveButton setTitle:@"滑动退出>>" forState:UIControlStateNormal];
+    [_saveButton setTitle:@"长按保存运动成果" forState:UIControlStateNormal];
     [_saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:_saveButton];
     
@@ -161,12 +173,22 @@
     
     //检查教程
     [self checkTutorial];
+
 }
 
 #pragma mark - tutorial method
 
 - (void)checkTutorial {
     //------------------------教程相关------------------------
+    if (self.exerciseType == ExerciseTypeWalk) {
+        [self startCount];
+        return;
+    }
+    _tutView = [[tutorialView alloc]initWithExerciseType:self.exerciseType complete:^(tutorialView *view){
+        view.hidden = YES;
+    }];
+    _tutView.hidden = YES;
+    [self.view addSubview:_tutView];
     //查看特定锻炼是否已运行过
     NSString *hasLaunchedOnce = [NSString string];
     switch (self.exerciseType) {
@@ -192,12 +214,20 @@
         [self startCount];
     } else {
         //未运行过，看教程先
-        tutorialView *tutView = [[tutorialView alloc]initWithExerciseType:self.exerciseType complete:^(tutorialView *view){
+        tutorialView *tuView = [[tutorialView alloc]initWithExerciseType:self.exerciseType complete:^(tutorialView *view){
             [view removeFromSuperview];
             [self startCount];
         }];
-        [self.view addSubview:tutView];
+        [self.view addSubview:tuView];
     }
+}
+
+- (void)showTutorial {
+//    tutorialView *tutView = [[tutorialView alloc]initWithExerciseType:self.exerciseType complete:^(tutorialView *view){
+//        [view removeFromSuperview];
+//    }];
+//    [self.view addSubview:tutView];
+    _tutView.hidden = NO;
 }
 
 - (void)startCount {
@@ -226,27 +256,51 @@
 #pragma mark - pan gesture
 - (void)addPanGesture {
     //开启手势
-    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-    panGesture.maximumNumberOfTouches = 1;
-    panGesture.delegate = self;
-    [self.saveButton addGestureRecognizer:panGesture];
+    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
+    longPressGesture.minimumPressDuration = 0.1f;
+    longPressGesture.delegate = self;
+    [self.saveButton addGestureRecognizer:longPressGesture];
 }
 
-- (void)handlePanGesture:(UIPanGestureRecognizer *)panGesture {
-    CGFloat translatedX = [panGesture translationInView:self.view].x;
-    if (panGesture.state == UIGestureRecognizerStateChanged) {
-        if (translatedX > 100) {
-            translatedX = 100;
-        }
-        if (translatedX < 0) {
-            translatedX = 0;
-        }
-        _coverView.alpha = translatedX / 200.0f;
-    } else if (panGesture.state == UIGestureRecognizerStateEnded) {
+- (void)handleGesture:(UILongPressGestureRecognizer *)longPressGesture {
+    if (longPressGesture.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"start");
+        //longPressStartTime = [NSDate date];
+        timeInterval = 0;
+        [self performSelector:@selector(fadeOutView) withObject:nil afterDelay:0.03f];
+    } else if (longPressGesture.state == UIGestureRecognizerStateChanged) {
+        NSLog(@"changed");
+    } else if (longPressGesture.state == UIGestureRecognizerStateEnded) {
+        NSLog(@"end");
+        
         _coverView.alpha = 0;
-        if (translatedX >= 100) {
-            [self tappedSaveBtn];
-        }
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fadeOutView) object:nil];
+    }
+    
+//    CGFloat translatedX = [panGesture translationInView:self.view].x;
+//    if (panGesture.state == UIGestureRecognizerStateChanged) {
+//        if (translatedX > 100) {
+//            translatedX = 100;
+//        }
+//        if (translatedX < 0) {
+//            translatedX = 0;
+//        }
+//        _coverView.alpha = translatedX / 200.0f;
+//    } else if (panGesture.state == UIGestureRecognizerStateEnded) {
+//        _coverView.alpha = 0;
+//        if (translatedX >= 100) {
+//            [self tappedSaveBtn];
+//        }
+//    }
+}
+
+- (void)fadeOutView {
+    timeInterval += 0.03f;
+    if (timeInterval > 0.5f) {
+        [self tappedSaveBtn];
+    } else {
+        _coverView.alpha = (timeInterval / 0.5f) * 0.8f;
+        [self performSelector:@selector(fadeOutView) withObject:nil afterDelay:0.03f];
     }
 }
 

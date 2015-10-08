@@ -38,6 +38,11 @@ SINGLETON_IMPLEMENT(AppCore)
 
 #pragma mark - 网络请求
 - (void)networkUpdateAccount {
+    BOOL allowSendToServer = [[NSUserDefaults standardUserDefaults] boolForKey:@"AllowSendToServer"];
+    if (!allowSendToServer) {
+        return;
+    }
+    
     NSError *error;
     NSDictionary *account = [AccountCoreDataHelper getAccountDictionaryWithError:&error];
     

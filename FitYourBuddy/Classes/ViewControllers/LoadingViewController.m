@@ -169,7 +169,7 @@ static CGFloat const IconHeight = 30.0f;
 //}
 
 //强制竖屏
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 

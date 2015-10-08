@@ -59,7 +59,7 @@
                 
                 NSLog(@"%f", motion.attitude.roll);
                 
-                if (!isStart && motion.attitude.roll > - 1.5) {
+                if (!isStart && motion.attitude.roll > - 1.5 && motion.attitude.roll < 0) {
                     isStart = true;
                     weakSelf.count++;
                     [weakSelf.closedIndicator updateWithTotalBytes:weakSelf.targetNum downloadedBytes:weakSelf.count];
@@ -104,7 +104,7 @@
     self.coverView.frame = self.view.bounds;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskLandscapeRight;
 }
 

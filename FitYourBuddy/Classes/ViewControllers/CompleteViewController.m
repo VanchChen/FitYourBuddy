@@ -319,7 +319,7 @@ static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的�
     [[NSNotificationCenter defaultCenter] postNotificationName:@"CompleteTapNote" object:nil];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 

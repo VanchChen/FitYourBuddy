@@ -35,7 +35,7 @@
     if ( (self = [super init]) ) {
         
         self.motion = [EBMotionManager sharedManager];
-        self.m7 = [EBM7Manager sharedManager];
+        //self.m7 = [EBM7Manager sharedManager];
         
         steps = 0;
     }
@@ -47,16 +47,16 @@
 {
     _handler = handler;
     
-    if ([self.m7 isAvailable]) {
-        [self.m7 startWithHandler:^(NSInteger numberOfSteps, NSDate *timestamp, NSError *error) {
-           
-            steps = steps + numberOfSteps;
-            
-            if (_handler) {
-                _handler(steps, timestamp, error);
-            }
-        }];
-    }else {
+//    if ([self.m7 isAvailable]) {
+//        [self.m7 startWithHandler:^(NSInteger numberOfSteps, NSDate *timestamp, NSError *error) {
+//           
+//            steps = steps + numberOfSteps;
+//            
+//            if (_handler) {
+//                _handler(steps, timestamp, error);
+//            }
+//        }];
+//    }else {
         [self.motion startWithHandler:^(NSInteger numberOfSteps, NSDate *timestamp, NSError *error) {
             steps = steps + numberOfSteps;
             
@@ -64,18 +64,18 @@
                 _handler(steps, timestamp, error);
             }
         }];
-    }
+    //}
 }
 
 - (void)stopStepCounting
 {
     steps = 0;
     
-    if ([self.m7 isAvailable]) {
-        [self.m7 stop];
-    }else {
+//    if ([self.m7 isAvailable]) {
+//        [self.m7 stop];
+//    }else {
         [self.motion stop];
-    }
+    //}
 }
 
 

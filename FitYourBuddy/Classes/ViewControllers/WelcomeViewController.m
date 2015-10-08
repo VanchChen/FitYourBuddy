@@ -158,7 +158,7 @@ static CGFloat const GenderExplainLabelHeight = 20.0f;
     popViewTextField.tintColor = tipTitleLabelColor;
     popViewTextField.textColor = tipTitleLabelColor;
     popViewTextField.font = [UIFont boldSystemFontOfSize:20];
-    popViewTextField.keyboardType = UIKeyboardTypeNamePhonePad;
+    popViewTextField.keyboardType = UIKeyboardTypeDefault;
     popViewTextField.returnKeyType = UIReturnKeyDone;
     popViewTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     popViewTextField.delegate = self;
@@ -204,11 +204,15 @@ static CGFloat const GenderExplainLabelHeight = 20.0f;
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
         
+        //保存名字后的第一次跳转
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstTimeEnterIndexPage"];
+        
         TarBarViewController* tabBarController = [[TarBarViewController alloc] init];
         [self presentViewController:tabBarController animated:NO completion:nil];
         
         //最后发送一次记录到服务器
-        [[AppCore sharedAppCore] networkUpdateAccount];
+        //[[AppCore sharedAppCore] networkUpdateAccount];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"AllowSendToServer"];
     }
 }
 
@@ -241,7 +245,7 @@ static CGFloat const GenderExplainLabelHeight = 20.0f;
 }
 
 //强制竖屏
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 

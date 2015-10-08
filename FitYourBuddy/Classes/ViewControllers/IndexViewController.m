@@ -12,6 +12,7 @@
 
 #import "ExerciseViewController.h"
 #import "StoreViewController.h"
+#import "AppCore.h"
 
 static CGFloat  const TitleLabelWidth   = 40.0f;
 static CGFloat  const FatGuyHeightRatio = 0.8f;
@@ -133,6 +134,18 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
     [calendar reloadData];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    BOOL isFirst = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTimeEnterIndexPage"];
+    if (isFirst) {
+        //弹窗
+        [self addPopView];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstTimeEnterIndexPage"];
+    }
+}
+
 - (void)initNav {
     self.navigationItem.title = @"天天趣健身";
     
@@ -249,10 +262,22 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
     leftHistoryDayLabel = [CommonUtil createLabelWithText:@"" andTextColor:tipTitleLabelColor andFont:[UIFont boldSystemFontOfSize:24] andTextAlignment:NSTextAlignmentCenter];
     leftHistoryDayLabel.frame = CGRectMake(20, 0, leftDayView.width - 20, leftDayView.height);
     [leftDayView addSubview:leftHistoryDayLabel];
+    
+    UIButton *leftDayButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftDayButton setFrame:CGRectMake(APPCONFIG_UI_VIEW_PADDING, 0, dayViewWidth, LevelIconWidth)];
+    [leftDayButton addTarget:self action:@selector(tappedLeftDayButton) forControlEvents:UIControlEventTouchUpInside];
+    [leftDayButton topOfView:startTrainBtn withMargin:APPCONFIG_UI_VIEW_PADDING];
+    [_bodyView addSubview:leftDayButton];
 
     //右边等级框
     levelProgressBar = [[WQProgressBar alloc] initWithFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - dayViewWidth - APPCONFIG_UI_VIEW_PADDING, CGRectGetMinY(leftCalendarImage.frame), dayViewWidth, LevelIconWidth)];
     [_bodyView addSubview:levelProgressBar];
+    
+    UIButton *rightDayButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightDayButton setFrame:CGRectMake(APPCONFIG_UI_SCREEN_FWIDTH - dayViewWidth - APPCONFIG_UI_VIEW_PADDING, 0, dayViewWidth, LevelIconWidth)];
+    [rightDayButton addTarget:self action:@selector(tappedRightDayButton) forControlEvents:UIControlEventTouchUpInside];
+    [rightDayButton topOfView:startTrainBtn withMargin:APPCONFIG_UI_VIEW_PADDING];
+    [_bodyView addSubview:rightDayButton];
     
     //最后加上阴影层
     _shadowView = [[UIButton alloc] initWithFrame:_bodyView.bounds];
@@ -336,6 +361,63 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
     }
 }
 
+#pragma mark - 弹窗相关 
+- (void)addPopView {
+    //先来个背景返回
+    UIButton *popBackgroundButton = [[UIButton alloc] initWithFrame:self.view.bounds];
+    [popBackgroundButton setBackgroundColor:popBackgroundColor];
+    [self.view addSubview:popBackgroundButton];
+    
+    UIView *popView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width - 70, 200)];
+    popView.backgroundColor = popContentColor;
+    popView.center = CGPointMake(popBackgroundButton.center.x, popBackgroundButton.center.y - 30.0f);
+    popView.layer.cornerRadius = 16;
+    popView.layer.masksToBounds = YES;
+    popView.layer.borderColor = themeBlueColor.CGColor;
+    popView.layer.borderWidth = 2.0f;
+    [popBackgroundButton addSubview:popView];
+    
+    UILabel *popLable = [[UILabel alloc] initWithFrame:CGRectMake(30, 20, popView.width - 60, 100)];
+    [popLable setNumberOfLines:2];
+    [popLable setTextAlignment:NSTextAlignmentCenter];
+    [popLable setText:@"是否允许上传锻炼数据，查看自己的成绩排名？"];
+    [popLable setTextColor:tipTitleLabelColor];
+    [popView addSubview:popLable];
+    
+    UIButton *popViewCommitButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 113, popView.width - 100, 34)];
+    popViewCommitButton.backgroundColor = themeBlueColor;
+    popViewCommitButton.titleLabel.textColor = [UIColor whiteColor];
+    popViewCommitButton.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    popViewCommitButton.layer.cornerRadius = 10;
+    [popViewCommitButton setTitle:@"允许～" forState:UIControlStateNormal];
+    [popViewCommitButton addTarget:self action:@selector(tappedPopCommit:) forControlEvents:UIControlEventTouchUpInside];
+    [popView addSubview:popViewCommitButton];
+    
+    UIButton *popViewCancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    popViewCancelButton.frame = CGRectMake(50, 147, popView.width - 100, 34);
+    [popViewCancelButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    popViewCancelButton.titleLabel.font = [UIFont systemFontOfSize:12];
+    [popViewCancelButton setTitle:@"下次再说" forState:UIControlStateNormal];
+    [popViewCancelButton addTarget:self action:@selector(tappedPopViewCancel:) forControlEvents:UIControlEventTouchUpInside];
+    [popView addSubview:popViewCancelButton];
+    
+    UIView *popLine = [[UIView alloc] initWithFrame:CGRectMake(100, 170, popView.width - 200, 0.5f)];
+    [popLine setBackgroundColor:[UIColor lightGrayColor]];
+    [popView addSubview:popLine];
+}
+
+- (void)tappedPopViewCancel:(UIButton *)sender {
+    [[[sender superview] superview] removeFromSuperview];
+}
+
+- (void)tappedPopCommit:(UIButton *)sender {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"AllowSendToServer"];
+    
+    [[[sender superview] superview] removeFromSuperview];
+    
+    [[AppCore sharedAppCore] networkUpdateAccount];
+}
+
 #pragma mark - Class Extention Delegate
 - (void)tappedStartTrainBtn {
     ExerciseViewController* new = [[ExerciseViewController alloc] init];
@@ -359,6 +441,19 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
         _bodyView.frame = CGRectMake(0, 0, APPCONFIG_UI_SCREEN_FWIDTH, APPCONFIG_UI_SCREEN_VHEIGHT);
         _shadowView.alpha = 0;
     }];
+}
+
+- (void)tappedLeftDayButton {
+    _isPull = false;
+    [UIView animateWithDuration:0.5f animations:^{
+        _headView.frame = CGRectMake(0, 0, APPCONFIG_UI_SCREEN_FWIDTH, CalendarViewHeight);
+        _bodyView.frame = CGRectMake(0, CalendarViewHeight, APPCONFIG_UI_SCREEN_FWIDTH, APPCONFIG_UI_SCREEN_VHEIGHT);
+        _shadowView.alpha = 1;
+    }];
+}
+
+- (void)tappedRightDayButton {
+    
 }
 
 #pragma mark - Gesture Delegate

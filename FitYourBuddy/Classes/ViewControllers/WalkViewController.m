@@ -39,6 +39,7 @@
     [super viewDidLoad];
     
     self.soundButton.hidden = YES;
+    self.tutBtn.hidden = YES;
     
     __weak typeof(self) weakSelf = self;
     [self.closedIndicator setProgressDidReadyBlock:^(WQCircleProgressBar *progressBar){
@@ -58,7 +59,7 @@
     }];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
