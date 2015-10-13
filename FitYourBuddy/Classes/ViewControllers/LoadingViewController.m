@@ -13,6 +13,8 @@
 #import "WelcomeViewController.h"
 #import "TarBarViewController.h"
 
+#import <CoreSpotlight/CoreSpotlight.h> 
+
 static CGFloat const BottomPadding = 20.0f;
 static CGFloat const LabelHeight = 15.0f;
 static CGFloat const IconHeight = 30.0f;
@@ -42,6 +44,65 @@ static CGFloat const IconHeight = 30.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //添加搜索
+    [self addSpotlightSearch];
+    
+    //展示页面
+    [self addLoadingView];
+}
+
+#pragma mark Core Spotlight
+- (void)addSpotlightSearch {
+    static NSString *domainIdentifier = @"xpz.FitYourBuddy.spotlight";
+    
+    CSSearchableItemAttributeSet *attributeSetPushUp = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:@"shortcut.pushup"];
+    attributeSetPushUp.title = @"俯卧撑";
+    attributeSetPushUp.contentDescription = @"提供最专业最趣味的俯卧撑辅助工具，帮助你更快乐的锻炼，快来体验吧~";
+    attributeSetPushUp.thumbnailData = UIImagePNGRepresentation([UIImage imageNamed:@"PushUpIcon"]);
+    attributeSetPushUp.keywords = @[@"俯卧撑",@"pushup"];
+    
+    CSSearchableItemAttributeSet *attributeSetSitUp = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:@"shortcut.situp"];
+    attributeSetSitUp.title = @"仰卧起坐";
+    attributeSetSitUp.contentDescription = @"提供最专业最趣味的仰卧起坐辅助工具，帮助你更快乐的锻炼，快来体验吧~";
+    attributeSetSitUp.thumbnailData = UIImagePNGRepresentation([UIImage imageNamed:@"SitUpIcon"]);
+    attributeSetSitUp.keywords = @[@"仰卧起坐",@"situp",@"卷腹"];
+    
+    CSSearchableItemAttributeSet *attributeSetSquat = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:@"shortcut.squat"];
+    attributeSetSquat.title = @"深蹲";
+    attributeSetSquat.contentDescription = @"提供最专业最趣味的深蹲辅助工具，帮助你更快乐的锻炼，快来体验吧~";
+    attributeSetSquat.thumbnailData = UIImagePNGRepresentation([UIImage imageNamed:@"SquatIcon"]);
+    attributeSetSquat.keywords = @[@"深蹲",@"squat",@"下蹲"];
+    
+    CSSearchableItemAttributeSet *attributeSetWalk = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:@"shortcut.walk"];
+    attributeSetWalk.title = @"步行";
+    attributeSetWalk.contentDescription = @"提供最专业最趣味的步行辅助工具，帮助你更快乐的锻炼，快来体验吧~";
+    attributeSetWalk.thumbnailData = UIImagePNGRepresentation([UIImage imageNamed:@"WalkIcon"]);
+    attributeSetWalk.keywords = @[@"步行",@"walk",@"跑步",@"竞走"];
+    
+    CSSearchableItem *pushupItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:@"pushUp"
+                                                                     domainIdentifier:domainIdentifier
+                                                                         attributeSet:attributeSetPushUp];
+    CSSearchableItem *situpItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:@"situp"
+                                                                    domainIdentifier:domainIdentifier
+                                                                        attributeSet:attributeSetSitUp];
+    CSSearchableItem *squatItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:@"squat"
+                                                                    domainIdentifier:domainIdentifier
+                                                                        attributeSet:attributeSetSquat];
+    CSSearchableItem *walkItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:@"walk"
+                                                                   domainIdentifier:domainIdentifier
+                                                                       attributeSet:attributeSetWalk];
+    
+    [[CSSearchableIndex defaultSearchableIndex] indexSearchableItems:@[pushupItem,situpItem,squatItem,walkItem]
+                                                   completionHandler:^(NSError * _Nullable error) {
+                                                       if (error) {
+                                                           NSLog(@"add search item error");
+                                                       }
+    }];
+}
+
+#pragma mark Working Method
+
+- (void)addLoadingView {
     //底部栏
     UILabel *appVersionLabel = [CommonUtil createLabelWithText:@"程序版本 V1.0" andTextColor:tipTitleLabelColor andFont:[UIFont systemFontOfSize:14.0f] andTextAlignment:NSTextAlignmentCenter];
     appVersionLabel.frame = CGRectMake(0, 0, APPCONFIG_UI_SCREEN_FWIDTH, LabelHeight);
@@ -104,21 +165,8 @@ static CGFloat const IconHeight = 30.0f;
     _blurView.dynamic = NO;
     [self.view addSubview:_blurView];
     
-    
     [self performSelector:@selector(clearBlur) withObject:nil afterDelay:1.0f];
-
-    
-//    UIButton *animationBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 400, 200, 40)];
-//    [animationBtn setTitle:@"点我" forState:UIControlStateNormal];
-//    [animationBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    [animationBtn addTarget:self action:@selector(touchBtn) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:animationBtn];
 }
-
-- (void)dealloc {
-}
-
-#pragma mark Working Method
 
 - (void)clearBlur {
     [UIView animateWithDuration:1 animations:^{
@@ -152,21 +200,6 @@ static CGFloat const IconHeight = 30.0f;
         }];
     }];
 }
-
-//- (void)touchBtn {
-//    if (self.blurView.blurRadius < 5)
-//    {
-//        [UIView animateWithDuration:0.5 animations:^{
-//            self.blurView.blurRadius = 40;
-//        }];
-//    }
-//    else
-//    {
-//        [UIView animateWithDuration:0.5 animations:^{
-//            self.blurView.blurRadius = 0;
-//        }];
-//    }
-//}
 
 //强制竖屏
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

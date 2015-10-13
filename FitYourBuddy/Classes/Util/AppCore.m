@@ -13,6 +13,8 @@
 #import "DataLoader.h"
 #import "DataItemResult.h"
 
+#import <objc/runtime.h>
+
 static int const kMultiteNetWorkCount = 20;          //并行的网络请求数
 
 @implementation AppCore
@@ -103,6 +105,59 @@ SINGLETON_IMPLEMENT(AppCore)
                                                     [AccountCoreDataHelper setDataByName:@"lastUpdateDate" andData:[NSString today] withError:nil];
                                                 }];
     loader = nil;
+}
+
+#pragma mark - 跳转页面
+- (void)jumpToClass:(NSString *)className {
+    UIViewController *currentViewController = self.activityViewController;
+    if (!currentViewController) {
+        return;
+    }
+    NSString *fromViewController = NSStringFromClass(currentViewController.class);
+    if (![fromViewController isEqualToString:@"LoadingViewController"]) {
+        if (![fromViewController isEqualToString:@"WelcomeViewController"]) {
+            if (![fromViewController isEqualToString:className]) {
+                //当前页面不是加载页面，欢迎页面，已经与目标页面不同时，跳转页面
+                UINavigationController *navController = currentViewController.navigationController;
+                if (navController) {
+                    Class cls = objc_getClass([className UTF8String]);
+                    id newViewController = [[cls alloc] init];
+                    [navController presentViewController:newViewController animated:YES completion:nil];
+                }
+            }
+        }
+    }
+}
+
+// 获取当前处于activity状态的view controller
+- (UIViewController *)activityViewController {
+    UIViewController* activityViewController = nil;
+    
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    if (window.windowLevel != UIWindowLevelNormal) {
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        for (UIWindow *tmpWin in windows) {
+            if (tmpWin.windowLevel == UIWindowLevelNormal) {
+                window = tmpWin;
+                break;
+            }
+        }
+    }
+    
+    NSArray *viewsArray = [window subviews];
+    if ([viewsArray count] > 0) {
+        UIView *frontView = [viewsArray objectAtIndex:0];
+        
+        id nextResponder = [frontView nextResponder];
+        
+        if ([nextResponder isKindOfClass:[UIViewController class]]) {
+            activityViewController = nextResponder;
+        } else {
+            activityViewController = window.rootViewController;
+        }
+    }
+    
+    return activityViewController;
 }
 
 @end

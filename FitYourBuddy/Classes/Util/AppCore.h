@@ -14,6 +14,11 @@ SINGLETON_DEFINE(AppCore)
 @property (nonatomic, copy  ) NSString         *appLaunchDate;
 @property (nonatomic, strong) NSOperationQueue *appCoreQueue;//核心任务队列
 
+/**
+ *  上传用户信息以及用户锻炼数据
+ */
 - (void)networkUpdateAccount;
+
+- (void)jumpToClass:(NSString *)className;
 
 @end
