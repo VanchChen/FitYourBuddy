@@ -57,16 +57,22 @@
         nav4.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
         
         [self setViewControllers:@[nav1,nav2,nav3,nav4]];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(completeVCDidTappedButon) name:@"CompleteTapNote" object:nil];
     }
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CompleteTapNote" object:nil];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
+}
+
+- (void)completeVCDidTappedButon {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

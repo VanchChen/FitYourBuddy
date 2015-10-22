@@ -7,10 +7,7 @@
 //
 
 #import "BaseViewController.h"
-
-@interface BaseViewController ()
-
-@end
+#import "AppCore.h"
 
 @implementation BaseViewController
 
@@ -21,6 +18,13 @@
     
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    //处理跳转
+    //[[AppCore sharedAppCore] checkPresent];
 }
 
 @end

@@ -18,7 +18,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+
 #warning 发布前还原注释
     //友盟统计
     //[MobClick startWithAppkey:@"559a90d667e58eb311006634" reportPolicy:BATCH channelId:nil];
@@ -57,7 +57,9 @@
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler {
+    
     NSString *idetifier = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
+    idetifier = [idetifier lowercaseString];
     
     NSString *toViewControllerClass = @"";
     if ([idetifier isEqualToString:@"pushup"]) {
@@ -71,7 +73,7 @@
     }
     
     if (toViewControllerClass.length > 0) {
-        [[AppCore sharedAppCore] jumpToClass:toViewControllerClass];
+        [[AppCore sharedAppCore] presentViewControllerByClass:toViewControllerClass];
     }
     
     return YES;

@@ -182,7 +182,7 @@ static CGFloat const ExerciseBtnBetweenPadding = 30.0f;             //新界面�
 
 - (void)dealloc {
     //销毁提醒
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CompleteTapNote" object:nil];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"CompleteTapNote" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -195,7 +195,7 @@ static CGFloat const ExerciseBtnBetweenPadding = 30.0f;             //新界面�
 
 - (void)initNav {
     //加消息提醒
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(completeVCDidTappedButon) name:@"CompleteTapNote" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(completeVCDidTappedButon) name:@"CompleteTapNote" object:nil];
     
     self.title = @"开始锻炼";
     
@@ -558,9 +558,9 @@ static CGFloat const ExerciseBtnBetweenPadding = 30.0f;             //新界面�
 
 #pragma mark - Complete View Delegate
 
-- (void)completeVCDidTappedButon
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+//- (void)completeVCDidTappedButon
+//{
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 
 @end

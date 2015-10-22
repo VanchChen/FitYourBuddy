@@ -7,11 +7,8 @@
 //
 
 #import "LoadingViewController.h"
-#import "AppDelegate.h"
+#import "AppCore.h"
 #import "FXBlurView.h"
-
-#import "WelcomeViewController.h"
-#import "TarBarViewController.h"
 
 #import <CoreSpotlight/CoreSpotlight.h> 
 
@@ -182,20 +179,14 @@ static CGFloat const IconHeight = 30.0f;
         [UIView animateWithDuration:2 animations:^{
             _labelCoverView.frame = coverFrame;
         } completion:^(BOOL finished) {
-            AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
             //判断是否有本地数据
             NSError *error;
             NSString* name = [AccountCoreDataHelper getDataByName:@"name" withError:&error];
             if (name == nil) {
                 //第一次使用，创建初始存档
-                WelcomeViewController* welcomeView = [[WelcomeViewController alloc] init];
-                [appDelegate.window setRootViewController:welcomeView];
+                [[AppCore sharedAppCore] jumpToWelcomeViewController];
             } else {
-                [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-        
-                TarBarViewController* tabBarController = [[TarBarViewController alloc] init];
-                [appDelegate.window setRootViewController:tabBarController];
+                [[AppCore sharedAppCore] jumpToIndexViewController];
             }
         }];
     }];

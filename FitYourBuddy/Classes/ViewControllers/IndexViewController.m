@@ -144,6 +144,8 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstTimeEnterIndexPage"];
     }
+    
+    [[AppCore sharedAppCore] checkPresent];
 }
 
 - (void)initNav {

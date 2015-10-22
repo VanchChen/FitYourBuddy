@@ -8,7 +8,6 @@
 
 #import "WelcomeViewController.h"
 
-#import "TarBarViewController.h"
 #import "AppCore.h"
 
 //性别
@@ -126,8 +125,7 @@ static CGFloat const GenderExplainLabelHeight = 20.0f;
 #pragma mark - Name View
 
 //弹出输入姓名框
-- (void)showNameView:(UIButton *)button
-{
+- (void)showNameView:(UIButton *)button {
     gender = [button tag];//记录性别
     //先来个背景返回
     UIButton *popBackgroundButton = [[UIButton alloc] initWithFrame:self.view.bounds];
@@ -177,15 +175,13 @@ static CGFloat const GenderExplainLabelHeight = 20.0f;
 }
 
 //点击姓名框背景
-- (void)tappedNameViewBackground:(UIButton *)sender
-{
+- (void)tappedNameViewBackground:(UIButton *)sender {
     [sender removeFromSuperview];
     [popView removeFromSuperview];
 }
 
 //点击确认框
-- (void)tappedPopCommit:(UIButton *)sender
-{
+- (void)tappedPopCommit:(UIButton *)sender {
     NSString *name = popViewTextField.text;
     name = [name trim];
     if (!name || name.length == 0) {//没输入名字
@@ -200,27 +196,19 @@ static CGFloat const GenderExplainLabelHeight = 20.0f;
         //顺便建立商店数据库
         [StoreCoreDataHelper initStoreDataBaseWithError:&error];
         
-        //名字保存成功，跳到首页
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-        
         //保存名字后的第一次跳转
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstTimeEnterIndexPage"];
-        
-        TarBarViewController* tabBarController = [[TarBarViewController alloc] init];
-        [self presentViewController:tabBarController animated:NO completion:nil];
-        
-        //最后发送一次记录到服务器
-        //[[AppCore sharedAppCore] networkUpdateAccount];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"AllowSendToServer"];
+        
+        //名字保存成功，跳到首页
+        [[AppCore sharedAppCore] jumpToIndexViewController];
     }
 }
 
 #pragma mark - Text Field Delegate
 
 //当开始点击textField会调用的方法
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
     CGRect frame = popView.frame;
     frame.origin.y = 80;
     
@@ -230,8 +218,7 @@ static CGFloat const GenderExplainLabelHeight = 20.0f;
 }
 
 //当textField编辑结束时调用的方法
--(void)textFieldDidEndEditing:(UITextField *)textField
-{
+-(void)textFieldDidEndEditing:(UITextField *)textField {
     [UIView animateWithDuration:0.3 animations:^{
         popView.center = self.view.center;
     }];
