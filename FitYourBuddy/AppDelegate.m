@@ -24,22 +24,18 @@
     //[MobClick startWithAppkey:@"559a90d667e58eb311006634" reportPolicy:BATCH channelId:nil];
     //友盟检查更新
     //[MobClick checkUpdate];
-    
-    //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
-    //[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-    //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    //友盟分享
+    [UMSocialData setAppKey:@"559a90d667e58eb311006634"];
+    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window setBackgroundColor:[UIColor whiteColor]];
     [self.window makeKeyAndVisible];
     
-    //设置导航条全局统一样式
-    //[[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-    //[[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"NavShadowImage"]];
     if(APPCONFIG_VERSION_OVER_8 && [UINavigationBar conformsToProtocol:@protocol(UIAppearanceContainer)]) {
         [[UINavigationBar appearance] setTranslucent:NO];
     }
-    [[UINavigationBar appearance] setBarTintColor:tarBarColor];//themePureBlueColor
+    [[UINavigationBar appearance] setBarTintColor:tarBarColor];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:20]}];
     

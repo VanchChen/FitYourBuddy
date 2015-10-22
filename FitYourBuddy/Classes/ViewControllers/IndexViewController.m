@@ -20,7 +20,7 @@ static CGFloat  const IPhone4sRatio = 217.0f / 305.0f;
 static CGFloat  const CalendarViewHeight = 320.0f;
 static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买框，分别为（上，左，高，宽）
 
-@interface IndexViewController () {
+@interface IndexViewController () <UMSocialUIDelegate> {
     UIButton            *fatGuyFrameView;   //胖子圆框
     
     UILabel             *fatGuyNameLabel;   //名字框
@@ -432,7 +432,12 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
 }
 
 - (void)tappedShareBtn {
-    
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"559a90d667e58eb311006634"
+                                      shareText:@"友盟社会化分享让您快速实现分享等社会化功能，http://umeng.com/social"
+                                     shareImage:[UIImage imageNamed:@"AppIcon"]
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToTencent,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
+                                       delegate:self];
 }
 
 - (void)tappedShadow {
@@ -518,6 +523,15 @@ static UIEdgeInsets const DayLabelInset = (UIEdgeInsets){0,0,10,40};  //购买�
             
             _shadowView.alpha = 1 - fabsf(y) / CalendarViewHeight;
         }
+    }
+}
+
+#pragma mark - Umeng Social Delegate
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response {
+    //根据`responseCode`得到发送结果,如果分享成功
+    if(response.responseCode == UMSResponseCodeSuccess) {
+        //得到分享到的微博平台名
+        NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
     }
 }
 

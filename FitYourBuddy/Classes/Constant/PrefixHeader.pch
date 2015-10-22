@@ -27,6 +27,7 @@
 
 //友盟
 #import "MobClick.h"
+#import "UMSocial.h"
 
 //常量
 #import "DefineHelper.h"
