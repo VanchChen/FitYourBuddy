@@ -13,5 +13,7 @@
 - (instancetype)initWithFrame:(CGRect)frame andExerciseType:(ExerciseType)type;
 /**重载数据，但是有个问题就是不能更新跨天*/
 - (void)reloadData;
+/**取消选中状态*/
+- (void)dismissSelected;
 
 @end

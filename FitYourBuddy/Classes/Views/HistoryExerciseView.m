@@ -139,7 +139,7 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
         histogramView.tag = day;
         histogramView.layer.cornerRadius = 5;
         histogramView.layer.masksToBounds = YES;
-        [histogramView setBackgroundImage:[UIImage imageWithUIColor:[UIColor whiteColor] andCGSize:histogramView.bounds.size] forState:UIControlStateNormal];
+        [histogramView setBackgroundImage:[UIImage imageWithUIColor:[UIColor whiteColor] andCGSize:CGSizeMake(histogramViewWidth * 2, histogramViewDefaultHeight)] forState:UIControlStateNormal];
         [histogramView setBackgroundImage:[UIImage imageWithUIColor:transparentWhiteColor andCGSize:histogramView.bounds.size] forState:UIControlStateSelected];
         [histogramView addTarget:self action:@selector(tappedHistogramView:) forControlEvents:UIControlEventTouchUpInside];
         [_dataView addSubview:histogramView];
@@ -184,7 +184,7 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
                 break;
             }
             case ExerciseTypeWalk: {
-                totalNum = totalNum * 40;
+                totalNum = totalNum * 4;
                 break;
             }
             default: {
@@ -252,6 +252,19 @@ static CGFloat const histogramViewDefaultHeight = 10.f;         //柱状图空�
     }
     _numLabel.text = numString;
     [_numLabel topOfView:button withMargin:APPCONFIG_UI_VIEW_BETWEEN_PADDING sameHorizontal:YES];
+}
+
+/**取消选中状态*/
+- (void)dismissSelected {
+    //先找到上一个
+    UIButton *tmpButton = [self findButtonInView:_dataView];
+    if (tmpButton) {
+        tmpButton.selected = NO;
+    }
+    if (_numLabel) {
+        [_numLabel removeFromSuperview];
+        _numLabel = nil;
+    }
 }
 
 //根据tag找uiview 其实uilabel也是uiview

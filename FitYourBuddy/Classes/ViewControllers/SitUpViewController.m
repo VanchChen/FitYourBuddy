@@ -63,6 +63,10 @@
                     isStart = true;
                     weakSelf.count++;
                     [weakSelf.closedIndicator updateWithTotalBytes:weakSelf.targetNum downloadedBytes:weakSelf.count];
+                    if (weakSelf.count > weakSelf.maxExerciseNum) {
+                        weakSelf.maxExerciseNum = weakSelf.count;
+                        weakSelf.recordLabel.text = [NSString stringFromInteger:weakSelf.maxExerciseNum];
+                    }
                 }
                 
                 if (isStart && motion.attitude.roll < - 2) {

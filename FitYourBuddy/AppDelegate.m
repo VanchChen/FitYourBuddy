@@ -11,6 +11,10 @@
 #import "TimerManager.h"
 #import "AppCore.h"
 
+#import "UMSocialWechatHandler.h"
+#import "UMSocialSinaHandler.h"
+#import "UMSocialQQHandler.h"
+
 @interface AppDelegate ()
 
 @end
@@ -27,6 +31,9 @@
     //友盟分享
     [UMSocialData setAppKey:@"559a90d667e58eb311006634"];
     [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
+    [UMSocialWechatHandler setWXAppId:@"" appSecret:@"" url:nil];
+    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+    [UMSocialQQHandler setQQWithAppId:@"1104850999" appKey:@"ibb44dkDCezsQLT8" url:nil];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window setBackgroundColor:[UIColor whiteColor]];
@@ -73,6 +80,16 @@
     }
     
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return  [UMSocialSnsService handleOpenURL:url];
+}
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return  [UMSocialSnsService handleOpenURL:url];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

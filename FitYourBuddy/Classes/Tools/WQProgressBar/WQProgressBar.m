@@ -14,6 +14,8 @@ const CGFloat  LevelViewHeight  = 40.0f;
 @interface WQProgressBar()
 
 @property(nonatomic, strong) UIView  *progressView;
+@property(nonatomic, strong) UIView  *progressInsideView;
+
 @property(nonatomic, strong) UILabel *levelLabel;
 @property(nonatomic, strong) UILabel *tintLabel;
 
@@ -67,13 +69,18 @@ const CGFloat  LevelViewHeight  = 40.0f;
     exp = exp / fullExp;
     
     _levelLabel.text = [NSString stringWithFormat:@"Lv.%@", level];
-    UIView *progressInsideView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, _progressView.height)];
-    progressInsideView.backgroundColor = themePureBlueColor;
-    progressInsideView.layer.cornerRadius = 2;
-    [_progressView addSubview:progressInsideView];
+    
+    if (!_progressInsideView) {
+        _progressInsideView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, _progressView.height)];
+        _progressInsideView.backgroundColor = themePureBlueColor;
+        _progressInsideView.layer.cornerRadius = 2;
+        [_progressView addSubview:_progressInsideView];
+    } else {
+        _progressInsideView.frame = CGRectMake(0, 0, 0, _progressView.height);
+    }
     
     [UIView animateWithDuration:0.5 animations:^{
-        progressInsideView.frame = CGRectMake(0, 0, exp * _progressView.width, _progressView.height);
+        _progressInsideView.frame = CGRectMake(0, 0, exp * _progressView.width, _progressView.height);
     }];
 }
 

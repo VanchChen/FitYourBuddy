@@ -49,6 +49,7 @@
 		D63FCF371A9628EE00582386 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63FCF361A9628EE00582386 /* SettingsViewController.m */; };
 		D63FCF3E1A96293A00582386 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63FCF3D1A96293A00582386 /* FriendsViewController.m */; };
 		D63FCF411A962EA100582386 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D63FCF401A962EA100582386 /* HistoryViewController.m */; };
+		D64614DA1BDB6AEC003D7F62 /* libSocialSina.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64614D81BDB6AEC003D7F62 /* libSocialSina.a */; settings = {ASSET_TAGS = (); }; };
 		D65352CC1B48DF52007CD311 /* WorkOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D65352CB1B48DF52007CD311 /* WorkOutViewController.m */; };
 		D65467B11AACA86300FE38E3 /* AccountCoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D65467B01AACA86300FE38E3 /* AccountCoreDataHelper.m */; };
 		D65467B41AACA8C600FE38E3 /* ExerciseCoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D65467B31AACA8C600FE38E3 /* ExerciseCoreDataHelper.m */; };
@@ -203,6 +204,8 @@
 		D63FCF3D1A96293A00582386 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsViewController.m; path = Classes/ViewControllers/FriendsViewController.m; sourceTree = "<group>"; };
 		D63FCF3F1A962EA100582386 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryViewController.h; path = Classes/ViewControllers/HistoryViewController.h; sourceTree = "<group>"; };
 		D63FCF401A962EA100582386 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryViewController.m; path = Classes/ViewControllers/HistoryViewController.m; sourceTree = "<group>"; };
+		D64614D81BDB6AEC003D7F62 /* libSocialSina.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialSina.a; sourceTree = "<group>"; };
+		D64614D91BDB6AEC003D7F62 /* UMSocialSinaHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSinaHandler.h; sourceTree = "<group>"; };
 		D65352CA1B48DF52007CD311 /* WorkOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorkOutViewController.h; path = Classes/ViewControllers/WorkOutViewController.h; sourceTree = "<group>"; };
 		D65352CB1B48DF52007CD311 /* WorkOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WorkOutViewController.m; path = Classes/ViewControllers/WorkOutViewController.m; sourceTree = "<group>"; };
 		D65467AF1AACA86300FE38E3 /* AccountCoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountCoreDataHelper.h; path = Classes/CoreDataHelpers/AccountCoreDataHelper.h; sourceTree = "<group>"; };
@@ -348,6 +351,7 @@
 				D676E43C1AA21CB3003BF293 /* CoreGraphics.framework in Frameworks */,
 				D625CF341BD8DAA600023BD8 /* libiconv.tbd in Frameworks */,
 				D625CF321BD8DA9B00023BD8 /* Security.framework in Frameworks */,
+				D64614DA1BDB6AEC003D7F62 /* libSocialSina.a in Frameworks */,
 				D625CF301BD8DA0900023BD8 /* SystemConfiguration.framework in Frameworks */,
 				D625CF291BD8D92100023BD8 /* libSocialQQ.a in Frameworks */,
 				D625CF2A1BD8D92100023BD8 /* TencentOpenAPI.framework in Frameworks */,
@@ -468,6 +472,7 @@
 		D625CF111BD8D92100023BD8 /* UMSocial_Sdk_Extra_Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D64614D71BDB6AEC003D7F62 /* Sina */,
 				D625CF121BD8D92100023BD8 /* TencentOpenAPI */,
 				D625CF171BD8D92100023BD8 /* Wechat */,
 			);
@@ -642,6 +647,15 @@
 				D67CE8891ACC42C7005E8BB9 /* HistoryExerciseView.m */,
 			);
 			name = History;
+			sourceTree = "<group>";
+		};
+		D64614D71BDB6AEC003D7F62 /* Sina */ = {
+			isa = PBXGroup;
+			children = (
+				D64614D81BDB6AEC003D7F62 /* libSocialSina.a */,
+				D64614D91BDB6AEC003D7F62 /* UMSocialSinaHandler.h */,
+			);
+			path = Sina;
 			sourceTree = "<group>";
 		};
 		D65467B51AACAD6100FE38E3 /* Loading&Welcome */ = {
@@ -1190,6 +1204,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1233,6 +1248,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1274,6 +1290,7 @@
 					"$(PROJECT_DIR)/FitYourBuddy/Classes/Tools/Umeng/UMSocial_Sdk_4.2.5",
 					"$(PROJECT_DIR)/FitYourBuddy/Classes/Tools/Umeng/UMSocial_Sdk_4.2.5/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/FitYourBuddy/Classes/Tools/Umeng/UMSocial_Sdk_4.2.5/UMSocial_Sdk_Extra_Frameworks/Wechat",
+					"$(PROJECT_DIR)/FitYourBuddy/Classes/Tools/Umeng/UMSocial_Sdk_4.2.5/UMSocial_Sdk_Extra_Frameworks/Sina",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "xpz.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1306,6 +1323,7 @@
 					"$(PROJECT_DIR)/FitYourBuddy/Classes/Tools/Umeng/UMSocial_Sdk_4.2.5",
 					"$(PROJECT_DIR)/FitYourBuddy/Classes/Tools/Umeng/UMSocial_Sdk_4.2.5/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/FitYourBuddy/Classes/Tools/Umeng/UMSocial_Sdk_4.2.5/UMSocial_Sdk_Extra_Frameworks/Wechat",
+					"$(PROJECT_DIR)/FitYourBuddy/Classes/Tools/Umeng/UMSocial_Sdk_4.2.5/UMSocial_Sdk_Extra_Frameworks/Sina",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "xpz.$(PRODUCT_NAME:rfc1034identifier)";

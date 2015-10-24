@@ -152,6 +152,9 @@ static CGFloat const TriangleLeftPadding = 40.0f;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"统计"];
+    
+    HistoryExerciseView *currentView = [viewArray objectAtIndex:page];
+    [currentView dismissSelected];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -165,8 +168,7 @@ static CGFloat const TriangleLeftPadding = 40.0f;
 }
 
 #pragma mark - Scroll View Delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     float x = scrollView.contentOffset.x;
     if (x < 0) {
         [self changeScrollViewWithPage:4];
@@ -215,14 +217,12 @@ static CGFloat const TriangleLeftPadding = 40.0f;
     }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger newPage = scrollView.contentOffset.x / APPCONFIG_UI_SCREEN_FWIDTH;
     [self changeScrollViewWithPage:newPage];
 }
 
-- (void)changeScrollViewWithPage:(NSInteger)newPage
-{
+- (void)changeScrollViewWithPage:(NSInteger)newPage {
     if (newPage != page) {
         switch (page) {
             case 0:
@@ -253,8 +253,7 @@ static CGFloat const TriangleLeftPadding = 40.0f;
                 if (newPage == 3) {
                     sharpB.text = @"步行";
                     [self scrollViewMoveLeft];
-                }
-                break;
+                }                break;
             case 3:
                 if (newPage == 2) {
                     sharpD.text = @"仰卧起坐";
@@ -279,6 +278,9 @@ static CGFloat const TriangleLeftPadding = 40.0f;
             default:
                 break;
         }
+        
+        HistoryExerciseView *currentView = [viewArray objectAtIndex:page];
+        [currentView dismissSelected];
         page = newPage;
     }
 }

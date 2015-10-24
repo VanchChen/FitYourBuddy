@@ -54,6 +54,10 @@
             }else {
                 weakSelf.count = numberOfSteps;
                 [progressBar updateWithTotalBytes:weakSelf.targetNum downloadedBytes:numberOfSteps];
+                if (weakSelf.count > weakSelf.maxExerciseNum) {
+                    weakSelf.maxExerciseNum = weakSelf.count;
+                    weakSelf.recordLabel.text = [NSString stringFromInteger:weakSelf.maxExerciseNum];
+                }
             }
         }];
     }];

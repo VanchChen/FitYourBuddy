@@ -105,6 +105,10 @@
                     isEnd = false;
                     weakSelf.count++;
                     [weakSelf.closedIndicator updateWithTotalBytes:weakSelf.targetNum downloadedBytes:weakSelf.count];
+                    if (weakSelf.count > weakSelf.maxExerciseNum) {
+                        weakSelf.maxExerciseNum = weakSelf.count;
+                        weakSelf.recordLabel.text = [NSString stringFromInteger:weakSelf.maxExerciseNum];
+                    }
                 }
                 
                 

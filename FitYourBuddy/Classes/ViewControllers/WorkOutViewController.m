@@ -101,7 +101,7 @@
     [_maxRecordView addSubview:_recordLabel];
     
     _saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 63, self.view.bounds.size.width, 63)];
-    [_saveButton setTitle:@"长按保存运动成果" forState:UIControlStateNormal];
+    [_saveButton setTitle:@"长 按 退 出" forState:UIControlStateNormal];
     [_saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:_saveButton];
     

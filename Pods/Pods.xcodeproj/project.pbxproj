@@ -7,50 +7,50 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1495A648BE0CF2E039C6E73A3E7CB0C7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC1A50FE12E3B8C4DE675514F98CD80 /* Foundation.framework */; };
-		56002985BCAC89D3B51C9BCAD9FE9227 /* JSPatch-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9117F232BB718BB9BD1D7EB56AEC4B20 /* JSPatch-dummy.m */; };
-		7AFED59FA321CAEB0E6576AF2E4413E0 /* JPEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 01494DD1DA9BA2BCE0641465A05C3154 /* JPEngine.h */; };
+		3C88C53C5B46A59BEA33B4219AD4E69A /* JPEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 63BB0A911BE5612BF1E835A3404A95C9 /* JPEngine.h */; };
 		7E61505B98B4C3EBE58686234F25BCA8 /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7144AC9668D17BF01BEA7EDA59774E /* Pods-dummy.m */; };
-		84E2E66BA84DA88D3C64F25432918B9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC1A50FE12E3B8C4DE675514F98CD80 /* Foundation.framework */; };
-		C0CF34B97D283594979433648FEC8EF0 /* JPEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F5CC22B48A5AEEF5DA3B2B7A806A59 /* JPEngine.m */; };
+		84E2E66BA84DA88D3C64F25432918B9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DB160B43535675DE510C2D66C3A37A0 /* Foundation.framework */; };
+		9F105D9B61C81F87ADE86BDB8346AF34 /* JSPatch-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AFD54573992CCA0BEB2AE911EB1381C /* JSPatch-dummy.m */; };
+		E4FD3194719368C6281FBA1992E06ABA /* JPEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F66ADA9C45954F07D0F40D18BD630A /* JPEngine.m */; };
+		EEC8250A641B1CC454B19EEF3754DC24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DB160B43535675DE510C2D66C3A37A0 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B224B8DCA556F765DB1E16EDE35EEDF9 /* PBXContainerItemProxy */ = {
+		F217832E45392772E726E48FFD94135C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D40C425418B98A596F076B4BCBB22AE9;
+			remoteGlobalIDString = 50A81B70EA0178610CF1DFC89F6831CF;
 			remoteInfo = JSPatch;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		01494DD1DA9BA2BCE0641465A05C3154 /* JPEngine.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JPEngine.h; path = JSPatch/JPEngine.h; sourceTree = "<group>"; };
-		0EC1A50FE12E3B8C4DE675514F98CD80 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		15A529C27057E4A57D259CBC6E6CE49C /* Pods-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-acknowledgements.markdown"; sourceTree = "<group>"; };
-		1AE260FFB5F0CE2D4575395B7BA8D358 /* JSPatch-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "JSPatch-Private.xcconfig"; sourceTree = "<group>"; };
+		182B956847BF975BBD9D3921B7BDEF9E /* JSPatch-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "JSPatch-Private.xcconfig"; sourceTree = "<group>"; };
+		1AFD54573992CCA0BEB2AE911EB1381C /* JSPatch-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JSPatch-dummy.m"; sourceTree = "<group>"; };
+		38339937B320A351BCA6B2791E26B843 /* libJSPatch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJSPatch.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		56386B5B4F808B64F894E06E5756B97C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.release.xcconfig; sourceTree = "<group>"; };
 		5D7144AC9668D17BF01BEA7EDA59774E /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-dummy.m"; sourceTree = "<group>"; };
+		62F66ADA9C45954F07D0F40D18BD630A /* JPEngine.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JPEngine.m; path = JSPatch/JPEngine.m; sourceTree = "<group>"; };
+		63BB0A911BE5612BF1E835A3404A95C9 /* JPEngine.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JPEngine.h; path = JSPatch/JPEngine.h; sourceTree = "<group>"; };
 		641AE05DD55E5E6AC1590CD7B4A18F97 /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = "<group>"; };
-		9117F232BB718BB9BD1D7EB56AEC4B20 /* JSPatch-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JSPatch-dummy.m"; sourceTree = "<group>"; };
+		6DB160B43535675DE510C2D66C3A37A0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		939BF0CAFDFD58BC809346B774EBFB33 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.debug.xcconfig; sourceTree = "<group>"; };
-		A2F5CC22B48A5AEEF5DA3B2B7A806A59 /* JPEngine.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JPEngine.m; path = JSPatch/JPEngine.m; sourceTree = "<group>"; };
 		A36B55B4C3EE855DF1B1C47838EDED51 /* JSPatch.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JSPatch.xcconfig; sourceTree = "<group>"; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BB3CB172E01D87F600D62DB69E63334B /* JSPatch.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; name = JSPatch.js; path = JSPatch/JSPatch.js; sourceTree = "<group>"; };
-		BEF5A8536FDA226701CB201EEB5112F9 /* libJSPatch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJSPatch.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF59BC15D23E1E1912C8F334E7236813 /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
 		F9B5EBF71D57AAF8329BA5DF4B9C0872 /* JSPatch-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSPatch-prefix.pch"; sourceTree = "<group>"; };
 		FC0CFF994389FBD2C315D0C219CF4DDC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3A764833F0C9EC788224F4283D0612BB /* Frameworks */ = {
+		4E9F76784DE9F0A15B460817FFCE40CD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1495A648BE0CF2E039C6E73A3E7CB0C7 /* Foundation.framework in Frameworks */,
+				EEC8250A641B1CC454B19EEF3754DC24 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,8 +77,8 @@
 			isa = PBXGroup;
 			children = (
 				A36B55B4C3EE855DF1B1C47838EDED51 /* JSPatch.xcconfig */,
-				1AE260FFB5F0CE2D4575395B7BA8D358 /* JSPatch-Private.xcconfig */,
-				9117F232BB718BB9BD1D7EB56AEC4B20 /* JSPatch-dummy.m */,
+				182B956847BF975BBD9D3921B7BDEF9E /* JSPatch-Private.xcconfig */,
+				1AFD54573992CCA0BEB2AE911EB1381C /* JSPatch-dummy.m */,
 				F9B5EBF71D57AAF8329BA5DF4B9C0872 /* JSPatch-prefix.pch */,
 			);
 			name = "Support Files";
@@ -88,7 +88,7 @@
 		53F661C0CA7190D2CF05023FB33D61E4 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				0EC1A50FE12E3B8C4DE675514F98CD80 /* Foundation.framework */,
+				6DB160B43535675DE510C2D66C3A37A0 /* Foundation.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -96,8 +96,8 @@
 		6D96CAFB15190D3537F7229068FAD1F1 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				01494DD1DA9BA2BCE0641465A05C3154 /* JPEngine.h */,
-				A2F5CC22B48A5AEEF5DA3B2B7A806A59 /* JPEngine.m */,
+				63BB0A911BE5612BF1E835A3404A95C9 /* JPEngine.h */,
+				62F66ADA9C45954F07D0F40D18BD630A /* JPEngine.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -156,7 +156,7 @@
 		CCA510CFBEA2D207524CDA0D73C3B561 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BEF5A8536FDA226701CB201EEB5112F9 /* libJSPatch.a */,
+				38339937B320A351BCA6B2791E26B843 /* libJSPatch.a */,
 				FC0CFF994389FBD2C315D0C219CF4DDC /* libPods.a */,
 			);
 			name = Products;
@@ -173,17 +173,34 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		8B7E1D3D020753978F1F166DE8D2FFC8 /* Headers */ = {
+		C9186A0CD01088D7CDF56B11D9681289 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7AFED59FA321CAEB0E6576AF2E4413E0 /* JPEngine.h in Headers */,
+				3C88C53C5B46A59BEA33B4219AD4E69A /* JPEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		50A81B70EA0178610CF1DFC89F6831CF /* JSPatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF1EE5867A27B8158732DE37D8733179 /* Build configuration list for PBXNativeTarget "JSPatch" */;
+			buildPhases = (
+				B4696C123A2CC8359F5EFC637A6316E1 /* Sources */,
+				4E9F76784DE9F0A15B460817FFCE40CD /* Frameworks */,
+				C9186A0CD01088D7CDF56B11D9681289 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JSPatch;
+			productName = JSPatch;
+			productReference = 38339937B320A351BCA6B2791E26B843 /* libJSPatch.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		BD87B537975C69F65BA15699A80E3862 /* Pods */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E3661F8B68A2D203C42C842C54E78B9D /* Build configuration list for PBXNativeTarget "Pods" */;
@@ -194,28 +211,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				A9D232CEA58C641114CB433E6898DC3C /* PBXTargetDependency */,
+				63C080CC11A9DA59B4494B61EF6E4E67 /* PBXTargetDependency */,
 			);
 			name = Pods;
 			productName = Pods;
 			productReference = FC0CFF994389FBD2C315D0C219CF4DDC /* libPods.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		D40C425418B98A596F076B4BCBB22AE9 /* JSPatch */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BF21D24B854E00CE8E9958F4ABD12261 /* Build configuration list for PBXNativeTarget "JSPatch" */;
-			buildPhases = (
-				A897A5438A326C65B32D83E51B670583 /* Sources */,
-				3A764833F0C9EC788224F4283D0612BB /* Frameworks */,
-				8B7E1D3D020753978F1F166DE8D2FFC8 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = JSPatch;
-			productName = JSPatch;
-			productReference = BEF5A8536FDA226701CB201EEB5112F9 /* libJSPatch.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -239,22 +239,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D40C425418B98A596F076B4BCBB22AE9 /* JSPatch */,
+				50A81B70EA0178610CF1DFC89F6831CF /* JSPatch */,
 				BD87B537975C69F65BA15699A80E3862 /* Pods */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A897A5438A326C65B32D83E51B670583 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C0CF34B97D283594979433648FEC8EF0 /* JPEngine.m in Sources */,
-				56002985BCAC89D3B51C9BCAD9FE9227 /* JSPatch-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		ACCAB1AA02D1223EE2C43B913F83205D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -263,18 +254,43 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B4696C123A2CC8359F5EFC637A6316E1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4FD3194719368C6281FBA1992E06ABA /* JPEngine.m in Sources */,
+				9F105D9B61C81F87ADE86BDB8346AF34 /* JSPatch-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A9D232CEA58C641114CB433E6898DC3C /* PBXTargetDependency */ = {
+		63C080CC11A9DA59B4494B61EF6E4E67 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = JSPatch;
-			target = D40C425418B98A596F076B4BCBB22AE9 /* JSPatch */;
-			targetProxy = B224B8DCA556F765DB1E16EDE35EEDF9 /* PBXContainerItemProxy */;
+			target = 50A81B70EA0178610CF1DFC89F6831CF /* JSPatch */;
+			targetProxy = F217832E45392772E726E48FFD94135C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		2C4E52549202BE3456D9BF00DE3018A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 182B956847BF975BBD9D3921B7BDEF9E /* JSPatch-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/JSPatch/JSPatch-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		3E2B02BBB164CB9B45C9ED345F3E7FE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 939BF0CAFDFD58BC809346B774EBFB33 /* Pods.debug.xcconfig */;
@@ -330,6 +346,22 @@
 			};
 			name = Debug;
 		};
+		67825C61999A148380CD8ECBC49E8F68 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 182B956847BF975BBD9D3921B7BDEF9E /* JSPatch-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/JSPatch/JSPatch-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
 		A14E2444F162A20E3776820E0ADFFB52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -380,38 +412,6 @@
 			};
 			name = Release;
 		};
-		A93B618EC55FAF4EE330605D79548943 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1AE260FFB5F0CE2D4575395B7BA8D358 /* JSPatch-Private.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/JSPatch/JSPatch-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		D84BDD0CD177D1D0B7D95DF06AACAE21 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1AE260FFB5F0CE2D4575395B7BA8D358 /* JSPatch-Private.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/JSPatch/JSPatch-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -424,20 +424,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BF21D24B854E00CE8E9958F4ABD12261 /* Build configuration list for PBXNativeTarget "JSPatch" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D84BDD0CD177D1D0B7D95DF06AACAE21 /* Debug */,
-				A93B618EC55FAF4EE330605D79548943 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		E3661F8B68A2D203C42C842C54E78B9D /* Build configuration list for PBXNativeTarget "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E2B02BBB164CB9B45C9ED345F3E7FE6 /* Debug */,
 				A4E95EC0269E0FFADA65FDE4D29209B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF1EE5867A27B8158732DE37D8733179 /* Build configuration list for PBXNativeTarget "JSPatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				67825C61999A148380CD8ECBC49E8F68 /* Debug */,
+				2C4E52549202BE3456D9BF00DE3018A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
