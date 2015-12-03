@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 xpz. All rights reserved.
 //
 
-//帖子类型
+//健身类型
 typedef NS_ENUM(NSInteger, ExerciseType) {
     ExerciseTypeSitUp,
     ExerciseTypePushUp,

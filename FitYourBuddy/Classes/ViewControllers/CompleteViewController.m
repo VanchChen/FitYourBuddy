@@ -20,7 +20,7 @@ static CGFloat const tipTitleLabelWidth = 100.0f;               //数据框的�
 
 static CGFloat const shareImageWidth = 24.0f;                   //分享按钮宽度
 
-@interface CompleteViewController ()
+@interface CompleteViewController () <UMSocialUIDelegate>
 {
     UIView *navView;
     
@@ -41,6 +41,9 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
 @property(nonatomic, strong) WQProgressBar  *levelProgressBar;  //经验框
 
 @property(nonatomic, strong) UIButton       *completeButton;    //完成按钮
+
+@property (nonatomic, copy)  NSString      *shareUrl;
+@property (nonatomic, copy)  NSString      *shareTitle;
 
 @end
 
@@ -321,11 +324,86 @@ static CGFloat const shareImageWidth = 24.0f;                   //分享按钮�
 }
 
 - (void)tappedShareButton {
+    NSString *exerciseTitle = @"";
+    switch (_exerciseType) {
+        case ExerciseTypeSitUp: {
+            exerciseTitle = @"仰卧起坐";
+            break;
+        }
+        case ExerciseTypePushUp: {
+            exerciseTitle = @"俯卧撑";
+            break;
+        }
+        case ExerciseTypeSquat: {
+            exerciseTitle = @"深蹲";
+            break;
+        }
+        case ExerciseTypeWalk: {
+            exerciseTitle = @"步行";
+            break;
+        }
+        default: {
+            break;
+        }
+    }
     
+    NSInteger todayNum = [ExerciseCoreDataHelper getTodayNumByType:self.exerciseType withError:nil];
+    _shareTitle = [NSString stringWithFormat:@"我在[天天趣健身]完成[%@x%ld]！", exerciseTitle, (long)todayNum];
+    NSMutableString *urlString = [NSMutableString stringWithString:@"http://121.43.226.76/shareMyExercise/"];
+    [urlString appendString:[NSString stringWithFormat:@"%ld/", self.exerciseType + 1]];
+    [urlString appendString:[[NSString today] formatDate]];
+    NSString *cid = [AccountCoreDataHelper getDataByName:@"clientID" withError:nil];
+    [urlString appendString:[NSString stringWithFormat:@"/%@", cid]];
+    _shareUrl = urlString;
+    
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"559a90d667e58eb311006634"
+                                      shareText:[NSString stringWithFormat:@"%@ %@", _shareTitle, _shareUrl]
+                                     shareImage:[UIImage imageNamed:@"AppIcon"]
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToTencent,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
+                                       delegate:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
+}
+
+#pragma mark - Umeng Social Delegate
+- (void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response {
+    //根据`responseCode`得到发送结果,如果分享成功
+    if(response.responseCode == UMSResponseCodeSuccess) {
+        //得到分享到的微博平台名
+        NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
+    }
+}
+
+- (void)didSelectSocialPlatform:(NSString *)platformName withSocialData:(UMSocialData *)socialData {
+    if ([platformName isEqualToString:UMShareToQQ]) {
+        [UMSocialData defaultData].extConfig.qqData.title = _shareTitle;
+        [UMSocialData defaultData].extConfig.qqData.url = _shareUrl;
+        [UMSocialData defaultData].extConfig.qqData.urlResource.url = _shareUrl;
+        [UMSocialData defaultData].extConfig.qqData.urlResource.resourceType = UMSocialUrlResourceTypeDefault;
+    }
+    
+    if ([platformName isEqualToString:UMShareToQzone]) {
+        [UMSocialData defaultData].extConfig.qzoneData.title = _shareTitle;
+        [UMSocialData defaultData].extConfig.qzoneData.url = _shareUrl;
+        [UMSocialData defaultData].extConfig.qqData.urlResource.url = _shareUrl;
+        [UMSocialData defaultData].extConfig.qqData.urlResource.resourceType = UMSocialUrlResourceTypeImage;
+    }
+    
+    
+    if ([platformName isEqualToString:UMShareToWechatSession]) {
+        [UMSocialData defaultData].extConfig.wechatSessionData.title = _shareTitle;
+        [UMSocialData defaultData].extConfig.wechatSessionData.url = _shareUrl;
+        [UMSocialData defaultData].extConfig.wechatSessionData.wxMessageType = UMSocialWXMessageTypeWeb;
+    }
+    
+    if ([platformName isEqualToString:UMShareToWechatTimeline]) {
+        [UMSocialData defaultData].extConfig.wechatTimelineData.title = _shareTitle;
+        [UMSocialData defaultData].extConfig.wechatTimelineData.url = _shareUrl;
+        [UMSocialData defaultData].extConfig.wechatTimelineData.wxMessageType = UMSocialWXMessageTypeWeb;
+    }
 }
 
 @end
